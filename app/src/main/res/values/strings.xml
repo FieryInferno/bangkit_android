@@ -5,4 +5,9 @@
     <string name="height">Tinggi</string>
     <string name="calculate">Hitung</string>
     <string name="result">Hasil</string>
+    <string name="disease_detail_image">Disease Detail Image</string>
+    <string name="time_icon">Time Icon</string>
+    <string name="cara_mengobati">Cara Mengobati</string>
+    <string name="rekomendasi_produk">Rekomendasi Produk</string>
+    <string name="card_image">Card Image</string>
 </resources>
