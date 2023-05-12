@@ -12,6 +12,9 @@
         android:theme="@style/Theme.BangkitAndroid"
         tools:targetApi="31">
         <activity
+            android:name=".ui.disease.DiseaseImagePreviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.disease.DiseaseHistoryActivity"
             android:exported="false" />
         <activity

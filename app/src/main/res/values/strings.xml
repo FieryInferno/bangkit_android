@@ -12,4 +12,8 @@
     <string name="card_image">Card Image</string>
     <string name="back_button">Back Button</string>
     <string name="riwayat">Riwayat</string>
+    <string name="unggah_gambar">Unggah Gambar</string>
+    <string name="ambil_ulang">ambil ulang</string>
+    <string name="image_preview">Image Preview</string>
+    <string name="sedang_diproses">Sedang Diproses</string>
 </resources>

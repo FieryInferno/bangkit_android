@@ -2,7 +2,8 @@
 <resources>
     <color name="green_100">#E7F0EB</color>
     <color name="green_200">#CCDDD3</color>
-    <color name="green_300">#116531</color>
+    <color name="green_300">#99D98C</color>
+    <color name="green_400">#116531</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
