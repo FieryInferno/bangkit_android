@@ -35,7 +35,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tv_title_vertical_item"
+                android:id="@+id/tv_title_horizontal_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="8dp"
@@ -47,8 +47,8 @@
                 tools:text="Konten 1" />
 
             <TextView
-                android:id="@+id/tv_subtitle_vertical_item"
-                android:layout_width="match_parent"
+                android:id="@+id/tv_subtitle_horizontal_item"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="8dp"
                 android:textSize="11sp"
@@ -56,8 +56,24 @@
                 android:gravity="center_vertical"
                 tools:text="4 Mei 2023 9:00"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_second_subtitle_horizontal_item"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:drawableStartCompat="@drawable/baseline_access_time_16"
+                android:drawablePadding="4dp"/>
+            <TextView
+                android:id="@+id/tv_second_subtitle_horizontal_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
+                android:textSize="11sp"
+                android:textColor="@color/black"
+                android:gravity="end"
+                tools:text="Julian Tantra"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@id/tv_subtitle_horizontal_item"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:drawableStartCompat="@drawable/baseline_person_outline_16"
                 android:drawablePadding="4dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
