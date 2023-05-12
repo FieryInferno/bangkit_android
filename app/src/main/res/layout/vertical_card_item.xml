@@ -25,7 +25,7 @@
         <TextView
             android:id="@+id/tv_title_vertical_item"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:paddingHorizontal="8dp"
             android:paddingTop="8dp"
             android:textSize="12sp"
@@ -36,7 +36,7 @@
         <TextView
             android:id="@+id/tv_subtitle_vertical_item"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:paddingHorizontal="8dp"
             android:paddingTop="4dp"
             android:textSize="11sp"
