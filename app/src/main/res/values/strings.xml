@@ -5,4 +5,12 @@
     <string name="height">Tinggi</string>
     <string name="calculate">Hitung</string>
     <string name="result">Hasil</string>
+    <string name="scan_description">Cari tahu penyakit tanamanmu disini!</string>
+    <string name="riwayat">Riwayat</string>
+    <string name="lihat_semua">Lihat Semua</string>
+    <string name="card_image">Card Image</string>
+    <string name="blog">Blog</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="history_not_logged">Masuk untuk menyimpan riwayat penyakit</string>
 </resources>
