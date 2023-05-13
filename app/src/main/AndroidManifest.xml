@@ -18,13 +18,13 @@
             android:name=".ui.profile.ProfileNotLoggedActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.profile.ProfileLoggedActivity"
             android:exported="false" />
         <activity
             android:name=".BlogActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.profile.ProfileLoggedActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
