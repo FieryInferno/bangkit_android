@@ -57,8 +57,7 @@
         android:textSize="20sp"
         android:textAlignment="center"
         android:drawablePadding="16dp"
-        app:drawableTopCompat="@drawable/icon_history_not_logged">
-    </TextView>
+        app:drawableTopCompat="@drawable/icon_history_not_logged" />
 
     <TextView
         android:layout_marginTop="16dp"
