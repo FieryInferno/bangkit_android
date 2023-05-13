@@ -12,10 +12,19 @@
         android:theme="@style/Theme.BangkitAndroid"
         tools:targetApi="31">
         <activity
-            android:name=".BlogActivity"
+            android:name=".ui.profile.EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.profile.ProfileNotLoggedActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BlogActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.profile.ProfileLoggedActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
