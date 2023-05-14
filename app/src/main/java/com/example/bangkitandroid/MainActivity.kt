@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import com.example.bangkitandroid.ui.blog.BlogListActivity
 import com.example.bangkitandroid.ui.disease.DiseaseDetailActivity
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         btnCalculate.setOnClickListener(this)
         btnNext.setOnClickListener {
-            val intent = Intent(this, DiseaseDetailActivity::class.java)
+            val intent = Intent(this, BlogListActivity::class.java)
             startActivity(intent)
         }
     }

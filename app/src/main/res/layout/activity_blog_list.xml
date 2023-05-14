@@ -24,6 +24,7 @@
             android:drawablePadding="4dp"
             app:drawableStartCompat="@drawable/ic_leaf" />
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list_blog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/horizontal_card_item"/>
