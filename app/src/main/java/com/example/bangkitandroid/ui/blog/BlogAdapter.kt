@@ -33,6 +33,9 @@ class BlogAdapter(private val blogs: List<Blog>) : RecyclerView.Adapter<BlogAdap
     override fun onBindViewHolder(holder: BlogAdapter.ViewHolder, position: Int) {
         val blog = blogs[position]
         holder.bind(blog)
+        holder.itemView.setOnClickListener {
+            onItemTapCallback.onItemTap(blog)
+        }
     }
 
     override fun getItemCount(): Int = blogs.size
