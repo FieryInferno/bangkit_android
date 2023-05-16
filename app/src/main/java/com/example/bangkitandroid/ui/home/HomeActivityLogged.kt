@@ -5,12 +5,14 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.ActivityHomeLoggedBinding
+import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.domain.entities.Disease
 import com.example.bangkitandroid.service.DummyData
 
 class HomeActivityLogged : AppCompatActivity() {
     private lateinit var binding: ActivityHomeLoggedBinding
     private lateinit var diseases: List<Disease>
+    private lateinit var blogs: List<Blog>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +28,7 @@ class HomeActivityLogged : AppCompatActivity() {
 
     private fun getData(){
         diseases = DummyData().getHistoryDiseases()
+        blogs = DummyData().getListBlogs()
     }
 
     private fun setupView() {
@@ -42,6 +45,13 @@ class HomeActivityLogged : AppCompatActivity() {
             }
         })
 
+        val blogAdapter = BlogAdapter(blogs)
+        blogAdapter.setOnItemTapCallback(object : BlogAdapter.OnItemTapCallback{
+            override fun onItemTap(data: Blog) {
+                // intent to blog detail
+            }
+        })
+
         binding.apply {
             historyRv.layoutManager = LinearLayoutManager(
                 this@HomeActivityLogged,
@@ -49,6 +59,9 @@ class HomeActivityLogged : AppCompatActivity() {
                 false
             )
             historyRv.adapter = historyAdapter
+
+            blogRv.layoutManager = LinearLayoutManager(this@HomeActivityLogged)
+            blogRv.adapter = blogAdapter
         }
     }
 
