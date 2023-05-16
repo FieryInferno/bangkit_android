@@ -26,7 +26,7 @@ class HomeActivityLogged : AppCompatActivity() {
         setupBottomNavigationView()
     }
 
-    private fun getData(){
+    private fun getData() {
         diseases = DummyData().getHistoryDiseases()
         blogs = DummyData().getListBlogs()
     }

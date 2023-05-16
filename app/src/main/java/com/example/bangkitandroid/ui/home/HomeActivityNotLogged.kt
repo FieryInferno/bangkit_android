@@ -2,11 +2,15 @@ package com.example.bangkitandroid.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.ActivityHomeNotLoggedBinding
+import com.example.bangkitandroid.domain.entities.Blog
+import com.example.bangkitandroid.service.DummyData
 
 class HomeActivityNotLogged : AppCompatActivity() {
     private lateinit var binding: ActivityHomeNotLoggedBinding
+    private lateinit var blogs: List<Blog>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,7 +20,27 @@ class HomeActivityNotLogged : AppCompatActivity() {
 
         supportActionBar?.hide()
 
+        getData()
+        setupView()
         setupBottomNavigationView()
+    }
+
+    private fun getData() {
+        blogs = DummyData().getListBlogs()
+    }
+
+    private fun setupView() {
+        val blogAdapter = BlogAdapter(blogs)
+        blogAdapter.setOnItemTapCallback(object : BlogAdapter.OnItemTapCallback{
+            override fun onItemTap(data: Blog) {
+                // intent to blog detail
+            }
+        })
+
+        binding.apply {
+            blogRv.layoutManager = LinearLayoutManager(this@HomeActivityNotLogged)
+            blogRv.adapter = blogAdapter
+        }
     }
 
     private fun setupBottomNavigationView() {
