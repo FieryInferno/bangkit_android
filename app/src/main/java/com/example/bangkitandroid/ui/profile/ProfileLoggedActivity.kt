@@ -3,12 +3,15 @@ package com.example.bangkitandroid.ui.profile
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.bumptech.glide.Glide
 import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.ActivityProfileLoggedBinding
+import com.example.bangkitandroid.domain.entities.User
+import com.example.bangkitandroid.service.DummyData
 
 class ProfileLoggedActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileLoggedBinding
-
+    private lateinit var user: User
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileLoggedBinding.inflate(layoutInflater)
@@ -16,17 +19,23 @@ class ProfileLoggedActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
+        getData()
         setupView()
         setupBottomNavigationView()
     }
 
+    private fun getData() {
+        user =  DummyData().getUser(1)
+    }
+
     private fun setupView() {
-        // set photo, name, phone number here
+        Glide.with(this).load(user.imgUrl).circleCrop().into(binding.personPhoto)
+        binding.personName.text = user.name
+        binding.personPhone.text = user.phoneNumber
 
         binding.editTv.setOnClickListener {
             val intent = Intent(this, EditProfileActivity::class.java)
-            intent.putExtra(EditProfileActivity.EXTRA_NAME, "dummy name")
-            intent.putExtra(EditProfileActivity.EXTRA_PHONE, "08123456789")
+            intent.putExtra(EditProfileActivity.EXTRA_USER, user)
             startActivity(intent)
         }
 
