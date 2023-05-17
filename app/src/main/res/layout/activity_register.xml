@@ -68,7 +68,6 @@
         android:background="@drawable/rounded_edit_text_white"
         android:layout_marginBottom="8dp"
         android:padding="10dp"
-        android:textColor="@color/green_100"
         android:textColorHint="@color/green_200"
         android:hint="@string/masukkan_nama"/>
 
@@ -89,7 +88,6 @@
         android:background="@drawable/rounded_edit_text_white"
         android:layout_marginBottom="8dp"
         android:padding="10dp"
-        android:textColor="@color/green_100"
         android:textColorHint="@color/green_200"
         android:hint="@string/masukkan_nomor_telepon"/>
 
@@ -110,7 +108,6 @@
         android:background="@drawable/rounded_edit_text_white"
         android:padding="10dp"
         android:inputType="textPassword"
-        android:textColor="@color/green_100"
         android:textColorHint="@color/green_200"
         android:hint="@string/masukkan_kata_sandi"/>
     <View
