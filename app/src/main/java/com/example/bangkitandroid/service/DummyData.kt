@@ -37,7 +37,7 @@ class DummyData {
         return diseases
     }
 
-    private fun getUser(id: Int): User {
+    fun getUser(id: Int): User {
         return User(
             id = id,
             name = "user $id",
