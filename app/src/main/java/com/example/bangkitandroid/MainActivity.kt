@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import com.example.bangkitandroid.ui.authentication.LoginActivity
+import com.example.bangkitandroid.ui.authentication.RegisterActivity
 import com.example.bangkitandroid.ui.blog.BlogListActivity
 import com.example.bangkitandroid.ui.disease.DiseaseDetailActivity
 
@@ -15,7 +17,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var edtHeight: EditText
     private lateinit var edtLength: EditText
     private lateinit var btnCalculate: Button
-    private lateinit var btnNext: Button
+    private lateinit var btnLogin: Button
+    private lateinit var btnRegister: Button
     private lateinit var tvResult: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,9 +30,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         edtLength = findViewById(R.id.edt_length)
         btnCalculate = findViewById(R.id.btn_calculate)
         tvResult = findViewById(R.id.tv_result)
-        btnNext = findViewById(R.id.btn_next)
+        btnLogin = findViewById(R.id.btn_login)
+        btnRegister = findViewById(R.id.btn_register)
 
         btnCalculate.setOnClickListener(this)
+        btnLogin.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+        btnRegister.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
         btnNext.setOnClickListener {
             val intent = Intent(this, BlogListActivity::class.java)
             startActivity(intent)

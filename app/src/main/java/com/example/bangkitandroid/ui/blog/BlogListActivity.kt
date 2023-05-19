@@ -3,6 +3,7 @@ package com.example.bangkitandroid.ui.blog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.bangkitandroid.R
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bangkitandroid.R
