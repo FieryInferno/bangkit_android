@@ -1,5 +1,4 @@
 package com.example.bangkitandroid.domain.entities
-
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 

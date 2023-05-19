@@ -43,10 +43,15 @@
         android:layout_height="wrap_content"
         android:text="@string/calculate" />
     <Button
-        android:id="@+id/btn_next"
+        android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Blog Example" />
+        android:text="Login Example" />
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register Example" />
     <TextView
         android:id="@+id/tv_result"
         android:layout_width="match_parent"
