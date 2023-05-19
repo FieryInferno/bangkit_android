@@ -8,4 +8,4 @@ data class Disease (
     val description: String,
     val treatment: String,
     val products: List<Product>
-    )
+)

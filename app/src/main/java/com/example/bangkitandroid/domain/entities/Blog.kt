@@ -8,5 +8,4 @@ data class Blog (
     val imgUrl: String,
     val description: String,
     val comments: List<Comment>
-
 )

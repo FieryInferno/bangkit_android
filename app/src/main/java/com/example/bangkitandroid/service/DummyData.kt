@@ -1,11 +1,5 @@
 package com.example.bangkitandroid.service
-import com.example.bangkitandroid.domain.entities.Disease
-import com.example.bangkitandroid.domain.entities.Product
-import com.example.bangkitandroid.domain.entities.Blog
-import com.example.bangkitandroid.domain.entities.Comment
-import com.example.bangkitandroid.domain.entities.User
-
-// DummyData for those who needs
+import com.example.bangkitandroid.domain.entities.*
 class DummyData {
 
     private fun getProductsRecommendation(): List<Product> {
@@ -42,7 +36,7 @@ class DummyData {
         }
         return diseases
     }
-    
+
     private fun getUser(id: Int): User {
         return User(
             id = id,
@@ -52,7 +46,7 @@ class DummyData {
             password = "password"
         )
     }
- 
+
     private fun getComment(): List<Comment> {
         val comments = ArrayList<Comment>()
         for(i in 1..5){

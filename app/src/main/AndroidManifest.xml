@@ -12,6 +12,9 @@
         android:theme="@style/Theme.BangkitAndroid"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.profile.EditProfileActivity"
             android:exported="false" />
         <activity
@@ -45,7 +48,10 @@
             android:name=".BlogActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.home.HomeActivityNotLogged"
+            android:exported="false" />
+        <activity
+            android:name=".ui.home.HomeActivityLogged"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
