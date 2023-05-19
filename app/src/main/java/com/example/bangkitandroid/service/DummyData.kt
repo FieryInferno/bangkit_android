@@ -1,5 +1,4 @@
 package com.example.bangkitandroid.service
-
 import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.domain.entities.Comment
 import com.example.bangkitandroid.domain.entities.User
@@ -14,7 +13,7 @@ class DummyData {
             password = "password"
         )
     }
-
+ 
     private fun getComment(): List<Comment> {
         val comments = ArrayList<Comment>()
         for(i in 1..5){
