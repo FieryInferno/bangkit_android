@@ -16,10 +16,10 @@ class BlogAdapter(private val blogs: List<Blog>) : RecyclerView.Adapter<BlogAdap
         fun bind(blog: Blog){
             binding.tvTitleHorizontalItem.text = blog.title
             binding.tvSubtitleHorizontalItem.text = blog.dateTime
-            Glide.with(binding.imgVerticalItem.context)
+            Glide.with(binding.imgHorizontalItem.context)
                 .load(blog.imgUrl)
                 .placeholder(R.drawable.ic_launcher_background)
-                .into(binding.imgVerticalItem)
+                .into(binding.imgHorizontalItem)
             binding.tvSecondSubtitleHorizontalItem.text = blog.author
             binding.tvSecondSubtitleHorizontalItem.visibility = View.VISIBLE
         }

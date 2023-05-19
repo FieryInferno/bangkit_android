@@ -13,9 +13,6 @@
     <string name="home">Home</string>
     <string name="profile">Profile</string>
     <string name="history_not_logged">Masuk untuk menyimpan riwayat penyakit</string>
-    <string name="blog">Blog</string>
-    <string name="home">Home</string>
-    <string name="profile">Profile</string>
     <string name="edit">Edit</string>
     <string name="edit_profile">Edit Profil</string>
     <string name="name">Nama</string>
@@ -31,17 +28,13 @@
     <string name="time_icon">Time Icon</string>
     <string name="cara_mengobati">Cara Mengobati</string>
     <string name="rekomendasi_produk">Rekomendasi Produk</string>
-    <string name="card_image">Card Image</string>
     <string name="back_button">Back Button</string>
-    <string name="riwayat">Riwayat</string>
     <string name="unggah_gambar">Unggah Gambar</string>
     <string name="ambil_ulang">ambil ulang</string>
     <string name="image_preview">Image Preview</string>
     <string name="sedang_diproses">Sedang Diproses</string>
-    <string name="blog">Blog</string>
     <string name="judul_blog">Judul Blog</string>
     <string name="author">Pak Slamet</string>
-    <string name="name">Name</string>
     <string name="add_a_comment">Berikan Komentar</string>
     <string name="kirim">Kirim</string>
     <string name="komentar">Komentar</string>

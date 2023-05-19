@@ -1,0 +1,23 @@
+name: Android CI/CD
+
+on:
+  push:
+    branches:
+      - '**'
+jobs:
+  test:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
+      - name: Unit tests
+        run: ./gradlew test

@@ -9,10 +9,6 @@ import android.widget.EditText
 import android.widget.TextView
 import com.example.bangkitandroid.ui.authentication.LoginActivity
 import com.example.bangkitandroid.ui.authentication.RegisterActivity
-import com.example.bangkitandroid.ui.blog.BlogListActivity
-import com.example.bangkitandroid.ui.disease.DiseaseDetailActivity
-import com.example.bangkitandroid.ui.disease.DiseaseHistoryActivity
-import com.example.bangkitandroid.ui.disease.DiseaseImagePreviewActivity
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var edtWidth: EditText
@@ -42,8 +38,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
         btnRegister.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
-        btnNext.setOnClickListener {
-            val intent = Intent(this, DiseaseImagePreviewActivity::class.java)
             startActivity(intent)
         }
     }
