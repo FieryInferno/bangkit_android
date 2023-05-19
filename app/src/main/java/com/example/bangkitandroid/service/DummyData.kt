@@ -1,7 +1,5 @@
 package com.example.bangkitandroid.service
-
 import com.example.bangkitandroid.domain.entities.*
-
 class DummyData {
 
     private fun getProductsRecommendation(): List<Product> {
@@ -76,11 +74,10 @@ class DummyData {
 
     fun getListBlogs(): List<Blog> {
         val blogs = ArrayList<Blog>()
-        for(i in 1..5){
+        for(i in 1..10){
             val blog = getDetailBlog(i)
             blogs.add(blog)
         }
         return blogs
     }
-
 }
