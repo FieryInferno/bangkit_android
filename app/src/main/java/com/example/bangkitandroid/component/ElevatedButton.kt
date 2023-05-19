@@ -14,7 +14,6 @@ class ElevatedButton : AppCompatButton {
     private lateinit var disabledBackground: Drawable
     private var txtColor: Int = 0
 
-
     constructor(context: Context) : super(context) {
         init()
     }
@@ -35,6 +34,7 @@ class ElevatedButton : AppCompatButton {
     }
 
     private fun init() {
+        transformationMethod = null
         txtColor = ContextCompat.getColor(context, R.color.green_400)
         enabledBackground = ContextCompat.getDrawable(context, R.drawable.button_background_enabled) as Drawable
     }
