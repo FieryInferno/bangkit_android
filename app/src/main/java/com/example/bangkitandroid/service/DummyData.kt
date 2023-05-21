@@ -1,7 +1,9 @@
 package com.example.bangkitandroid.service
+import com.example.bangkitandroid.data.remote.response.CommonResponse
 import com.example.bangkitandroid.domain.entities.*
 class DummyData {
 
+    // For Testing Purpose
     private fun getProductsRecommendation(): List<Product> {
         val products = ArrayList<Product>()
         for(i in 1..5){
@@ -80,4 +82,37 @@ class DummyData {
         }
         return blogs
     }
+
+    fun generateSuccessCommonResponse(): CommonResponse {
+        return CommonResponse(
+            status = true,
+            message = "success",
+        )
+    }
+
+    fun generateFailedCommonResponse(): CommonResponse {
+        return CommonResponse(
+            status = false,
+            message = "failed",
+        )
+    }
+
+    // For supply placeholder purpose
+    fun getUserDummy(id: Int): User {
+        return User(
+            id = id,
+            name = "Name $id",
+            imgUrl = "https://agrisustineri.org/wp-content/uploads/2022/08/The-Story-of-Todays-Successful-Young-Farmers-.jpg",
+            phoneNumber = "0123456789",
+            password = "Password $id",
+        )
+    }
+
+    fun generateDummyCommonResponse(): CommonResponse {
+        return CommonResponse(
+            status = false,
+            message = "dummy",
+        )
+    }
+
 }
