@@ -1,4 +1,7 @@
 package com.example.bangkitandroid.service
+import android.util.Log
+import com.example.bangkitandroid.data.remote.response.LoginResponse
+import com.example.bangkitandroid.data.remote.response.RegisterResponse
 import com.example.bangkitandroid.domain.entities.*
 class DummyData {
 
@@ -79,5 +82,32 @@ class DummyData {
             blogs.add(blog)
         }
         return blogs
+    }
+
+    fun generateLoginResponse(): LoginResponse {
+        return LoginResponse(
+            success = true,
+            message = "success",
+            data = getUser(1)
+        )
+    }
+
+    fun generateRegisterResponse(): RegisterResponse {
+        return RegisterResponse(
+            success = true,
+            message = "success",
+            data = getUser(1)
+        )
+    }
+
+    // For supply placeholder purpose
+    fun getUserDummy(id: Int): User {
+        return User(
+            id = id,
+            name = "Name $id",
+            imgUrl = "https://agrisustineri.org/wp-content/uploads/2022/08/The-Story-of-Todays-Successful-Young-Farmers-.jpg",
+            phoneNumber = "0123456789",
+            password = "Password $id",
+        )
     }
 }
