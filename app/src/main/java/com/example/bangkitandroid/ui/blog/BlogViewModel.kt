@@ -6,5 +6,5 @@ import com.example.bangkitandroid.data.remote.Repository
 class BlogViewModel(private val repository: Repository) : ViewModel() {
     fun getListBlog() = repository.getListBlog()
 
-    fun getBlog() = repository.getBlogDetail(0)
+    fun getBlog(id: Int) = repository.getBlogDetail(id)
 }
