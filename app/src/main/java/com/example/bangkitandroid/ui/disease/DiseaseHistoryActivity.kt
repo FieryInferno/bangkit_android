@@ -26,7 +26,7 @@ class DiseaseHistoryActivity : AppCompatActivity() {
     }
 
     private fun setView(){
-        val adapter = DiseaseHistoryAdapter(diseases)
+        val adapter = DiseaseHistoryAdapter()
         adapter.setOnItemTapCallback(object : DiseaseHistoryAdapter.OnItemTapCallback{
             override fun onItemTap(data: Disease) {
                 val intent = Intent(this@DiseaseHistoryActivity, DiseaseDetailActivity::class.java)
