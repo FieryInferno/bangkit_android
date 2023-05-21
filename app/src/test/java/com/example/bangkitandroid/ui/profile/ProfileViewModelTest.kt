@@ -1,6 +1,7 @@
-package com.example.bangkitandroid.data
+package com.example.bangkitandroid.ui.profile
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.bangkitandroid.data.Repository
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.domain.entities.User
 import com.example.bangkitandroid.service.DummyData
@@ -16,7 +17,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class RepositoryTest {
+class ProfileViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
@@ -35,7 +36,9 @@ class RepositoryTest {
     @Test
     fun `when getUser Should Not Null and Return Data`() = runTest {
         val expectedUser = DummyData().getUser(1)
-        val actualUser = repository.getUser()
+
+        val profileViewModel = ProfileViewModel(repository)
+        val actualUser = profileViewModel.getUser()
 
         actualUser.observeForTesting {
             assertNotNull(actualUser)
@@ -46,7 +49,9 @@ class RepositoryTest {
     @Test
     fun `when getUser Empty Should Return No Data`() = runTest {
         val expectedUser: User? = null
-        val actualUser = repository.getUser()
+
+        val profileViewModel = ProfileViewModel(repository)
+        val actualUser = profileViewModel.getUser()
 
         actualUser.observeForTesting {
             assertEquals(expectedUser, (actualUser.value as Result.Success).data)
@@ -56,7 +61,9 @@ class RepositoryTest {
     @Test
     fun `when editProfile Success Should Return Success`() = runTest {
         val expectedResponse = DummyData().getUser(1)
-        val actualResponse = repository.editProfile("dummy name", "000000")
+
+        val profileViewModel = ProfileViewModel(repository)
+        val actualResponse = profileViewModel.editUser("dummy name", "000000")
 
         actualResponse.observeForTesting {
             assertNotNull(actualResponse)
@@ -67,7 +74,9 @@ class RepositoryTest {
     @Test
     fun `when editProfile Failed Should Return Failed`() = runTest {
         val expectedResponse = DummyData().getUser(1)
-        val actualResponse = repository.editProfile("dummy name", "000000")
+
+        val profileViewModel = ProfileViewModel(repository)
+        val actualResponse = profileViewModel.editUser("dummy name", "000000")
 
         actualResponse.observeForTesting {
             assertEquals(expectedResponse, (actualResponse.value as Result.Success).data)

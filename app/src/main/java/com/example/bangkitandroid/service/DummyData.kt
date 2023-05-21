@@ -1,6 +1,8 @@
 package com.example.bangkitandroid.service
-import com.example.bangkitandroid.data.remote.response.CommonResponse
+
+import com.example.bangkitandroid.data.remote.response.EditProfileResponse
 import com.example.bangkitandroid.domain.entities.*
+
 class DummyData {
 
     // For Testing Purpose
@@ -83,17 +85,11 @@ class DummyData {
         return blogs
     }
 
-    fun generateSuccessCommonResponse(): CommonResponse {
-        return CommonResponse(
-            status = true,
+    fun generateEditProfileResponse(): EditProfileResponse {
+        return EditProfileResponse(
+            success = true,
             message = "success",
-        )
-    }
-
-    fun generateFailedCommonResponse(): CommonResponse {
-        return CommonResponse(
-            status = false,
-            message = "failed",
+            data = getUser(1)
         )
     }
 
@@ -105,13 +101,6 @@ class DummyData {
             imgUrl = "https://agrisustineri.org/wp-content/uploads/2022/08/The-Story-of-Todays-Successful-Young-Farmers-.jpg",
             phoneNumber = "0123456789",
             password = "Password $id",
-        )
-    }
-
-    fun generateDummyCommonResponse(): CommonResponse {
-        return CommonResponse(
-            status = false,
-            message = "dummy",
         )
     }
 
