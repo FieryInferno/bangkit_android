@@ -80,4 +80,47 @@ class DummyData {
         }
         return blogs
     }
+
+    // For supply placeholder purpose
+    fun getHistoryDiseasesDummy(): List<Disease> {
+        val diseases = ArrayList<Disease>()
+        for(i in 1..5){
+            val disease = getDetailDiseaseDummy(i)
+            diseases.add(disease)
+        }
+        return diseases
+    }
+
+    private fun getDetailDiseaseDummy(id: Int): Disease {
+        return Disease(
+            id = id,
+            title = "Penyakit $id",
+            imgUrl = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
+            description = "Description $id",
+            treatment = "Treatment $id",
+            dateTime = "21 Mei 2023 22:00",
+            products = getProductsRecommendation(),
+        )
+    }
+
+    fun getListBlogsDummy(): List<Blog> {
+        val blogs = ArrayList<Blog>()
+        for(i in 1..5){
+            val blog = getDetailBlogDummy(i)
+            blogs.add(blog)
+        }
+        return blogs
+    }
+
+    fun getDetailBlogDummy(id: Int): Blog {
+        return Blog(
+            id = id,
+            title = "Judul Blog $id",
+            imgUrl = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
+            description = "Description $id",
+            dateTime = "21 Mei 2023 22:00",
+            author = "author $id",
+            comments = getComment(),
+        )
+    }
 }
