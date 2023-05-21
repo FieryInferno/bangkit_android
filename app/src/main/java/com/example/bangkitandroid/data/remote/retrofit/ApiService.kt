@@ -7,14 +7,14 @@ import retrofit2.http.Header
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("diseases")
+    @GET("history")
     fun getDiseases(
         @Header("Authorization") token: String,
         @Query("Page") page: Int,
         @Query("Size") size: Int,
     ): DiseaseHistoryResponse
 
-    @GET("blogs")
+    @GET("blog")
     fun getBlogs(
         @Query("Page") page: Int,
         @Query("Size") size: Int,
