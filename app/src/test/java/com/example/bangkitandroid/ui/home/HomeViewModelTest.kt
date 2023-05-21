@@ -1,6 +1,7 @@
-package com.example.bangkitandroid.data
+package com.example.bangkitandroid.ui.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.bangkitandroid.data.Repository
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.domain.entities.Disease
@@ -17,7 +18,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class RepositoryTest {
+class HomeViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
@@ -37,7 +38,9 @@ class RepositoryTest {
     fun `when getHistory Should Not Null and Return Data`() = runTest {
         val dummyToken = "Bearer 123456"
         val expectedHistory = DummyData().getHistoryDiseases()
-        val actualHistory = repository.getHistory(dummyToken)
+
+        val homeViewModel = HomeViewModel(repository)
+        val actualHistory = homeViewModel.getHistory(dummyToken)
 
         actualHistory.observeForTesting {
             assertNotNull(actualHistory)
@@ -49,7 +52,9 @@ class RepositoryTest {
     fun `when getHistory Empty Should Return No Data`() = runTest {
         val dummyToken = "Bearer 123456"
         val expectedHistory = emptyList<Disease>()
-        val actualHistory = repository.getHistory(dummyToken)
+
+        val homeViewModel = HomeViewModel(repository)
+        val actualHistory = homeViewModel.getHistory(dummyToken)
 
         actualHistory.observeForTesting {
             assertEquals(0, (actualHistory.value as Result.Success).data.size)
@@ -60,7 +65,9 @@ class RepositoryTest {
     @Test
     fun `when getBlog Should Not Null and Return Data`() = runTest {
         val expectedBlogs = DummyData().getListBlogs()
-        val actualBlogs = repository.getBlog()
+
+        val homeViewModel = HomeViewModel(repository)
+        val actualBlogs = homeViewModel.getBlog()
 
         actualBlogs.observeForTesting {
             assertNotNull(actualBlogs)
@@ -71,7 +78,9 @@ class RepositoryTest {
     @Test
     fun `when getBlog Empty Should Return No Data`() = runTest {
         val expectedBlogs = emptyList<Blog>()
-        val actualBlogs = repository.getBlog()
+
+        val homeViewModel = HomeViewModel(repository)
+        val actualBlogs = homeViewModel.getBlog()
 
         actualBlogs.observeForTesting {
             assertEquals(0, (actualBlogs.value as Result.Success).data.size)

@@ -19,7 +19,7 @@ class Repository (
         return historyResult
     }
 
-    fun getBlog(): LiveData<Result<List<Blog>>> {
+    fun getListBlog(): LiveData<Result<List<Blog>>> {
         blogResult.value = Result.Success(DummyData().getListBlogsDummy())
         return blogResult
     }
