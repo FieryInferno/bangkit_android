@@ -2,14 +2,19 @@ package com.example.bangkitandroid.ui.blog
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.CommentCardItemBinding
 import com.example.bangkitandroid.databinding.VerticalCardItemBinding
+import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.domain.entities.Comment
+import com.example.bangkitandroid.ui.blog.BlogAdapter.Companion.DIFF_CALLBACK
 
-class CommentAdapter(private val comments: List<Comment>) : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
+class CommentAdapter : PagingDataAdapter<Comment, CommentAdapter.ViewHolder>(
+    DIFF_CALLBACK) {
 
     inner class ViewHolder(private val binding: CommentCardItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(comment: Comment){
@@ -22,15 +27,27 @@ class CommentAdapter(private val comments: List<Comment>) : RecyclerView.Adapter
                 .into(binding.imgVerticalItem)
         }
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = CommentCardItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: CommentAdapter.ViewHolder, position: Int) {
-        val comment = comments[position]
-        holder.bind(comment)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val comment = getItem(position)
+        if (comment != null){
+            holder.bind(comment)
+        }
     }
 
-    override fun getItemCount(): Int = comments.size
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Comment>() {
+            override fun areItemsTheSame(oldItem: Comment, newItem: Comment): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(oldItem: Comment, newItem: Comment): Boolean {
+                return oldItem.id == newItem.id
+            }
+        }
+    }
 }

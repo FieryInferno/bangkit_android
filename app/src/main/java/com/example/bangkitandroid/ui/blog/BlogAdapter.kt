@@ -3,13 +3,17 @@ package com.example.bangkitandroid.ui.blog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.HorizontalCardItemBinding
 import com.example.bangkitandroid.domain.entities.Blog
+import com.example.bangkitandroid.domain.entities.Disease
 
-class BlogAdapter(private val blogs: List<Blog>) : RecyclerView.Adapter<BlogAdapter.ViewHolder>() {
+class BlogAdapter : PagingDataAdapter<Blog, BlogAdapter.ViewHolder>(
+    DIFF_CALLBACK) {
     private lateinit var onItemTapCallback: OnItemTapCallback
 
     inner class ViewHolder(private val binding: HorizontalCardItemBinding) : RecyclerView.ViewHolder(binding.root){
@@ -25,20 +29,20 @@ class BlogAdapter(private val blogs: List<Blog>) : RecyclerView.Adapter<BlogAdap
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BlogAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = HorizontalCardItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: BlogAdapter.ViewHolder, position: Int) {
-        val blog = blogs[position]
-        holder.bind(blog)
-        holder.itemView.setOnClickListener {
-            onItemTapCallback.onItemTap(blog)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val blog = getItem(position)
+        if(blog != null){
+            holder.bind(blog)
+            holder.itemView.setOnClickListener {
+                onItemTapCallback.onItemTap(blog)
+            }
         }
     }
-
-    override fun getItemCount(): Int = blogs.size
 
     fun setOnItemTapCallback(onItemTapCallback: OnItemTapCallback){
         this.onItemTapCallback = onItemTapCallback
@@ -46,5 +50,17 @@ class BlogAdapter(private val blogs: List<Blog>) : RecyclerView.Adapter<BlogAdap
 
     interface OnItemTapCallback {
         fun onItemTap(data: Blog)
+    }
+
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Blog>() {
+            override fun areItemsTheSame(oldItem: Blog, newItem: Blog): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(oldItem: Blog, newItem: Blog): Boolean {
+                return oldItem.id == newItem.id
+            }
+        }
     }
 }

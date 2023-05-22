@@ -26,7 +26,7 @@ class BlogListActivity : AppCompatActivity() {
     }
 
     private fun setView() {
-        val adapter = BlogAdapter(blogs)
+        val adapter = BlogAdapter()
         adapter.setOnItemTapCallback(object : BlogAdapter.OnItemTapCallback{
             override fun onItemTap(data: Blog) {
                 val intent = Intent(this@BlogListActivity, BlogDetailActivity::class.java)

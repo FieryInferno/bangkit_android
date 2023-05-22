@@ -25,7 +25,7 @@ class BlogDetailActivity : AppCompatActivity() {
         blog = DummyData().getDetailBlog(0)
     }
     private fun setView() {
-        val adapter = CommentAdapter(blog.comments)
+        val adapter = CommentAdapter()
         binding?.apply {
             tvBlogName.text = blog.title
             tvDiseaseDescription.text = blog.description

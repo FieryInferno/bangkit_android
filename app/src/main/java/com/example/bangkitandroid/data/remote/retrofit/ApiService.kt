@@ -1,8 +1,16 @@
 package com.example.bangkitandroid.data.remote.retrofit
 
 import com.example.bangkitandroid.data.remote.response.BlogResponse
+import com.example.bangkitandroid.data.remote.response.CommentResponse
 import com.example.bangkitandroid.data.remote.response.ListBlogResponse
+import okhttp3.MultipartBody
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Query
 
 interface ApiService {
@@ -17,4 +25,11 @@ interface ApiService {
         @Query("Size") size: Int,
     ): ListBlogResponse
 
+    @FormUrlEncoded
+    @POST("comment/submit/")
+    fun postComment(
+        @Header("Authorization") token: String,
+        @Field("dateTime") dateTime: String,
+        @Field("description") description: String,
+    ): CommentResponse
 }
