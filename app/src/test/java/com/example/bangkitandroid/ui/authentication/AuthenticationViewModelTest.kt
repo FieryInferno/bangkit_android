@@ -33,15 +33,16 @@ class AuthenticationViewModelTest {
     }
 
     @Test
-    fun `when Login Success Should Return Success`() = runTest {
-        val expectedResponse = DummyData().getUser(1)
+    fun `when Login Should Return Correct Data`() = runTest {
+        val expectedLogin = DummyData().getUser(1)
 
-        val profileViewModel = AuthenticationViewModel(repository)
-        val actualResponse = profileViewModel.login("000000", "password")
+        val viewModel = AuthenticationViewModel(repository)
+        val actualLogin = viewModel.login("000000", "password")
 
-        actualResponse.observeForTesting {
-            assertNotNull(actualResponse)
-            assertEquals(expectedResponse, (actualResponse.value as Result.Success).data)
+        actualLogin.observeForTesting {
+            assertNotNull(actualLogin)
+            assertEquals(expectedLogin,
+                (actualLogin.value as Result.Success).data)
         }
     }
 
@@ -49,8 +50,8 @@ class AuthenticationViewModelTest {
     fun `when Login Failed Should Return Failed`() = runTest {
         val expectedResponse = DummyData().getUser(1)
 
-        val profileViewModel = AuthenticationViewModel(repository)
-        val actualResponse = profileViewModel.login("000000", "password")
+        val authViewModel = AuthenticationViewModel(repository)
+        val actualResponse = authViewModel.login("000000", "password")
 
         actualResponse.observeForTesting {
             assertEquals(expectedResponse, (actualResponse.value as Result.Success).data)
@@ -61,8 +62,8 @@ class AuthenticationViewModelTest {
     fun `when Register Success Should Return Success`() = runTest {
         val expectedResponse = DummyData().getUser(1)
 
-        val profileViewModel = AuthenticationViewModel(repository)
-        val actualResponse = profileViewModel.register("dummy", "000000", "password")
+        val authViewModel = AuthenticationViewModel(repository)
+        val actualResponse = authViewModel.register("dummy", "000000", "password")
 
         actualResponse.observeForTesting {
             assertNotNull(actualResponse)
@@ -74,8 +75,8 @@ class AuthenticationViewModelTest {
     fun `when Register Failed Should Return Failed`() = runTest {
         val expectedResponse = DummyData().getUser(1)
 
-        val profileViewModel = AuthenticationViewModel(repository)
-        val actualResponse = profileViewModel.register("dummy", "000000", "password")
+        val authViewModel = AuthenticationViewModel(repository)
+        val actualResponse = authViewModel.register("dummy", "000000", "password")
 
         actualResponse.observeForTesting {
             assertEquals(expectedResponse, (actualResponse.value as Result.Success).data)

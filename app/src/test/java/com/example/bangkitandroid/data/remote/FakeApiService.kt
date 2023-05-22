@@ -7,10 +7,18 @@ import com.example.bangkitandroid.service.DummyData
 
 class FakeApiService : ApiService {
     override fun login(phoneNumber: String, password: String): LoginResponse {
-        return DummyData().generateLoginResponse()
+        return LoginResponse(
+            success = true,
+            message = "Success",
+            data = DummyData().getUser(0)
+        )
     }
 
     override fun register(name: String, phoneNumber: String, password: String): RegisterResponse {
-        return DummyData().generateRegisterResponse()
+        return RegisterResponse(
+            success = true,
+            message = "Success",
+            data = DummyData().getUser(0)
+        )
     }
 }
