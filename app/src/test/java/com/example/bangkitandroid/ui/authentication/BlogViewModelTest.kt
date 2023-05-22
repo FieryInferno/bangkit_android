@@ -114,7 +114,6 @@ class BlogViewModelTest {
     fun `when postComment Should Return Error When Token Invalid`() = runTest {
         val emptyToken = ""
         val expectedError = "invalid token"
-        DummyData().getDetailBlog(0).comments[0]
 
         val viewModel = BlogViewModel(repository)
         val actualComment = viewModel.postComment(emptyToken, "10/10/2010", "description comment")

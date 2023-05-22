@@ -120,7 +120,21 @@ class DummyData {
             description = "Description $id",
             dateTime = "21 Mei 2023 22:00",
             author = "author $id",
-            comments = getComment(),
+            comments = getCommentDummy(),
         )
+    }
+
+    private fun getCommentDummy(): List<Comment> {
+        val comments = ArrayList<Comment>()
+        for(i in 1..5){
+            val comment = Comment(
+                id = i,
+                user = getUser(i),
+                description = "Comment $i",
+                dateTime = "21 Mei 2023 22:00"
+            )
+            comments.add(comment)
+        }
+        return comments
     }
 }

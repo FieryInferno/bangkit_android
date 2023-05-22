@@ -13,14 +13,11 @@ import com.example.bangkitandroid.service.Result
 class Repository (
     private val apiService: ApiService,
 ) {
-    private val listBlogsResult = MediatorLiveData<Result<List<Blog>>>()
     private val blogResult = MediatorLiveData<Result<Blog>>()
     private val commentResult = MediatorLiveData<Result<Comment>>()
-    private lateinit var blog: Blog
 
     fun getBlogDetail(id: Int) : LiveData<Result<Blog>> {
         blogResult.value = Result.Success(DummyData().getDetailBlogDummy(id))
-        blog = DummyData().getDetailBlogDummy(id)
         return blogResult
     }
 
@@ -32,13 +29,13 @@ class Repository (
 
     fun getListComment() : LiveData<PagingData<Comment>> {
         val pagingDataResult = MediatorLiveData<PagingData<Comment>>()
-        val listComment = blog.comments
+        val listComment = DummyData().getDetailBlogDummy(0).comments
         pagingDataResult.value = PagingData.from(listComment)
         return pagingDataResult
     }
 
     fun postComment(token: String, dateTime: String, description: String) : LiveData<Result<Comment>>{
-        commentResult.value = Result.Success(blog.comments[0])
+        commentResult.value = Result.Success(DummyData().getDetailBlogDummy(0).comments[0])
         return commentResult
     }
 
