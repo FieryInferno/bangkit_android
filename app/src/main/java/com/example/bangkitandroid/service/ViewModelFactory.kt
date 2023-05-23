@@ -14,6 +14,7 @@ class ViewModelFactory private constructor(private val repository: Repository) :
         return when {
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 ProfileViewModel(repository) as T
+                HomeViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
