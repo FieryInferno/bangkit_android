@@ -1,5 +1,7 @@
 package com.example.bangkitandroid.service
-
+import android.util.Log
+import com.example.bangkitandroid.data.remote.response.LoginResponse
+import com.example.bangkitandroid.data.remote.response.RegisterResponse
 import com.example.bangkitandroid.data.remote.response.EditProfileResponse
 import com.example.bangkitandroid.domain.entities.*
 
@@ -129,6 +131,22 @@ class DummyData {
     }
     fun generateEditProfileResponse(): EditProfileResponse {
         return EditProfileResponse(
+            success = true,
+            message = "success",
+            data = getUser(1)
+        )
+    }
+
+    fun generateLoginResponse(): LoginResponse {
+        return LoginResponse(
+            success = true,
+            message = "success",
+            data = getUser(1)
+        )
+    }
+
+    fun generateRegisterResponse(): RegisterResponse {
+        return RegisterResponse(
             success = true,
             message = "success",
             data = getUser(1)

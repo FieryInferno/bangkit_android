@@ -15,6 +15,18 @@ class Repository (
     private val blogResult = MediatorLiveData<Result<List<Blog>>>()
     private val getUserResult = MediatorLiveData<Result<User>>()
     private val editProfileResult = MediatorLiveData<Result<User>>()
+    private val loginResult = MediatorLiveData<Result<User>>()
+    private val registerResult = MediatorLiveData<Result<User>>()
+    
+    fun login(phoneNumber: String, password: String): LiveData<Result<User>> {
+        loginResult.value = Result.Success(DummyData().getUserDummy(1))
+        return loginResult
+    }
+    
+    fun register(name: String, phoneNumber: String, password: String): LiveData<Result<User>> {
+        registerResult.value = Result.Success(DummyData().getUserDummy(1))
+        return registerResult
+    }
 
     fun getHistory(token: String): LiveData<Result<List<Disease>>> {
         historyResult.value = Result.Success(DummyData().getHistoryDiseasesDummy())
