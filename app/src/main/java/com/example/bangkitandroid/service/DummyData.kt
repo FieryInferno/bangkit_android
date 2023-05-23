@@ -83,25 +83,45 @@ class DummyData {
     }
 
     // For supply placeholder purpose
-    fun getDetailDiseaseDummy(): Disease {
-        return Disease(
-            id = 0,
-            title = "Judul Penyakit",
-            imgUrl = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
-            description = "Lorem ipsum dolor sit amet",
-            treatment = "Lorem ipsum dolor sit amet",
-            dateTime = "4 Mei 2023 9:00",
-            products = getProductsRecommendation(),
-        )
-    }
-
     fun getHistoryDiseasesDummy(): List<Disease> {
         val diseases = ArrayList<Disease>()
         for(i in 1..5){
-            val disease = getDetailDiseaseDummy()
+            val disease = getDetailDiseaseDummy(i)
             diseases.add(disease)
         }
         return diseases
     }
 
+    private fun getDetailDiseaseDummy(id: Int): Disease {
+        return Disease(
+            id = id,
+            title = "Penyakit $id",
+            imgUrl = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
+            description = "Description $id",
+            treatment = "Treatment $id",
+            dateTime = "21 Mei 2023 22:00",
+            products = getProductsRecommendation(),
+        )
+    }
+
+    fun getListBlogsDummy(): List<Blog> {
+        val blogs = ArrayList<Blog>()
+        for(i in 1..5){
+            val blog = getDetailBlogDummy(i)
+            blogs.add(blog)
+        }
+        return blogs
+    }
+
+    private fun getDetailBlogDummy(id: Int): Blog {
+        return Blog(
+            id = id,
+            title = "Judul Blog $id",
+            imgUrl = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
+            description = "Description $id",
+            dateTime = "21 Mei 2023 22:00",
+            author = "author $id",
+            comments = getComment(),
+        )
+    }
 }

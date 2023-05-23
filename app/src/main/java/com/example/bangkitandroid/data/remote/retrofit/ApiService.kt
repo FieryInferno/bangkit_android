@@ -1,12 +1,29 @@
 package com.example.bangkitandroid.data.remote.retrofit
 
 import com.example.bangkitandroid.data.remote.response.DiseaseHistoryResponse
+import com.example.bangkitandroid.data.remote.response.ListBlogResponse
 import com.example.bangkitandroid.data.remote.response.DiseaseResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Query
 
 interface ApiService {
+    @GET("history")
+    fun getDiseases(
+        @Header("Authorization") token: String,
+        @Query("Page") page: Int,
+        @Query("Size") size: Int,
+    ): DiseaseHistoryResponse
+
+    @GET("blog")
+    fun getBlogs(
+        @Query("Page") page: Int,
+        @Query("Size") size: Int,
+    ): ListBlogResponse
+
     @GET("disease")
     fun getDisease(
         @Header("Authorization") token: String,
@@ -26,5 +43,4 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Part file: MultipartBody.Part,
     ): DiseaseResponse
-
 }
