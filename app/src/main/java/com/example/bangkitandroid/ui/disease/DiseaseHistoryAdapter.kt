@@ -3,13 +3,16 @@ package com.example.bangkitandroid.ui.disease
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.HorizontalCardItemBinding
 import com.example.bangkitandroid.domain.entities.Disease
 
-class DiseaseHistoryAdapter(private val diseases: List<Disease>) : RecyclerView.Adapter<DiseaseHistoryAdapter.ViewHolder>(){
+class DiseaseHistoryAdapter : PagingDataAdapter<Disease, DiseaseHistoryAdapter.ViewHolder>(
+    DIFF_CALLBACK){
     private lateinit var onItemTapCallback: OnItemTapCallback
 
 
@@ -32,14 +35,15 @@ class DiseaseHistoryAdapter(private val diseases: List<Disease>) : RecyclerView.
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = diseases.size
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val disease = diseases[position]
-        holder.bind(disease)
-        holder.itemView.setOnClickListener {
-            onItemTapCallback.onItemTap(disease)
+        val disease = getItem(position)
+        if(disease != null){
+            holder.bind(disease)
+            holder.itemView.setOnClickListener {
+                onItemTapCallback.onItemTap(disease)
+            }
         }
+
     }
 
     fun setOnItemTapCallback(onItemTapCallback: OnItemTapCallback){
@@ -48,5 +52,17 @@ class DiseaseHistoryAdapter(private val diseases: List<Disease>) : RecyclerView.
 
     interface OnItemTapCallback {
         fun onItemTap(data: Disease)
+    }
+
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Disease>() {
+            override fun areItemsTheSame(oldItem: Disease, newItem: Disease): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(oldItem: Disease, newItem: Disease): Boolean {
+                return oldItem.id == newItem.id
+            }
+        }
     }
 }
