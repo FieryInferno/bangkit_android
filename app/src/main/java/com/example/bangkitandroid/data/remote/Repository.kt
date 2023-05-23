@@ -9,13 +9,32 @@ import com.example.bangkitandroid.domain.entities.Comment
 import com.example.bangkitandroid.domain.entities.Disease
 import com.example.bangkitandroid.service.DummyData
 import com.example.bangkitandroid.service.Result
+import java.io.File
 
 class Repository (
     private val apiService: ApiService,
-) {
+){
+
+    private val diseaseResult = MediatorLiveData<Result<Disease>>()
     private val blogResult = MediatorLiveData<Result<Blog>>()
     private val commentResult = MediatorLiveData<Result<Comment>>()
 
+    fun getDiseaseDetail(token: String, id: Int) : LiveData<Result<Disease>>{
+        diseaseResult.value = Result.Success(DummyData().getDetailDiseaseDummy())
+        return diseaseResult
+    }
+
+    fun postAnalyzeDisease(token: String, photo: File) : LiveData<Result<Disease>>{
+        diseaseResult.value = Result.Success(DummyData().getDetailDiseaseDummy())
+        return diseaseResult
+    }
+
+    fun getHistoryDisease(token: String): LiveData<PagingData<Disease>> {
+        val pagingDataResult = MediatorLiveData<PagingData<Disease>>()
+        pagingDataResult.value = PagingData.from(DummyData().getHistoryDiseasesDummy())
+        return pagingDataResult
+    }
+    
     fun getBlogDetail(id: Int) : LiveData<Result<Blog>> {
         blogResult.value = Result.Success(DummyData().getDetailBlogDummy(id))
         return blogResult
@@ -40,6 +59,7 @@ class Repository (
     }
 
     companion object {
+        const val DiseaseTAG = "Disease"
         @Volatile
         private var instance: Repository? = null
         fun getInstance(

@@ -1,7 +1,13 @@
 package com.example.bangkitandroid.service
+import android.util.Log
+import com.example.bangkitandroid.data.remote.response.LoginResponse
+import com.example.bangkitandroid.data.remote.response.RegisterResponse
+import com.example.bangkitandroid.data.remote.response.EditProfileResponse
 import com.example.bangkitandroid.domain.entities.*
+
 class DummyData {
 
+    // For Testing Purpose
     private fun getProductsRecommendation(): List<Product> {
         val products = ArrayList<Product>()
         for(i in 1..5){
@@ -112,7 +118,7 @@ class DummyData {
         return blogs
     }
 
-    fun getDetailBlogDummy(id: Int): Blog {
+    private fun getDetailBlogDummy(id: Int): Blog {
         return Blog(
             id = id,
             title = "Judul Blog $id",
@@ -136,5 +142,40 @@ class DummyData {
             comments.add(comment)
         }
         return comments
+    }
+
+    fun generateEditProfileResponse(): EditProfileResponse {
+        return EditProfileResponse(
+            success = true,
+            message = "success",
+            data = getUser(1)
+        )
+    }
+
+    fun generateLoginResponse(): LoginResponse {
+        return LoginResponse(
+            success = true,
+            message = "success",
+            data = getUser(1)
+        )
+    }
+
+    fun generateRegisterResponse(): RegisterResponse {
+        return RegisterResponse(
+            success = true,
+            message = "success",
+            data = getUser(1)
+        )
+    }
+
+    // For supply placeholder purpose
+    fun getUserDummy(id: Int): User {
+        return User(
+            id = id,
+            name = "Name $id",
+            imgUrl = "https://agrisustineri.org/wp-content/uploads/2022/08/The-Story-of-Todays-Successful-Young-Farmers-.jpg",
+            phoneNumber = "0123456789",
+            password = "Password $id",
+        )
     }
 }
