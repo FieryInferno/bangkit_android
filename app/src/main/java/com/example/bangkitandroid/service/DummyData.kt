@@ -1,5 +1,8 @@
 package com.example.bangkitandroid.service
+
+import com.example.bangkitandroid.data.remote.response.EditProfileResponse
 import com.example.bangkitandroid.domain.entities.*
+
 class DummyData {
 
     // For Testing Purpose
@@ -122,6 +125,24 @@ class DummyData {
             dateTime = "21 Mei 2023 22:00",
             author = "author $id",
             comments = getComment(),
+        )
+    }
+    fun generateEditProfileResponse(): EditProfileResponse {
+        return EditProfileResponse(
+            success = true,
+            message = "success",
+            data = getUser(1)
+        )
+    }
+
+    // For supply placeholder purpose
+    fun getUserDummy(id: Int): User {
+        return User(
+            id = id,
+            name = "Name $id",
+            imgUrl = "https://agrisustineri.org/wp-content/uploads/2022/08/The-Story-of-Todays-Successful-Young-Farmers-.jpg",
+            phoneNumber = "0123456789",
+            password = "Password $id",
         )
     }
 }
