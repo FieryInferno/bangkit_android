@@ -3,7 +3,7 @@ package com.example.bangkitandroid.data.remote.response
 import com.example.bangkitandroid.domain.entities.Blog
 import com.google.gson.annotations.SerializedName
 
-data class ListBlogResponse (
+data class BlogResponse (
     @field:SerializedName("success")
     val success: Boolean,
 
@@ -11,5 +11,5 @@ data class ListBlogResponse (
     val message: String,
 
     @field:SerializedName("data")
-    val blogs: List<Blog>?,
+    val blog: Blog?,
 )

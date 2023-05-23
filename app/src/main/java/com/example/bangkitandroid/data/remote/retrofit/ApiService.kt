@@ -20,7 +20,25 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
-interface ApiService {
+import com.example.bangkitandroid.data.remote.response.BlogResponse
+import com.example.bangkitandroid.data.remote.response.CommentResponse
+import com.example.bangkitandroid.data.remote.response.ListBlogResponse
+import okhttp3.MultipartBody
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.Query
+
+interface ApiService 
+    @GET("blog")
+    fun getBlog(
+        @Query("id") id: Int,
+    ): BlogResponse
+
     @GET("history")
     fun getDiseases(
         @Header("Authorization") token: String,
@@ -28,7 +46,7 @@ interface ApiService {
         @Query("Size") size: Int,
     ): DiseaseHistoryResponse
 
-    @GET("blog")
+    @GET("blogs")
     fun getBlogs(
         @Query("Page") page: Int,
         @Query("Size") size: Int,
@@ -76,4 +94,12 @@ interface ApiService {
         @Field("phone_number") phoneNumber: String,
         @Field("password") password: String
     ): RegisterResponse
+
+    @FormUrlEncoded
+    @POST("comment/submit/")
+    fun postComment(
+        @Header("Authorization") token: String,
+        @Field("dateTime") dateTime: String,
+        @Field("description") description: String,
+    ): CommentResponse
 }

@@ -69,7 +69,10 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4" //TestDispatcher
     androidTestImplementation 'androidx.arch.core:core-testing:2.2.0'
     androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+
+    //paging
     implementation "androidx.paging:paging-runtime-ktx:3.1.1"
+ 
     // camera
     implementation "androidx.camera:camera-camera2:1.2.2"
     implementation "androidx.camera:camera-lifecycle:1.2.2"
