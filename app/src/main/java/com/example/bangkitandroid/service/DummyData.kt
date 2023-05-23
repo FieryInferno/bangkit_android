@@ -2,6 +2,7 @@ package com.example.bangkitandroid.service
 import com.example.bangkitandroid.domain.entities.*
 class DummyData {
 
+    // For Testing Purpose
     private fun getProductsRecommendation(): List<Product> {
         val products = ArrayList<Product>()
         for(i in 1..5){
@@ -80,4 +81,27 @@ class DummyData {
         }
         return blogs
     }
+
+    // For supply placeholder purpose
+    fun getDetailDiseaseDummy(): Disease {
+        return Disease(
+            id = 0,
+            title = "Judul Penyakit",
+            imgUrl = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
+            description = "Lorem ipsum dolor sit amet",
+            treatment = "Lorem ipsum dolor sit amet",
+            dateTime = "4 Mei 2023 9:00",
+            products = getProductsRecommendation(),
+        )
+    }
+
+    fun getHistoryDiseasesDummy(): List<Disease> {
+        val diseases = ArrayList<Disease>()
+        for(i in 1..5){
+            val disease = getDetailDiseaseDummy()
+            diseases.add(disease)
+        }
+        return diseases
+    }
+
 }
