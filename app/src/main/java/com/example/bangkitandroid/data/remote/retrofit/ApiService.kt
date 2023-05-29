@@ -17,6 +17,7 @@ import com.example.bangkitandroid.data.remote.response.CommentResponse
 import com.example.bangkitandroid.data.remote.response.DiseaseHistoryResponse
 import com.example.bangkitandroid.data.remote.response.DiseaseResponse
 import com.example.bangkitandroid.data.remote.response.EditProfileResponse
+import com.example.bangkitandroid.data.remote.response.HomeResponse
 import com.example.bangkitandroid.data.remote.response.ListBlogResponse
 
 interface ApiService {
@@ -81,4 +82,9 @@ interface ApiService {
         @Field("dateTime") dateTime: String,
         @Field("description") description: String,
     ): CommentResponse
+
+    @GET("v1/home")
+    fun getHome(
+        @Header("Authorization") token: String?,
+    ): HomeResponse
 }

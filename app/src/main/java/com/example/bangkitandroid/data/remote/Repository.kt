@@ -1,16 +1,20 @@
 package com.example.bangkitandroid.data.remote
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.liveData
 import androidx.paging.PagingData
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.domain.entities.Comment
 import com.example.bangkitandroid.domain.entities.Disease
+import com.example.bangkitandroid.domain.entities.History
 import com.example.bangkitandroid.domain.entities.User
 import com.example.bangkitandroid.service.DummyData
 import com.example.bangkitandroid.service.Result
 import java.io.File
+import java.lang.Exception
 
 class Repository (
     private val apiService: ApiService,
@@ -18,8 +22,8 @@ class Repository (
 
     private val diseaseResult = MediatorLiveData<Result<Disease>>()
     private val commentResult = MediatorLiveData<Result<Comment>>()
-    private val historyResult = MediatorLiveData<Result<List<Disease>>>()
-    private val blogResultHome = MediatorLiveData<Result<List<Blog>>>()
+    private val homeHistoryResult = MediatorLiveData<Result<List<History>>>()
+    private val homeblogResult = MediatorLiveData<Result<List<Blog>>>()
     private val blogResult = MediatorLiveData<Result<Blog>>()
     private val getUserResult = MediatorLiveData<Result<User>>()
     private val editProfileResult = MediatorLiveData<Result<User>>()
@@ -36,14 +40,27 @@ class Repository (
         return registerResult
     }
 
-    fun getHistory(token: String): LiveData<Result<List<Disease>>> {
-        historyResult.value = Result.Success(DummyData().getHistoryDiseasesDummy())
-        return historyResult
+    fun getHome(token: String?): LiveData<Result<Boolean>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.getHome(token)
+            Log.e("get home", response.toString())
+            homeHistoryResult.value = Result.Success(response.history)
+            homeblogResult.value = Result.Success(response.blogs)
+            emit(Result.Success(response.isAuthenticated))
+        } catch (e: Exception) {
+            Log.d("Repository", "getHome: ${e.message.toString()}")
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun getHistory(): LiveData<Result<List<History>>> {
+        Log.e("GET HISTORY", "MANTAP")
+        return homeHistoryResult
     }
 
     fun getListBlogHome(): LiveData<Result<List<Blog>>> {
-        blogResultHome.value = Result.Success(DummyData().getListBlogsDummy())
-        return blogResultHome
+        return homeblogResult
     }
 
     fun getUser(): LiveData<Result<User>> {

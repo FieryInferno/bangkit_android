@@ -15,7 +15,11 @@ class DummyData {
                 id = i,
                 title = "Obat Tanaman $i",
                 imgUrl = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
-                price = "Rp ${i}0.000"
+                price = 10000,
+                createdAt = "",
+                updatedAt = "",
+                description = "",
+                url = ""
             )
             products.add(product)
         }
@@ -26,10 +30,10 @@ class DummyData {
         return Disease(
             id = id,
             title = "Nama Penyakit",
-            imgUrl = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
             description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             treatment = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, .",
-            dateTime = "4 Mei 2023 9:00",
+            createdAt = "4 Mei 2023 9:00",
+            updatedAt = "4 Mei 2023 9:00",
             products = getProductsRecommendation(),
         )
     }
@@ -75,6 +79,7 @@ class DummyData {
             dateTime = "4 Mei 2023 9:00",
             author = "author $id",
             comments = getComment(),
+            user = id,
         )
     }
 
@@ -101,10 +106,10 @@ class DummyData {
         return Disease(
             id = id,
             title = "Penyakit $id",
-            imgUrl = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
             description = "Description $id",
             treatment = "Treatment $id",
-            dateTime = "21 Mei 2023 22:00",
+            createdAt = "21 Mei 2023 22:00",
+            updatedAt = "21 Mei 2023 22:00",
             products = getProductsRecommendation(),
         )
     }
@@ -127,6 +132,7 @@ class DummyData {
             dateTime = "21 Mei 2023 22:00",
             author = "author $id",
             comments = getCommentDummy(),
+            user = id,
         )
     }
 
