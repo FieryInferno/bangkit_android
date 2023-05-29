@@ -29,7 +29,7 @@ class EditProfileActivity : AppCompatActivity() {
             intent.getParcelableExtra<User>(EXTRA_USER)
         }
 
-        Glide.with(this).load(user?.imgUrl).into(binding.editPhoto)
+        Glide.with(this).load(user?.imgUrl).circleCrop().into(binding.editPhoto)
 
         binding.editPhoto.setOnClickListener {
             binding.root.isClickable = false
