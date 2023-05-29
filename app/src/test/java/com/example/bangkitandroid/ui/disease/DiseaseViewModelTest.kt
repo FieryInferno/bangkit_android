@@ -9,7 +9,7 @@ import androidx.paging.PagingState
 import androidx.recyclerview.widget.ListUpdateCallback
 import com.example.bangkitandroid.data.remote.FakeApiService
 import com.example.bangkitandroid.data.remote.Repository
-import com.example.bangkitandroid.data.remote.Result
+import com.example.bangkitandroid.service.Result
 import com.example.bangkitandroid.domain.entities.Disease
 import com.example.bangkitandroid.service.DummyData
 import com.example.bangkitandroid.utils.MainDispatcherRule

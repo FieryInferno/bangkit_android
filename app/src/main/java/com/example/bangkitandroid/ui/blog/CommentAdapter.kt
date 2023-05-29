@@ -8,10 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.CommentCardItemBinding
-import com.example.bangkitandroid.databinding.VerticalCardItemBinding
-import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.domain.entities.Comment
-import com.example.bangkitandroid.ui.blog.BlogAdapter.Companion.DIFF_CALLBACK
 
 class CommentAdapter : PagingDataAdapter<Comment, CommentAdapter.ViewHolder>(
     DIFF_CALLBACK) {

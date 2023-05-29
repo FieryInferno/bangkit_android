@@ -1,5 +1,5 @@
 package com.example.bangkitandroid.service
-import android.util.Log
+
 import com.example.bangkitandroid.data.remote.response.LoginResponse
 import com.example.bangkitandroid.data.remote.response.RegisterResponse
 import com.example.bangkitandroid.data.remote.response.EditProfileResponse
@@ -97,7 +97,7 @@ class DummyData {
         return diseases
     }
 
-    private fun getDetailDiseaseDummy(id: Int): Disease {
+    fun getDetailDiseaseDummy(id: Int): Disease {
         return Disease(
             id = id,
             title = "Penyakit $id",
@@ -118,7 +118,7 @@ class DummyData {
         return blogs
     }
 
-    private fun getDetailBlogDummy(id: Int): Blog {
+    fun getDetailBlogDummy(id: Int): Blog {
         return Blog(
             id = id,
             title = "Judul Blog $id",

@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide
 import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.HorizontalCardItemBinding
 import com.example.bangkitandroid.domain.entities.Blog
-import com.example.bangkitandroid.domain.entities.Disease
 
 class BlogAdapter : PagingDataAdapter<Blog, BlogAdapter.ViewHolder>(
     DIFF_CALLBACK) {

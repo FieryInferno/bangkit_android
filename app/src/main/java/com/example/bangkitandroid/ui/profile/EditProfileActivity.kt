@@ -3,6 +3,7 @@ package com.example.bangkitandroid.ui.profile
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.bumptech.glide.Glide
 import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.ActivityEditProfileBinding
@@ -29,6 +30,13 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         Glide.with(this).load(user?.imgUrl).into(binding.editPhoto)
+
+        binding.editPhoto.setOnClickListener {
+            binding.root.isClickable = false
+            binding.saveButton.visibility = View.GONE
+            binding.photoPicker.root.visibility = View.VISIBLE
+        }
+
         binding.editName.hint = user?.name
         binding.editPhone.hint = user?.phoneNumber
 

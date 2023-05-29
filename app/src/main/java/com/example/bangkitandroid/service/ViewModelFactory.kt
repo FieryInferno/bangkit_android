@@ -3,7 +3,7 @@ package com.example.bangkitandroid.service
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.bangkitandroid.data.Repository
+import com.example.bangkitandroid.data.remote.Repository
 import com.example.bangkitandroid.ui.home.HomeViewModel
 import com.example.bangkitandroid.ui.profile.ProfileViewModel
 import com.example.bangkitandroid.ui.authentication.AuthenticationViewModel

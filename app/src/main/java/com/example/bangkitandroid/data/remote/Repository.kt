@@ -7,6 +7,7 @@ import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.domain.entities.Comment
 import com.example.bangkitandroid.domain.entities.Disease
+import com.example.bangkitandroid.domain.entities.User
 import com.example.bangkitandroid.service.DummyData
 import com.example.bangkitandroid.service.Result
 import java.io.File
@@ -16,16 +17,52 @@ class Repository (
 ){
 
     private val diseaseResult = MediatorLiveData<Result<Disease>>()
-    private val blogResult = MediatorLiveData<Result<Blog>>()
     private val commentResult = MediatorLiveData<Result<Comment>>()
+    private val historyResult = MediatorLiveData<Result<List<Disease>>>()
+    private val blogResultHome = MediatorLiveData<Result<List<Blog>>>()
+    private val blogResult = MediatorLiveData<Result<Blog>>()
+    private val getUserResult = MediatorLiveData<Result<User>>()
+    private val editProfileResult = MediatorLiveData<Result<User>>()
+    private val loginResult = MediatorLiveData<Result<User>>()
+    private val registerResult = MediatorLiveData<Result<User>>()
+
+    fun login(phoneNumber: String, password: String): LiveData<Result<User>> {
+        loginResult.value = Result.Success(DummyData().getUserDummy(1))
+        return loginResult
+    }
+
+    fun register(name: String, phoneNumber: String, password: String): LiveData<Result<User>> {
+        registerResult.value = Result.Success(DummyData().getUserDummy(1))
+        return registerResult
+    }
+
+    fun getHistory(token: String): LiveData<Result<List<Disease>>> {
+        historyResult.value = Result.Success(DummyData().getHistoryDiseasesDummy())
+        return historyResult
+    }
+
+    fun getListBlogHome(): LiveData<Result<List<Blog>>> {
+        blogResultHome.value = Result.Success(DummyData().getListBlogsDummy())
+        return blogResultHome
+    }
+
+    fun getUser(): LiveData<Result<User>> {
+        getUserResult.value = Result.Success(DummyData().getUserDummy(1))
+        return getUserResult
+    }
+
+    fun editProfile(name: String, phoneNumber: String): LiveData<Result<User>> {
+        editProfileResult.value = Result.Success(DummyData().getUserDummy(1))
+        return editProfileResult
+    }
 
     fun getDiseaseDetail(token: String, id: Int) : LiveData<Result<Disease>>{
-        diseaseResult.value = Result.Success(DummyData().getDetailDiseaseDummy())
+        diseaseResult.value = Result.Success(DummyData().getDetailDiseaseDummy(id))
         return diseaseResult
     }
 
     fun postAnalyzeDisease(token: String, photo: File) : LiveData<Result<Disease>>{
-        diseaseResult.value = Result.Success(DummyData().getDetailDiseaseDummy())
+        diseaseResult.value = Result.Success(DummyData().getDetailDiseaseDummy(1))
         return diseaseResult
     }
 

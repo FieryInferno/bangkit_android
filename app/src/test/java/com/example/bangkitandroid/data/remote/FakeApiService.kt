@@ -6,6 +6,7 @@ import com.example.bangkitandroid.data.remote.response.LoginResponse
 import com.example.bangkitandroid.data.remote.response.RegisterResponse
 import com.example.bangkitandroid.data.remote.response.BlogResponse
 import com.example.bangkitandroid.data.remote.response.CommentResponse
+import com.example.bangkitandroid.data.remote.response.EditProfileResponse
 import com.example.bangkitandroid.data.remote.response.ListBlogResponse
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.service.DummyData
@@ -95,5 +96,9 @@ class FakeApiService : ApiService {
             message = "success",
             comments = DummyData().getDetailBlog(0).comments[0]
         )
+    }
+
+    override fun editProfile(token: String, name: String, phoneNumber: String): EditProfileResponse {
+        return DummyData().generateEditProfileResponse()
     }
 }
