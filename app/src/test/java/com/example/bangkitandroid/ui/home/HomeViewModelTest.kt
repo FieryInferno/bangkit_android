@@ -1,7 +1,6 @@
 package com.example.bangkitandroid.ui.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.bangkitandroid.data.Repository
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.domain.entities.Disease

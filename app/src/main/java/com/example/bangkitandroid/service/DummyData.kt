@@ -97,7 +97,7 @@ class DummyData {
         return diseases
     }
 
-    private fun getDetailDiseaseDummy(id: Int): Disease {
+    fun getDetailDiseaseDummy(id: Int): Disease {
         return Disease(
             id = id,
             title = "Penyakit $id",
@@ -118,7 +118,7 @@ class DummyData {
         return blogs
     }
 
-    private fun getDetailBlogDummy(id: Int): Blog {
+    fun getDetailBlogDummy(id: Int): Blog {
         return Blog(
             id = id,
             title = "Judul Blog $id",
@@ -152,21 +152,21 @@ class DummyData {
         )
     }
 
-    fun generateLoginResponse(): LoginResponse {
-        return LoginResponse(
-            success = true,
-            message = "success",
-            data = getUser(1)
-        )
-    }
-
-    fun generateRegisterResponse(): RegisterResponse {
-        return RegisterResponse(
-            success = true,
-            message = "success",
-            data = getUser(1)
-        )
-    }
+//    fun generateLoginResponse(): LoginResponse {
+//        return LoginResponse(
+//            success = true,
+//            message = "success",
+//            data = getUser(1)
+//        )
+//    }
+//
+//    fun generateRegisterResponse(): RegisterResponse {
+//        return RegisterResponse(
+//            success = true,
+//            message = "success",
+//            data = getUser(1)
+//        )
+//    }
 
     // For supply placeholder purpose
     fun getUserDummy(id: Int): User {

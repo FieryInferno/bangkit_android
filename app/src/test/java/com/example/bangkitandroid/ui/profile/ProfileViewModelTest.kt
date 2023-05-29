@@ -1,7 +1,6 @@
 package com.example.bangkitandroid.ui.profile
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.bangkitandroid.data.Repository
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.domain.entities.User
 import com.example.bangkitandroid.service.DummyData

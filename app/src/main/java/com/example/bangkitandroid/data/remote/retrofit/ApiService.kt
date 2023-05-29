@@ -1,29 +1,21 @@
 package com.example.bangkitandroid.data.remote.retrofit
+
+import com.example.bangkitandroid.data.remote.request.LoginRequest
+import com.example.bangkitandroid.data.remote.request.RegisterRequest
 import com.example.bangkitandroid.data.remote.response.DiseaseHistoryResponse
-import com.example.bangkitandroid.data.remote.response.ListBlogResponse
 import com.example.bangkitandroid.data.remote.response.DiseaseResponse
 import com.example.bangkitandroid.data.remote.response.EditProfileResponse
-import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Query
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.Header
-import retrofit2.http.POST
 
 import com.example.bangkitandroid.data.remote.response.LoginResponse
 import com.example.bangkitandroid.data.remote.response.RegisterResponse
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
 
 import com.example.bangkitandroid.data.remote.response.BlogResponse
 import com.example.bangkitandroid.data.remote.response.CommentResponse
 import com.example.bangkitandroid.data.remote.response.ListBlogResponse
 import okhttp3.MultipartBody
+import okhttp3.Request
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -33,18 +25,11 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Query
 
-interface ApiService 
+interface ApiService {
     @GET("blog")
     fun getBlog(
         @Query("id") id: Int,
     ): BlogResponse
-
-    @GET("history")
-    fun getDiseases(
-        @Header("Authorization") token: String,
-        @Query("Page") page: Int,
-        @Query("Size") size: Int,
-    ): DiseaseHistoryResponse
 
     @GET("blogs")
     fun getBlogs(
@@ -81,19 +66,16 @@ interface ApiService
     ): EditProfileResponse
   
     @FormUrlEncoded
-    @POST("auth/login/")
+    @POST("v1/auth/login/")
     fun login(
-        @Field("phone_number") phoneNumber: String,
-        @Field("password") password: String
-    ): LoginResponse
+        @Body request: LoginRequest
+    ): Call<LoginResponse>
 
     @FormUrlEncoded
-    @POST("auth/login/")
+    @POST("v1/auth/register/")
     fun register(
-        @Field("name") name: String,
-        @Field("phone_number") phoneNumber: String,
-        @Field("password") password: String
-    ): RegisterResponse
+        @Body request: RegisterRequest
+    ): Call<RegisterResponse>
 
     @FormUrlEncoded
     @POST("comment/submit/")
