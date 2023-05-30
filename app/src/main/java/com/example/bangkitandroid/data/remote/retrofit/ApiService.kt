@@ -84,7 +84,7 @@ interface ApiService {
     ): CommentResponse
 
     @GET("v1/home")
-    fun getHome(
+    suspend fun getHome(
         @Header("Authorization") token: String?,
     ): HomeResponse
 }

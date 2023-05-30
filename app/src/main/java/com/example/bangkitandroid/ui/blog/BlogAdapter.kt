@@ -23,7 +23,7 @@ class BlogAdapter : PagingDataAdapter<Blog, BlogAdapter.ViewHolder>(
                 .load(blog.imgUrl)
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(binding.imgHorizontalItem)
-            binding.tvSecondSubtitleHorizontalItem.text = blog.author
+            binding.tvSecondSubtitleHorizontalItem.text = blog.user.toString()
             binding.tvSecondSubtitleHorizontalItem.visibility = View.VISIBLE
         }
     }

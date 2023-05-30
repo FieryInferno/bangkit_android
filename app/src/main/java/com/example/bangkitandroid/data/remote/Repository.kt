@@ -5,11 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.liveData
 import androidx.paging.PagingData
+import com.example.bangkitandroid.data.remote.response.HomeResponse
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.domain.entities.Blog
-import com.example.bangkitandroid.domain.entities.Comment
 import com.example.bangkitandroid.domain.entities.Disease
-import com.example.bangkitandroid.domain.entities.History
 import com.example.bangkitandroid.domain.entities.User
 import com.example.bangkitandroid.service.DummyData
 import com.example.bangkitandroid.service.Result
@@ -21,9 +20,6 @@ class Repository (
 ){
 
     private val diseaseResult = MediatorLiveData<Result<Disease>>()
-    private val commentResult = MediatorLiveData<Result<Comment>>()
-    private val homeHistoryResult = MediatorLiveData<Result<List<History>>>()
-    private val homeblogResult = MediatorLiveData<Result<List<Blog>>>()
     private val blogResult = MediatorLiveData<Result<Blog>>()
     private val getUserResult = MediatorLiveData<Result<User>>()
     private val editProfileResult = MediatorLiveData<Result<User>>()
@@ -40,27 +36,15 @@ class Repository (
         return registerResult
     }
 
-    fun getHome(token: String?): LiveData<Result<Boolean>> = liveData {
+    fun getHome(token: String?): LiveData<Result<HomeResponse>> = liveData {
         emit(Result.Loading)
         try {
             val response = apiService.getHome(token)
-            Log.e("get home", response.toString())
-            homeHistoryResult.value = Result.Success(response.history)
-            homeblogResult.value = Result.Success(response.blogs)
-            emit(Result.Success(response.isAuthenticated))
+            emit(Result.Success(response))
         } catch (e: Exception) {
-            Log.d("Repository", "getHome: ${e.message.toString()}")
+            Log.d(HomeTAG, "getHome: ${e.message.toString()}")
             emit(Result.Error(e.message.toString()))
         }
-    }
-
-    fun getHistory(): LiveData<Result<List<History>>> {
-        Log.e("GET HISTORY", "MANTAP")
-        return homeHistoryResult
-    }
-
-    fun getListBlogHome(): LiveData<Result<List<Blog>>> {
-        return homeblogResult
     }
 
     fun getUser(): LiveData<Result<User>> {
@@ -100,19 +84,20 @@ class Repository (
         return pagingDataResult
     }
 
-    fun getListComment() : LiveData<PagingData<Comment>> {
-        val pagingDataResult = MediatorLiveData<PagingData<Comment>>()
-        val listComment = DummyData().getDetailBlogDummy(0).comments
-        pagingDataResult.value = PagingData.from(listComment)
-        return pagingDataResult
-    }
+//    fun getListComment() : LiveData<PagingData<Comment>> {
+//        val pagingDataResult = MediatorLiveData<PagingData<Comment>>()
+//        val listComment = DummyData().getDetailBlogDummy(0).comments
+//        pagingDataResult.value = PagingData.from(listComment)
+//        return pagingDataResult
+//    }
 
-    fun postComment(token: String, dateTime: String, description: String) : LiveData<Result<Comment>>{
-        commentResult.value = Result.Success(DummyData().getDetailBlogDummy(0).comments[0])
-        return commentResult
-    }
+//    fun postComment(token: String, dateTime: String, description: String) : LiveData<Result<Comment>>{
+//        commentResult.value = Result.Success(DummyData().getDetailBlogDummy(0).comments[0])
+//        return commentResult
+//    }
 
     companion object {
+        const val HomeTAG = "Home"
         const val DiseaseTAG = "Disease"
         @Volatile
         private var instance: Repository? = null

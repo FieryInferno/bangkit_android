@@ -2,6 +2,8 @@ package com.example.bangkitandroid.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bangkitandroid.R
@@ -27,86 +29,69 @@ class HomeActivityLogged : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        getData()
         setupView()
         setupBottomNavigationView()
-    }
-
-    private fun getData() {
-        viewModel.getHome("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1NDA5NjIwLCJpYXQiOjE2ODUzNjY0MjAsImp0aSI6ImVkZTI4MjY3Zjc0YjQ0MGY4MDU3ODMxYzRmODg2ZTk0IiwidXNlcl9pZCI6OX0.sUXbhtdGDI23rSVbzDU4nXsdYLOejbwq2XdJWlMBcDM")
-
-        viewModel.getHistory().observe(this) {
-            if (it != null) {
-                when (it) {
-                    is Result.Loading -> {
-
-                    }
-                    is Result.Success -> {
-                        histories = it.data
-                    }
-                    is Result.Error -> {
-                        Snackbar.make(
-                            window.decorView.rootView,
-                            it.error,
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
-        }
-
-        viewModel.getBlog().observe(this) {
-            if (it != null) {
-                when (it) {
-                    is Result.Loading -> {
-
-                    }
-                    is Result.Success -> {
-                        blogs = it.data
-                    }
-                    is Result.Error -> {
-                        Snackbar.make(
-                            window.decorView.rootView,
-                            it.error,
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
-        }
     }
 
     private fun setupView() {
         // conditional view here, if not logged intent to home not logged
 
-        binding.seeAllTv.setOnClickListener {
-            // intent to disease history page
-        }
+        // change token with user token here
+        viewModel.getHome(null).observe(this) {
+            if (it != null) {
+                when (it) {
+                    is Result.Loading -> {
 
-        val historyAdapter = HistoryAdapter(histories)
-        historyAdapter.setOnItemTapCallback(object : HistoryAdapter.OnItemTapCallback{
-            override fun onItemTap(data: History) {
-                // intent to disease detail
+                    }
+                    is Result.Success -> {
+                        histories = it.data.history
+                        blogs = it.data.blogs
+
+                        val historyAdapter = HistoryAdapter(histories)
+                        historyAdapter.setOnItemTapCallback(object : HistoryAdapter.OnItemTapCallback{
+                            override fun onItemTap(data: History) {
+                                // intent to history detail
+                            }
+                        })
+
+                        val blogAdapter = BlogAdapter(blogs)
+                        Log.e("BLOG RIGHT HERE", blogs.toString())
+                        blogAdapter.setOnItemTapCallback(object : BlogAdapter.OnItemTapCallback{
+                            override fun onItemTap(data: Blog) {
+                                // intent to blog detail
+                            }
+                        })
+
+                        binding.apply {
+                            historyRv.layoutManager = LinearLayoutManager(
+                                this@HomeActivityLogged,
+                                LinearLayoutManager.HORIZONTAL,
+                                false
+                            )
+                            historyRv.adapter = historyAdapter
+
+                            blogRv.layoutManager = LinearLayoutManager(this@HomeActivityLogged)
+                            blogRv.adapter = blogAdapter
+
+                            if (histories.isEmpty()) {
+                                seeAllTv.visibility = View.GONE
+                            } else {
+                                seeAllTv.visibility = View.VISIBLE
+                                seeAllTv.setOnClickListener {
+                                    // intent to disease history page
+                                }
+                            }
+                        }
+                    }
+                    is Result.Error -> {
+                        Snackbar.make(
+                            window.decorView.rootView,
+                            it.error,
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                }
             }
-        })
-
-        val blogAdapter = BlogAdapter(blogs)
-        blogAdapter.setOnItemTapCallback(object : BlogAdapter.OnItemTapCallback{
-            override fun onItemTap(data: Blog) {
-                // intent to blog detail
-            }
-        })
-
-        binding.apply {
-            historyRv.layoutManager = LinearLayoutManager(
-                this@HomeActivityLogged,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-            historyRv.adapter = historyAdapter
-
-            blogRv.layoutManager = LinearLayoutManager(this@HomeActivityLogged)
-            blogRv.adapter = blogAdapter
         }
     }
 

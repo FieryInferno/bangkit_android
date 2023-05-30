@@ -19,7 +19,7 @@
         android:layout_marginBottom="16dp"
         android:textColor="@color/black"
         android:drawablePadding="4dp"
-        app:drawableStartCompat="@drawable/leaf" />
+        app:drawableStartCompat="@drawable/ic_leaf" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,6 +49,7 @@
         android:textSize="20sp" />
 
     <TextView
+        android:id="@+id/empty_history"
         android:layout_marginTop="16dp"
         android:layout_width="290dp"
         android:layout_height="wrap_content"

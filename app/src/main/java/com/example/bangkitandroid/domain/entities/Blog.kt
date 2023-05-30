@@ -21,7 +21,4 @@ data class Blog (
 
     @field:SerializedName("user")
     val user: Int,
-
-    val author: String,
-    val comments: List<Comment>
 )

@@ -4,11 +4,5 @@ import androidx.lifecycle.ViewModel
 import com.example.bangkitandroid.data.remote.Repository
 
 class HomeViewModel(private val repository: Repository): ViewModel() {
-    fun getHome(token: String) {
-        repository.getHome(token)
-    }
-
-    fun getHistory() = repository.getHistory()
-
-    fun getBlog() = repository.getListBlogHome()
+    fun getHome(token: String?) = repository.getHome(token)
 }
