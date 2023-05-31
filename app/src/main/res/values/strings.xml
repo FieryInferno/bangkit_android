@@ -46,4 +46,6 @@
     <string name="masukkan_nama">Masukkan Nama</string>
     <string name="nama">Nama</string>
     <string name="daftar">Daftar</string>
+    <string name="timeout">Time Out</string>
+    <string name="retry">Retry</string>
 </resources>

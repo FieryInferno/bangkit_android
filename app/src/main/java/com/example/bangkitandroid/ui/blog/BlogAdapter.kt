@@ -1,5 +1,6 @@
 package com.example.bangkitandroid.ui.blog
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,23 +9,26 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bangkitandroid.R
+import com.example.bangkitandroid.data.remote.response.BlogResponse
 import com.example.bangkitandroid.databinding.HorizontalCardItemBinding
 import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.domain.entities.Disease
+import com.example.bangkitandroid.service.formatDateTime
 
-class BlogAdapter : PagingDataAdapter<Blog, BlogAdapter.ViewHolder>(
-    DIFF_CALLBACK) {
+class BlogAdapter : PagingDataAdapter<BlogResponse, BlogAdapter.ViewHolder>(
+    DIFF_CALLBACK
+) {
     private lateinit var onItemTapCallback: OnItemTapCallback
 
     inner class ViewHolder(private val binding: HorizontalCardItemBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(blog: Blog){
+        fun bind(blog: BlogResponse){
             binding.tvTitleHorizontalItem.text = blog.title
-            binding.tvSubtitleHorizontalItem.text = blog.dateTime
+            binding.tvSubtitleHorizontalItem.text = formatDateTime(blog.timestamp)
             Glide.with(binding.imgHorizontalItem.context)
-                .load(blog.imgUrl)
+                .load(blog.image)
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(binding.imgHorizontalItem)
-            binding.tvSecondSubtitleHorizontalItem.text = blog.author
+            binding.tvSecondSubtitleHorizontalItem.text = "author"
             binding.tvSecondSubtitleHorizontalItem.visibility = View.VISIBLE
         }
     }
@@ -49,16 +53,16 @@ class BlogAdapter : PagingDataAdapter<Blog, BlogAdapter.ViewHolder>(
     }
 
     interface OnItemTapCallback {
-        fun onItemTap(data: Blog)
+        fun onItemTap(data: BlogResponse)
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Blog>() {
-            override fun areItemsTheSame(oldItem: Blog, newItem: Blog): Boolean {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<BlogResponse>() {
+            override fun areItemsTheSame(oldItem: BlogResponse, newItem: BlogResponse): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: Blog, newItem: Blog): Boolean {
+            override fun areContentsTheSame(oldItem: BlogResponse, newItem: BlogResponse): Boolean {
                 return oldItem.id == newItem.id
             }
         }

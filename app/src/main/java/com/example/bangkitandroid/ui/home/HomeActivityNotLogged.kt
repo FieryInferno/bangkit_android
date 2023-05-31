@@ -1,5 +1,6 @@
 package com.example.bangkitandroid.ui.home
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -7,6 +8,7 @@ import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.ActivityHomeNotLoggedBinding
 import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.service.DummyData
+import com.example.bangkitandroid.ui.blog.BlogListActivity
 
 class HomeActivityNotLogged : AppCompatActivity() {
     private lateinit var binding: ActivityHomeNotLoggedBinding
@@ -52,6 +54,8 @@ class HomeActivityNotLogged : AppCompatActivity() {
                 }
                 R.id.blog -> {
                     // Intent to blog page
+                    val blogIntent = Intent(this@HomeActivityNotLogged, BlogListActivity::class.java)
+                    startActivity(blogIntent)
                     finish()
                     true
                 }

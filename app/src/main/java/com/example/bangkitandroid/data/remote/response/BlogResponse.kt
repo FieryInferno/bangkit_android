@@ -4,12 +4,22 @@ import com.example.bangkitandroid.domain.entities.Blog
 import com.google.gson.annotations.SerializedName
 
 data class BlogResponse (
-    @field:SerializedName("success")
-    val success: Boolean,
 
-    @field:SerializedName("message")
-    val message: String,
+    @field:SerializedName("image")
+    val image: String,
 
-    @field:SerializedName("data")
-    val blog: Blog?,
+    @field:SerializedName("description")
+    val description: String,
+
+    @field:SerializedName("id")
+    val id: Int,
+
+    @field:SerializedName("title")
+    val title: String,
+
+    @field:SerializedName("user")
+    val user: Int,
+
+    @field:SerializedName("timestamp")
+    val timestamp: String
 )

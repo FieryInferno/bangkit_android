@@ -6,10 +6,12 @@ import com.example.bangkitandroid.data.remote.response.LoginResponse
 import com.example.bangkitandroid.data.remote.response.RegisterResponse
 import com.example.bangkitandroid.data.remote.response.BlogResponse
 import com.example.bangkitandroid.data.remote.response.CommentResponse
+import com.example.bangkitandroid.data.remote.response.EditProfileResponse
 import com.example.bangkitandroid.data.remote.response.ListBlogResponse
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.service.DummyData
 import okhttp3.MultipartBody
+import retrofit2.Call
 
 class FakeApiService : ApiService {
     override fun getDisease(token: String, id: Int): DiseaseResponse {
@@ -50,6 +52,14 @@ class FakeApiService : ApiService {
         )
     }
 
+    override fun editProfile(
+        token: String,
+        name: String,
+        phoneNumber: String
+    ): EditProfileResponse {
+        TODO("Not yet implemented")
+    }
+
     override fun login(phoneNumber: String, password: String): LoginResponse {
         return LoginResponse(
             success = true,
@@ -68,17 +78,18 @@ class FakeApiService : ApiService {
     
     override fun getBlog(id: Int): BlogResponse {
         return BlogResponse(
-            success = true,
-            message = "success",
-            blog = DummyData().getDetailBlog(id)
+            image = "",
+            description = "",
+            id = 0,
+            title = "",
+            user = 0,
+            timestamp = ""
         )
     }
 
     override fun getBlogs(page: Int, size: Int): ListBlogResponse {
         return ListBlogResponse(
-            success = true,
-            message = "success",
-            blogs = DummyData().getListBlogs()
+            result = emptyList()
         )
     }
 
