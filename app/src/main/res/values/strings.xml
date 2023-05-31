@@ -48,4 +48,7 @@
     <string name="daftar">Daftar</string>
     <string name="take_photo">Ambil foto</string>
     <string name="gallery">Galeri</string>
+    <string name="fill_new_name">Nama sama dengan nama lama</string>
+    <string name="fill_new_phone">Nomor telepon sama dengan nomor telepon lama</string>
+    <string name="flip_camera">Balik kamera</string>
 </resources>
