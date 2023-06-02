@@ -32,21 +32,15 @@ interface ApiService {
         @Query("Size") size: Int,
     ): ListBlogResponse
 
-    @GET("disease")
-    fun getDisease(
-        @Header("Authorization") token: String,
-        @Query("id") id: Int,
-    ): DiseaseResponse
-
-    @GET("diseases")
+    @GET("v1/history")
     fun getDiseases(
         @Header("Authorization") token: String,
         @Query("page") page: Int,
-        @Query("size") size: Int,
+        @Query("limit") size: Int,
     ): DiseaseHistoryResponse
 
     @Multipart
-    @POST("analyze")
+    @POST("v1/disease/")
     fun postDisease(
         @Header("Authorization") token: String,
         @Part file: MultipartBody.Part,

@@ -1,17 +1,24 @@
 package com.example.bangkitandroid.data.remote
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.liveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.liveData
+import com.example.bangkitandroid.data.paging.DiseasePagingSource
 import com.example.bangkitandroid.data.remote.response.HomeResponse
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.domain.entities.Disease
 import com.example.bangkitandroid.domain.entities.User
+import com.example.bangkitandroid.domain.mapper.toDisease
 import com.example.bangkitandroid.service.DummyData
 import com.example.bangkitandroid.service.Result
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.lang.Exception
 
@@ -19,7 +26,6 @@ class Repository (
     private val apiService: ApiService,
 ){
 
-    private val diseaseResult = MediatorLiveData<Result<Disease>>()
     private val blogResult = MediatorLiveData<Result<Blog>>()
     private val getUserResult = MediatorLiveData<Result<User>>()
     private val editProfileResult = MediatorLiveData<Result<User>>()
@@ -42,7 +48,6 @@ class Repository (
             val response = apiService.getHome(token)
             emit(Result.Success(response))
         } catch (e: Exception) {
-            Log.d(HomeTAG, "getHome: ${e.message.toString()}")
             emit(Result.Error(e.message.toString()))
         }
     }
@@ -57,21 +62,35 @@ class Repository (
         return editProfileResult
     }
 
-    fun getDiseaseDetail(token: String, id: Int) : LiveData<Result<Disease>>{
-        diseaseResult.value = Result.Success(DummyData().getDetailDiseaseDummy(id))
-        return diseaseResult
-    }
+    fun postAnalyzeDisease(token: String, photo: File) = liveData {
+        emit(Result.Loading)
+        try {
+            val requestImageFile = photo.asRequestBody("image/jpg".toMediaType())
+            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "photo",
+                photo.name,
+                requestImageFile
+            )
+            val response = apiService.postDisease(token = "Bearer $token", file = imageMultipart)
 
-    fun postAnalyzeDisease(token: String, photo: File) : LiveData<Result<Disease>>{
-        diseaseResult.value = Result.Success(DummyData().getDetailDiseaseDummy(1))
-        return diseaseResult
+            emit(Result.Success(response.toDisease()))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
     }
 
     fun getHistoryDisease(token: String): LiveData<PagingData<Disease>> {
-        val pagingDataResult = MediatorLiveData<PagingData<Disease>>()
-        pagingDataResult.value = PagingData.from(DummyData().getHistoryDiseasesDummy())
-        return pagingDataResult
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5
+            ),
+            pagingSourceFactory = {
+                DiseasePagingSource(apiService, token)
+            }
+        ).liveData
     }
+
+
     
     fun getBlogDetail(id: Int) : LiveData<Result<Blog>> {
         blogResult.value = Result.Success(DummyData().getDetailBlogDummy(id))

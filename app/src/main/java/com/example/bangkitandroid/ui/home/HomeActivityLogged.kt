@@ -2,7 +2,6 @@ package com.example.bangkitandroid.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -55,7 +54,6 @@ class HomeActivityLogged : AppCompatActivity() {
                         })
 
                         val blogAdapter = BlogAdapter(blogs)
-                        Log.e("BLOG RIGHT HERE", blogs.toString())
                         blogAdapter.setOnItemTapCallback(object : BlogAdapter.OnItemTapCallback{
                             override fun onItemTap(data: Blog) {
                                 // intent to blog detail

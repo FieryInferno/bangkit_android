@@ -1,8 +1,6 @@
 package com.example.bangkitandroid.ui.disease
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
-import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -12,6 +10,7 @@ import com.example.bangkitandroid.data.remote.Repository
 import com.example.bangkitandroid.service.Result
 import com.example.bangkitandroid.domain.entities.Disease
 import com.example.bangkitandroid.service.DummyData
+import com.example.bangkitandroid.utils.AsyncPagingDataDiffer
 import com.example.bangkitandroid.utils.MainDispatcherRule
 import com.example.bangkitandroid.utils.observeForTesting
 import kotlinx.coroutines.Dispatchers
@@ -38,36 +37,6 @@ class DiseaseViewModelTest {
     fun setUp() {
         apiService = FakeApiService()
         repository = Repository(apiService)
-    }
-
-    @Test
-    fun `when getDetailDisease Should Return Correct Data`() = runTest {
-        val dummyToken = "Bearer 123456"
-        val expectedDisease = DummyData().getDetailDisease(0)
-
-        val viewModel = DiseaseViewModel(repository)
-        val actualDisease = viewModel.getDiseaseDetail(dummyToken, 0)
-
-        actualDisease.observeForTesting {
-            assertNotNull(actualDisease)
-            assertEquals(expectedDisease,
-                (actualDisease.value as Result.Success).data)
-        }
-    }
-
-    @Test
-    fun `when getDetailDisease Should Return Error When Token Invalid`() = runTest {
-        val emptyToken = ""
-        val expectedError = "invalid token"
-
-        val viewModel = DiseaseViewModel(repository)
-        val actualDisease = viewModel.getDiseaseDetail(emptyToken, 0)
-
-        actualDisease.observeForTesting {
-            assertNotNull(actualDisease)
-            assertEquals(expectedError,
-                (actualDisease.value as Result.Error).error)
-        }
     }
 
     @Test
@@ -132,16 +101,16 @@ class DiseaseViewModelTest {
 
 }
 
-class DiseasePagingSource : PagingSource<Int, LiveData<List<Disease>>>() {
+class DiseasePagingSource : PagingSource<Int, Disease>() {
     companion object {
         fun snapshot(items: List<Disease>): PagingData<Disease> {
             return PagingData.from(items)
         }
     }
-    override fun getRefreshKey(state: PagingState<Int, LiveData<List<Disease>>>): Int {
+    override fun getRefreshKey(state: PagingState<Int, Disease>): Int {
         return 0
     }
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LiveData<List<Disease>>> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Disease> {
         return LoadResult.Page(emptyList(), 0, 1)
     }
 }
