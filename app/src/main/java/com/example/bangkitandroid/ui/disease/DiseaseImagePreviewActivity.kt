@@ -1,32 +1,50 @@
 package com.example.bangkitandroid.ui.disease
 
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.bumptech.glide.Glide
-import com.example.bangkitandroid.R
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import com.example.bangkitandroid.databinding.ActivityDiseaseImagePreviewBinding
+import com.example.bangkitandroid.service.ViewModelFactory
+import com.example.bangkitandroid.service.rotateBitmap
+import com.example.bangkitandroid.service.saveRotatedImage
+import com.example.bangkitandroid.ui.profile.CameraActivity
+import com.example.bangkitandroid.ui.profile.EditProfileActivity
 import kotlinx.coroutines.*
+import java.io.File
 
 class DiseaseImagePreviewActivity : AppCompatActivity() {
     private var binding: ActivityDiseaseImagePreviewBinding? = null
+    private val viewModel : DiseaseViewModel by viewModels {
+        ViewModelFactory.getInstance(this)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDiseaseImagePreviewBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        val myFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra("picture", File::class.java)
+        } else {
+            intent.getSerializableExtra("picture")
+        } as File
+        viewModel.setFile(myFile)
+
         supportActionBar?.hide()
         setView()
+        viewModel.getFile().observe(this@DiseaseImagePreviewActivity){
+            if(it != null){
+                binding?.imgUploadPreview?.setImageBitmap(BitmapFactory.decodeFile(viewModel.getFile().value!!.path))
+            }
+        }
     }
 
     private fun setView(){
         binding?.apply {
-            Glide.with(this@DiseaseImagePreviewActivity)
-                .load("https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg")
-                .placeholder(R.drawable.ic_launcher_background)
-                .into(imgUploadPreview)
-
 
             btnUploadImage.setOnClickListener {
                 layoutPreviewLoading.layoutLoadingFullScreen.visibility = View.VISIBLE
@@ -42,9 +60,36 @@ class DiseaseImagePreviewActivity : AppCompatActivity() {
                 }
 
             }
+            btnRetakeImage.setOnClickListener {
+                startCameraX()
+            }
             btnDiseasePreviewBack.btnImageBack.setOnClickListener {
                 finish()
             }
+        }
+    }
+
+    private fun startCameraX() {
+        launcherIntentCameraX.launch(Intent(this@DiseaseImagePreviewActivity, CameraActivity::class.java))
+    }
+
+    private val launcherIntentCameraX = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == EditProfileActivity.CAMERA_X_RESULT) {
+            val myFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                it.data?.getSerializableExtra("picture", File::class.java)
+            } else {
+                it.data?.getSerializableExtra("picture")
+            } as File
+            val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
+
+            val result = rotateBitmap(
+                BitmapFactory.decodeFile(myFile.path),
+                isBackCamera
+            )
+
+            viewModel.setFile(saveRotatedImage(result, myFile))
         }
     }
 

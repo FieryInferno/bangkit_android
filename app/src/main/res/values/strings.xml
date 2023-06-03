@@ -51,4 +51,5 @@
     <string name="fill_new_name">Nama sama dengan nama lama</string>
     <string name="fill_new_phone">Nomor telepon sama dengan nomor telepon lama</string>
     <string name="flip_camera">Balik kamera</string>
+    <string name="please_pick_image">Silakan ambil gambar tanaman Anda</string>
 </resources>
