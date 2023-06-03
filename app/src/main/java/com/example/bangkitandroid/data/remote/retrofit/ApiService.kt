@@ -64,18 +64,16 @@ interface ApiService {
         @Field("name") name: String,
         @Field("phone_number") phoneNumber: String,
     ): EditProfileResponse
-  
-    @FormUrlEncoded
-    @POST("v1/auth/login/")
-    fun login(
-        @Body request: LoginRequest
-    ): Call<LoginResponse>
 
-    @FormUrlEncoded
+    @POST("v1/auth/login/")
+    suspend fun login(
+        @Body loginRequest: LoginRequest
+    ): LoginResponse
+
     @POST("v1/auth/register/")
-    fun register(
-        @Body request: RegisterRequest
-    ): Call<RegisterResponse>
+    suspend fun register(
+        @Body registerRequest: RegisterRequest
+    ): RegisterResponse
 
     @FormUrlEncoded
     @POST("comment/submit/")

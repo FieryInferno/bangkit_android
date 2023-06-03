@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.liveData
 import androidx.paging.PagingData
 import com.example.bangkitandroid.data.local.TokenPreferences
 import com.example.bangkitandroid.data.remote.request.LoginRequest
@@ -18,9 +19,6 @@ import com.example.bangkitandroid.domain.entities.Comment
 import com.example.bangkitandroid.domain.entities.Disease
 import com.example.bangkitandroid.service.DummyData
 import com.example.bangkitandroid.service.Result
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.File
 
 class Repository (
@@ -73,66 +71,28 @@ class Repository (
         return commentResult
     }
 
-    fun login(phoneNumber: String, password: String) : LiveData<Result<LoginResult>> {
-        loginResult.value = Result.Loading
-        val body = LoginRequest(phoneNumber, password)
-        val client = apiService.login(body)
-
-        client.enqueue(object : Callback<LoginResponse> {
-            override fun onResponse(
-                call: Call<LoginResponse>,
-                response: Response<LoginResponse>
-            ) {
-                if(response.isSuccessful){
-                    val responseBody = response.body()
-                    if(responseBody?.data != null){
-                        loginResult.value = Result.Success(responseBody.data)
-                    } else {
-                        loginResult.value = Result.Error(responseBody?.message.toString())
-                    }
-                } else{
-                    loginResult.value = Result.Error(response.message())
-                }
-            }
-
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                loginResult.value = Result.Error(t.message.toString())
-                Log.e(AuthenticationTAG, "onFailure: ${t.message}")
-            }
-
-        })
-        return loginResult
+    fun login(phoneNumber: String, password: String) : LiveData<Result<LoginResult>> = liveData {
+        emit(Result.Loading)
+        try {
+            val loginRequest = LoginRequest(phoneNumber, password)
+            val response = apiService.login(loginRequest)
+            val login = response.data
+            emit(Result.Success(login))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
     }
 
-    fun register(name: String, phoneNumber: String, password: String) : LiveData<Result<RegisterResult>>{
-        registerResult.value = Result.Loading
-        val body = RegisterRequest(name, phoneNumber, password)
-        val client = apiService.register(body)
-
-        client.enqueue(object : Callback<RegisterResponse> {
-            override fun onResponse(
-                call: Call<RegisterResponse>,
-                response: Response<RegisterResponse>
-            ) {
-                if(response.isSuccessful){
-                    val responseBody = response.body()
-                    if(responseBody?.data != null){
-                        registerResult.value = Result.Success(responseBody.data)
-                    } else {
-                        registerResult.value = Result.Error(responseBody?.message.toString())
-                    }
-                } else {
-                    registerResult.value = Result.Error(response.message())
-                }
-            }
-
-            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                registerResult.value = Result.Error(t.message.toString())
-                Log.e(AuthenticationTAG, "onFailure: ${t.message}")
-            }
-
-        })
-        return registerResult
+    fun register(name: String, phoneNumber: String, password: String) : LiveData<Result<RegisterResult>> = liveData{
+        emit(Result.Loading)
+        try {
+            val registerRequest = RegisterRequest(name, phoneNumber, password)
+            val response = apiService.register(registerRequest)
+            val register = response.data
+            emit(Result.Success(register))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
     }
 
     suspend fun logout(){
