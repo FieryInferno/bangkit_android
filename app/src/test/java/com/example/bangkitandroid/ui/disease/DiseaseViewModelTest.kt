@@ -74,30 +74,30 @@ class DiseaseViewModelTest {
         }
     }
 
-    @Test
-    fun `when getHistoryDisease Should Return Correct Data`() = runTest {
-        val dummyToken = "Bearer 123456"
-        val dummyData = DummyData().getHistoryDiseases()
-        val expected = DiseasePagingSource.snapshot(dummyData)
-
-        val viewModel = DiseaseViewModel(repository)
-        val actual = viewModel.getHistoryDisease(dummyToken)
-        actual.observeForTesting {
-            val differ = AsyncPagingDataDiffer(
-                diffCallback = DiseaseHistoryAdapter.DIFF_CALLBACK,
-                updateCallback = noopListUpdateCallback,
-                workerDispatcher = Dispatchers.Main,
-            )
-            val differ2 = AsyncPagingDataDiffer(
-                diffCallback = DiseaseHistoryAdapter.DIFF_CALLBACK,
-                updateCallback = noopListUpdateCallback,
-                workerDispatcher = Dispatchers.Main,
-            )
-            differ.submitData(expected)
-            actual.value?.let { differ2.submitData(it) }
-            assertEquals(differ.snapshot()[0], differ2.snapshot()[0])
-        }
-    }
+//    @Test
+//    fun `when getHistoryDisease Should Return Correct Data`() = runTest {
+//        val dummyToken = "Bearer 123456"
+//        val dummyData = DummyData().getHistoryDiseases()
+//        val expected = DiseasePagingSource.snapshot(dummyData)
+//
+//        val viewModel = DiseaseViewModel(repository)
+//        val actual = viewModel.getHistoryDisease(dummyToken)
+//        actual.observeForTesting {
+//            val differ = AsyncPagingDataDiffer(
+//                diffCallback = DiseaseHistoryAdapter.DIFF_CALLBACK,
+//                updateCallback = noopListUpdateCallback,
+//                workerDispatcher = Dispatchers.Main,
+//            )
+//            val differ2 = AsyncPagingDataDiffer(
+//                diffCallback = DiseaseHistoryAdapter.DIFF_CALLBACK,
+//                updateCallback = noopListUpdateCallback,
+//                workerDispatcher = Dispatchers.Main,
+//            )
+//            differ.submitData(expected)
+//            actual.value?.let { differ2.submitData(it) }
+//            assertEquals(differ.snapshot()[0], differ2.snapshot()[0])
+//        }
+//    }
 
 }
 

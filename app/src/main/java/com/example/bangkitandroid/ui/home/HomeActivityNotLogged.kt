@@ -2,6 +2,7 @@ package com.example.bangkitandroid.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bangkitandroid.R
@@ -54,6 +55,14 @@ class HomeActivityNotLogged : AppCompatActivity() {
                         binding.apply {
                             blogRv.layoutManager = LinearLayoutManager(this@HomeActivityNotLogged)
                             blogRv.adapter = blogAdapter
+                            btnScanImage.setOnClickListener{
+                                homePopupPhotoPicker.root.visibility = View.VISIBLE
+                                homePopupPhotoPickerModal.visibility = View.VISIBLE
+                            }
+                            popupClose.root.setOnClickListener {
+                                homePopupPhotoPicker.root.visibility = View.GONE
+                                homePopupPhotoPickerModal.visibility = View.GONE
+                            }
                         }
                     }
                     is Result.Error -> {

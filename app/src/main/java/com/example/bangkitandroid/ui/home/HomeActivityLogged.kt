@@ -79,6 +79,14 @@ class HomeActivityLogged : AppCompatActivity() {
                                     // intent to disease history page
                                 }
                             }
+                            btnScanImage.setOnClickListener{
+                                homePopupPhotoPicker.root.visibility = View.VISIBLE
+                                homePopupPhotoPickerModal.visibility = View.VISIBLE
+                            }
+                            popupClose.root.setOnClickListener {
+                                homePopupPhotoPicker.root.visibility = View.GONE
+                                homePopupPhotoPickerModal.visibility = View.GONE
+                            }
                         }
                     }
                     is Result.Error -> {
