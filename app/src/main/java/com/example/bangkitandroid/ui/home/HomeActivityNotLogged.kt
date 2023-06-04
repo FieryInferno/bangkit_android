@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.ActivityHomeNotLoggedBinding
 import com.example.bangkitandroid.domain.entities.Blog
+import com.example.bangkitandroid.domain.mapper.toListBlog
 import com.example.bangkitandroid.service.*
 import com.example.bangkitandroid.ui.disease.DiseaseImagePreviewActivity
 import com.example.bangkitandroid.ui.profile.CameraActivity
@@ -77,7 +78,7 @@ class HomeActivityNotLogged : AppCompatActivity() {
 
                     }
                     is Result.Success -> {
-                        blogs = it.data.blogs
+                        blogs = it.data.blogs.toListBlog()
 
                         val blogAdapter = BlogAdapter(blogs)
                         blogAdapter.setOnItemTapCallback(object : BlogAdapter.OnItemTapCallback{

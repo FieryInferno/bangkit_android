@@ -18,9 +18,9 @@ class BlogAdapter : PagingDataAdapter<Blog, BlogAdapter.ViewHolder>(
     inner class ViewHolder(private val binding: HorizontalCardItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(blog: Blog){
             binding.tvTitleHorizontalItem.text = blog.title
-            binding.tvSubtitleHorizontalItem.text = blog.dateTime
+            binding.tvSubtitleHorizontalItem.text = blog.timestamp
             Glide.with(binding.imgHorizontalItem.context)
-                .load(blog.imgUrl)
+                .load(blog.image)
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(binding.imgHorizontalItem)
             binding.tvSecondSubtitleHorizontalItem.text = blog.user.toString()

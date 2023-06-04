@@ -18,6 +18,8 @@ import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.ActivityHomeLoggedBinding
 import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.domain.entities.History
+import com.example.bangkitandroid.domain.mapper.toListBlog
+import com.example.bangkitandroid.domain.mapper.toListHistory
 import com.example.bangkitandroid.service.*
 import com.example.bangkitandroid.ui.disease.DiseaseImagePreviewActivity
 import com.example.bangkitandroid.ui.profile.CameraActivity
@@ -77,8 +79,8 @@ class HomeActivityLogged : AppCompatActivity() {
 
                     }
                     is Result.Success -> {
-                        histories = it.data.history
-                        blogs = it.data.blogs
+                        histories = it.data.history.toListHistory()
+                        blogs = it.data.blogs.toListBlog()
 
                         val historyAdapter = HistoryAdapter(histories)
                         historyAdapter.setOnItemTapCallback(object : HistoryAdapter.OnItemTapCallback{

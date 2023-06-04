@@ -1,9 +1,11 @@
 package com.example.bangkitandroid.domain.mapper
 
+import com.example.bangkitandroid.data.remote.model.HistoryModel
 import com.example.bangkitandroid.data.remote.model.ProductModel
 import com.example.bangkitandroid.data.remote.response.DiseaseHistoryResponse
 import com.example.bangkitandroid.data.remote.response.DiseaseResponse
 import com.example.bangkitandroid.domain.entities.Disease
+import com.example.bangkitandroid.domain.entities.History
 import com.example.bangkitandroid.domain.entities.Product
 
 fun DiseaseHistoryResponse.toListDisease() : List<Disease> = result.toListDisease()
@@ -45,5 +47,24 @@ fun List<ProductModel>.toListProduct() : List<Product> = map {
         price = it.price,
         createdAt = it.createdAt,
         updatedAt = it.updatedAt
+    )
+}
+
+fun List<HistoryModel>.toListHistory() : List<History> = map {
+    History(
+        image = it.image,
+        id = it.id,
+        user = it.user,
+        timestamp = it.timestamp,
+        disease = Disease(
+            id = it.disease.id,
+            title = it.disease.name,
+            description = it.disease.description,
+            image = it.image,
+            treatment = it.disease.solution,
+            createdAt = it.disease.createdAt,
+            updatedAt = it.disease.updatedAt,
+            products = it.disease.products.toListProduct()
+        )
     )
 }

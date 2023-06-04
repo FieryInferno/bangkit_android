@@ -20,9 +20,9 @@ class BlogAdapter(private val blogs: List<Blog>) : RecyclerView.Adapter<BlogAdap
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(blog: Blog){
             binding.tvTitleHorizontalItem.text = blog.title
-            binding.tvSubtitleHorizontalItem.text = DateFormatter.formatDate(blog.dateTime, TimeZone.getDefault().id)
+            binding.tvSubtitleHorizontalItem.text = DateFormatter.formatDate(blog.timestamp, TimeZone.getDefault().id)
             Glide.with(binding.imgHorizontalItem.context)
-                .load(blog.imgUrl)
+                .load(blog.image)
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(binding.imgHorizontalItem)
             binding.tvSecondSubtitleHorizontalItem.text = blog.user.toString()

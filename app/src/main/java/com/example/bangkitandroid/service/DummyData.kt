@@ -1,6 +1,7 @@
 package com.example.bangkitandroid.service
 
 import com.example.bangkitandroid.data.remote.model.DiseaseModel
+import com.example.bangkitandroid.data.remote.model.HistoryModel
 import com.example.bangkitandroid.data.remote.model.ProductModel
 import com.example.bangkitandroid.data.remote.response.*
 import com.example.bangkitandroid.domain.entities.*
@@ -73,7 +74,7 @@ class DummyData {
         return DiseaseResponse(
             success = true,
             statusCode = 200,
-            data = Data(
+            data = HistoryModel(
                 image = "image.jpg",
                 disease = DummyData().getDetailDiseaseModel(0),
                 id = 0,
@@ -128,9 +129,9 @@ class DummyData {
         return Blog(
             id = id,
             title = "Judul Blog $id",
-            imgUrl = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
+            image = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
             description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            dateTime = "4 Mei 2023 9:00",
+            timestamp = "4 Mei 2023 9:00",
             user = id,
         )
     }
@@ -180,9 +181,9 @@ class DummyData {
         return Blog(
             id = id,
             title = "Judul Blog $id",
-            imgUrl = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
+            image = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
             description = "Description $id",
-            dateTime = "21 Mei 2023 22:00",
+            timestamp = "21 Mei 2023 22:00",
             user = id,
         )
     }
