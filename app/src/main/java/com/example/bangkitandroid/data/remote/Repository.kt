@@ -1,5 +1,6 @@
 package com.example.bangkitandroid.data.remote
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.liveData
@@ -62,19 +63,21 @@ class Repository (
         return editProfileResult
     }
 
-    fun postAnalyzeDisease(token: String, photo: File) = liveData {
+    fun postAnalyzeDisease(photo: File?) = liveData {
         emit(Result.Loading)
         try {
-            val requestImageFile = photo.asRequestBody("image/jpg".toMediaType())
+            val requestImageFile = photo!!.asRequestBody("image/jpg".toMediaType())
             val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "photo",
+                "image",
                 photo.name,
                 requestImageFile
             )
+            val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1OTM1MTM2LCJpYXQiOjE2ODU4OTE5MzYsImp0aSI6IjNiMTJjZDA5Mzk5NDQ1MjJiMTliNDhlNThmZGIwZTY5IiwidXNlcl9pZCI6OH0.qUagcVoeIQYEVuZHtcqfwcxtVp90smT2NYRfY6jkikc"
             val response = apiService.postDisease(token = "Bearer $token", file = imageMultipart)
 
             emit(Result.Success(response.toDisease()))
         } catch (e: Exception) {
+            Log.e("Repository", e.message.toString())
             emit(Result.Error(e.message.toString()))
         }
     }

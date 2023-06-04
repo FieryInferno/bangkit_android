@@ -14,7 +14,7 @@ import com.example.bangkitandroid.service.rotateBitmap
 import com.example.bangkitandroid.service.saveRotatedImage
 import com.example.bangkitandroid.ui.profile.CameraActivity
 import com.example.bangkitandroid.ui.profile.EditProfileActivity
-import kotlinx.coroutines.*
+import com.example.bangkitandroid.service.Result
 import java.io.File
 
 class DiseaseImagePreviewActivity : AppCompatActivity() {
@@ -47,16 +47,19 @@ class DiseaseImagePreviewActivity : AppCompatActivity() {
         binding?.apply {
 
             btnUploadImage.setOnClickListener {
-                layoutPreviewLoading.layoutLoadingFullScreen.visibility = View.VISIBLE
-                val scope = CoroutineScope(Dispatchers.Main)
-                scope.launch {
 
-                    delay(3000) // Delay for 2 seconds
-                    layoutPreviewLoading.layoutLoadingFullScreen.visibility = View.GONE
-                    delay(500) // Delay for 2 seconds
-                    val intent = Intent(this@DiseaseImagePreviewActivity, DiseaseHistoryActivity::class.java)
-                    finish()
-                    startActivity(intent)
+                viewModel.postAnalyzeDisease().observe(this@DiseaseImagePreviewActivity){
+                    when(it){
+                        is Result.Loading -> {layoutPreviewLoading.layoutLoadingFullScreen.visibility = View.VISIBLE}
+                        is Result.Success -> {
+                            layoutPreviewLoading.layoutLoadingFullScreen.visibility = View.GONE
+                            startActivity(Intent(this@DiseaseImagePreviewActivity, DiseaseDetailActivity::class.java))
+                            finish()
+                        }
+                        is Result.Error -> {
+                            layoutPreviewLoading.layoutLoadingFullScreen.visibility = View.GONE
+                        }
+                    }
                 }
 
             }

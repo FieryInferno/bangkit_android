@@ -41,7 +41,7 @@ interface ApiService {
 
     @Multipart
     @POST("v1/disease/")
-    fun postDisease(
+    suspend fun postDisease(
         @Header("Authorization") token: String,
         @Part file: MultipartBody.Part,
     ): DiseaseResponse

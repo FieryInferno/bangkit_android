@@ -29,5 +29,5 @@ class DiseaseViewModel(private val repository: Repository) : ViewModel() {
     }
 
     fun getHistoryDisease(token: String) : LiveData<PagingData<Disease>> = repository.getHistoryDisease(token)
-    fun postAnalyzeDisease(token: String, photo: File) : LiveData<Result<Disease>> = repository.postAnalyzeDisease(token, photo)
+    fun postAnalyzeDisease() : LiveData<Result<Disease>> = repository.postAnalyzeDisease(imgFile.value)
 }

@@ -54,6 +54,11 @@ class HomeActivityLogged : AppCompatActivity() {
 
         viewModel.getFile().observe(this@HomeActivityLogged){
             if(it != null){
+                binding.apply {
+                    homePopupPhotoPicker.root.visibility = View.GONE
+                    homePopupPhotoPickerModal.visibility = View.GONE
+                    bottomNavigation.visibility = View.VISIBLE
+                }
                 val intent = Intent(this, DiseaseImagePreviewActivity::class.java)
                 intent.putExtra("picture", it)
                 startActivity(intent)
@@ -65,7 +70,7 @@ class HomeActivityLogged : AppCompatActivity() {
         // conditional view here, if not logged intent to home not logged
 
         // change token with user token here
-        viewModel.getHome(null).observe(this) {
+        viewModel.getHome("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1OTM1MTM2LCJpYXQiOjE2ODU4OTE5MzYsImp0aSI6IjNiMTJjZDA5Mzk5NDQ1MjJiMTliNDhlNThmZGIwZTY5IiwidXNlcl9pZCI6OH0.qUagcVoeIQYEVuZHtcqfwcxtVp90smT2NYRfY6jkikc").observe(this) {
             if (it != null) {
                 when (it) {
                     is Result.Loading -> {
