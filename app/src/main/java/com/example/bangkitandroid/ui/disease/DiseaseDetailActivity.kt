@@ -1,5 +1,6 @@
 package com.example.bangkitandroid.ui.disease
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -7,7 +8,6 @@ import com.bumptech.glide.Glide
 import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.ActivityDiseaseDetailBinding
 import com.example.bangkitandroid.domain.entities.Disease
-import com.example.bangkitandroid.service.DummyData
 
 class DiseaseDetailActivity : AppCompatActivity() {
     private lateinit var disease: Disease
@@ -22,7 +22,13 @@ class DiseaseDetailActivity : AppCompatActivity() {
     }
 
     private fun getData(){
-        disease = DummyData().getDetailDisease(0)
+        val data = if (Build.VERSION.SDK_INT >= 33) {
+            intent.getParcelableExtra<Disease>("disease", Disease::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getParcelableExtra<Disease>("disease")
+        } as Disease
+        disease = data
     }
 
     private fun setView(){
@@ -33,7 +39,7 @@ class DiseaseDetailActivity : AppCompatActivity() {
             tvDiseaseDateTime.text = disease.createdAt
             tvDiseaseTreatment.text = disease.treatment
             Glide.with(this@DiseaseDetailActivity)
-                .load("https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg")
+                .load(disease.image)
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(imgDiseaseDetail)
             rvDiseaseProductRecommendation.layoutManager = LinearLayoutManager(this@DiseaseDetailActivity, LinearLayoutManager.HORIZONTAL, false)

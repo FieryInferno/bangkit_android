@@ -1,7 +1,10 @@
 package com.example.bangkitandroid.domain.entities
 
-import com.google.gson.annotations.SerializedName
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+
+@Parcelize
 data class Disease (
     val id: Int,
     val products: List<Product>,
@@ -11,4 +14,4 @@ data class Disease (
     val treatment: String,
     val createdAt: String,
     val updatedAt: String,
-)
+) : Parcelable
