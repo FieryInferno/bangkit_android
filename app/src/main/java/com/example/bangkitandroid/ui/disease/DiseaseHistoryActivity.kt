@@ -83,13 +83,14 @@ class DiseaseHistoryActivity : AppCompatActivity() {
                     items(diseases.itemCount, key = { diseases[it]?.id ?: 0 }){
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             CardHorizontalItem(
-                                modifier = Modifier.clickable {
+                                onTap = {
                                     val intent = Intent(this@DiseaseHistoryActivity, DiseaseDetailActivity::class.java)
                                     intent.putExtra("disease", diseases[it]!!.disease)
                                     startActivity(intent)
                                 },
                                 title = diseases[it]?.disease?.title ?: "Nama Penyakit",
                                 image = diseases[it]?.image ?: "-",
+                                drawableSubTitleImage = R.drawable.baseline_access_time_16 ,
                                 subTitle = DateFormatter.formatDate(diseases[it]?.timestamp ?: "Deskripsi Penyakit"))
                         }
                     }

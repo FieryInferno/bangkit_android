@@ -37,7 +37,7 @@ class DiseaseDetailActivity : AppCompatActivity() {
         binding?.apply {
             tvDiseaseName.text = disease.title
             tvDiseaseDescription.text = disease.description
-            if(Build.VERSION.SDK_INT == Build.VERSION_CODES.O){
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
                 tvDiseaseDateTime.text = DateFormatter.formatDate(disease.createdAt)
             }
 

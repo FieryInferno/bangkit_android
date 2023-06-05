@@ -77,7 +77,7 @@ class Repository (
                 requestImageFile
             )
 
-            val response = apiService.postDisease(token = "Bearer ${getToken()}", file = imageMultipart)
+            val response = apiService.postDisease(token = getToken(), file = imageMultipart)
 
             emit(Result.Success(response.toDisease()))
         } catch (e: Exception) {
