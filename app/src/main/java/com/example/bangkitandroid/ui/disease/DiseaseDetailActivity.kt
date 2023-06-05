@@ -24,10 +24,10 @@ class DiseaseDetailActivity : AppCompatActivity() {
 
     private fun getData(){
         val data = if (Build.VERSION.SDK_INT >= 33) {
-            intent.getParcelableExtra("disease", Disease::class.java)
+            intent.getParcelableExtra(EXTRA_DISEASE, Disease::class.java)
         } else {
             @Suppress("DEPRECATION")
-            intent.getParcelableExtra("disease")
+            intent.getParcelableExtra(EXTRA_DISEASE)
         } as Disease
         disease = data
     }
@@ -57,5 +57,9 @@ class DiseaseDetailActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         binding = null
+    }
+
+    companion object {
+        const val EXTRA_DISEASE = "extra_disease"
     }
 }

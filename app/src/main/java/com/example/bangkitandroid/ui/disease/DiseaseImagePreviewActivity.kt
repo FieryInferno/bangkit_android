@@ -54,7 +54,7 @@ class DiseaseImagePreviewActivity : AppCompatActivity() {
                         is Result.Success -> {
                             layoutPreviewLoading.layoutLoadingFullScreen.visibility = View.GONE
                             val intent = Intent(this@DiseaseImagePreviewActivity, DiseaseDetailActivity::class.java)
-                            intent.putExtra("disease", it.data)
+                            intent.putExtra(DiseaseDetailActivity.EXTRA_DISEASE, it.data)
                             startActivity(intent)
                             finish()
                         }
@@ -83,9 +83,9 @@ class DiseaseImagePreviewActivity : AppCompatActivity() {
     ) {
         if (it.resultCode == EditProfileActivity.CAMERA_X_RESULT) {
             val myFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                it.data?.getSerializableExtra("picture", File::class.java)
+                it.data?.getSerializableExtra(EXTRA_PICTURE, File::class.java)
             } else {
-                it.data?.getSerializableExtra("picture")
+                it.data?.getSerializableExtra(EXTRA_PICTURE)
             } as File
             val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
 
@@ -101,5 +101,9 @@ class DiseaseImagePreviewActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         binding = null
+    }
+
+    companion object {
+        const val EXTRA_PICTURE = "extra_picture"
     }
 }

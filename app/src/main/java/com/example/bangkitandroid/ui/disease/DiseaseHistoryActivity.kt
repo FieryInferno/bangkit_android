@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -85,13 +86,13 @@ class DiseaseHistoryActivity : AppCompatActivity() {
                             CardHorizontalItem(
                                 onTap = {
                                     val intent = Intent(this@DiseaseHistoryActivity, DiseaseDetailActivity::class.java)
-                                    intent.putExtra("disease", diseases[it]!!.disease)
+                                    intent.putExtra(DiseaseDetailActivity.EXTRA_DISEASE, diseases[it]!!.disease)
                                     startActivity(intent)
                                 },
-                                title = diseases[it]?.disease?.title ?: "Nama Penyakit",
+                                title = diseases[it]?.disease?.title ?: stringResource(R.string.disease_name_label),
                                 image = diseases[it]?.image ?: "-",
                                 drawableSubTitleImage = R.drawable.baseline_access_time_16 ,
-                                subTitle = DateFormatter.formatDate(diseases[it]?.timestamp ?: "Deskripsi Penyakit"))
+                                subTitle = DateFormatter.formatDate(diseases[it]?.timestamp ?: "-"))
                         }
                     }
 

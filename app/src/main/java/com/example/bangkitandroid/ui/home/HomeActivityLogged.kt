@@ -63,7 +63,7 @@ class HomeActivityLogged : AppCompatActivity() {
                     bottomNavigation.visibility = View.VISIBLE
                 }
                 val intent = Intent(this, DiseaseImagePreviewActivity::class.java)
-                intent.putExtra("picture", it)
+                intent.putExtra(DiseaseImagePreviewActivity.EXTRA_PICTURE, it)
                 startActivity(intent)
             }
         }
