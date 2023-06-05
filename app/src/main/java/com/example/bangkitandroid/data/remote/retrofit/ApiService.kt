@@ -19,6 +19,7 @@ import com.example.bangkitandroid.data.remote.response.DiseaseResponse
 import com.example.bangkitandroid.data.remote.response.EditProfileResponse
 import com.example.bangkitandroid.data.remote.response.HomeResponse
 import com.example.bangkitandroid.data.remote.response.ListBlogResponse
+import com.example.bangkitandroid.data.remote.response.UserResponse
 
 interface ApiService {
     @GET("blog")
@@ -81,4 +82,9 @@ interface ApiService {
     suspend fun getHome(
         @Header("Authorization") token: String?,
     ): HomeResponse
+
+    @GET("v1/auth/user/")
+    suspend fun getUser(
+        @Header("Authorization") token: String,
+    ): UserResponse
 }

@@ -2,12 +2,15 @@ package com.example.bangkitandroid.data.remote
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.example.bangkitandroid.data.local.TokenPreferences
 import com.example.bangkitandroid.data.paging.DiseasePagingSource
 import com.example.bangkitandroid.data.remote.response.HomeResponse
+import com.example.bangkitandroid.data.remote.response.UserResponse
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.domain.entities.History
@@ -24,15 +27,13 @@ import java.lang.Exception
 
 class Repository (
     private val apiService: ApiService,
+    private val tokenPreferences: TokenPreferences
 ){
 
     private val blogResult = MediatorLiveData<Result<Blog>>()
-    private val getUserResult = MediatorLiveData<Result<User>>()
     private val editProfileResult = MediatorLiveData<Result<User>>()
     private val loginResult = MediatorLiveData<Result<User>>()
     private val registerResult = MediatorLiveData<Result<User>>()
-
-    fun getToken() = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1OTcwOTExLCJpYXQiOjE2ODU5Mjc3MTEsImp0aSI6ImM3ZThjMzVkMmE2ZDRjNmRhYTM2YTcwMDllYzJmNDE1IiwidXNlcl9pZCI6OH0.cyyybPRbLPIW83UMM_wt0BQWIuIh1AWgDHH1x4Fe2zY"
 
     fun login(phoneNumber: String, password: String): LiveData<Result<User>> {
         loginResult.value = Result.Success(DummyData().getUserDummy(1))
@@ -47,16 +48,22 @@ class Repository (
     fun getHome(): LiveData<Result<HomeResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.getHome(getToken())
+            val response = apiService.getHome(getToken().value)
             emit(Result.Success(response))
         } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
         }
     }
 
-    fun getUser(): LiveData<Result<User>> {
-        getUserResult.value = Result.Success(DummyData().getUserDummy(1))
-        return getUserResult
+    fun getUser(): LiveData<Result<UserResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val token = getToken().value ?: ""
+            val response = apiService.getUser("Bearer $token")
+            emit(Result.Success(response))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
     }
 
     fun editProfile(name: String, phoneNumber: String): LiveData<Result<User>> {
@@ -74,7 +81,7 @@ class Repository (
                 requestImageFile
             )
 
-            val response = apiService.postDisease(token = getToken(), file = imageMultipart)
+            val response = apiService.postDisease(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1OTcwOTExLCJpYXQiOjE2ODU5Mjc3MTEsImp0aSI6ImM3ZThjMzVkMmE2ZDRjNmRhYTM2YTcwMDllYzJmNDE1IiwidXNlcl9pZCI6OH0.cyyybPRbLPIW83UMM_wt0BQWIuIh1AWgDHH1x4Fe2zY", file = imageMultipart)
 
             emit(Result.Success(response.toDisease()))
         } catch (e: Exception) {
@@ -88,7 +95,7 @@ class Repository (
                 pageSize = 10,
             ),
             pagingSourceFactory = {
-                DiseasePagingSource(apiService, getToken())
+                DiseasePagingSource(apiService, "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1OTcwOTExLCJpYXQiOjE2ODU5Mjc3MTEsImp0aSI6ImM3ZThjMzVkMmE2ZDRjNmRhYTM2YTcwMDllYzJmNDE1IiwidXNlcl9pZCI6OH0.cyyybPRbLPIW83UMM_wt0BQWIuIh1AWgDHH1x4Fe2zY")
             }
         ).flow
     }
@@ -104,17 +111,17 @@ class Repository (
         return pagingDataResult
     }
 
-//    fun getListComment() : LiveData<PagingData<Comment>> {
-//        val pagingDataResult = MediatorLiveData<PagingData<Comment>>()
-//        val listComment = DummyData().getDetailBlogDummy(0).comments
-//        pagingDataResult.value = PagingData.from(listComment)
-//        return pagingDataResult
-//    }
+    suspend fun logout(){
+        tokenPreferences.deleteToken()
+    }
 
-//    fun postComment(token: String, dateTime: String, description: String) : LiveData<Result<Comment>>{
-//        commentResult.value = Result.Success(DummyData().getDetailBlogDummy(0).comments[0])
-//        return commentResult
-//    }
+    private fun getToken(): LiveData<String> {
+        return tokenPreferences.getToken().asLiveData()
+    }
+
+    fun getSessionId(): LiveData<String> {
+        return tokenPreferences.getSession().asLiveData()
+    }
 
     companion object {
         const val DiseaseTAG = "Disease"
@@ -122,8 +129,9 @@ class Repository (
         private var instance: Repository? = null
         fun getInstance(
             apiService: ApiService,
+            tokenPreferences: TokenPreferences
         ): Repository = instance ?: synchronized(this){
-            instance ?: Repository(apiService)
+            instance ?: Repository(apiService, tokenPreferences)
         }.also {
             instance = it
         }
