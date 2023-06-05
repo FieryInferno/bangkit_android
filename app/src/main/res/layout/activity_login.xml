@@ -42,13 +42,14 @@
         android:layout_marginTop="24dp"
         android:drawablePadding="4dp"/>
 
-    <EditText
+    <com.example.bangkitandroid.component.PhoneNumberEditText
         android:id="@+id/et_nomor_telepon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_edit_text_white"
         android:layout_marginBottom="8dp"
         android:padding="10dp"
+        android:inputType="phone"
         android:textColorHint="@color/green_200"
         android:hint="@string/masukkan_nomor_telepon"/>
 
@@ -62,7 +63,7 @@
         android:layout_marginTop="24dp"
         android:drawablePadding="4dp"/>
 
-    <EditText
+    <com.example.bangkitandroid.component.PasswordEditText
         android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,18 +72,36 @@
         android:inputType="textPassword"
         android:textColorHint="@color/green_200"
         android:hint="@string/masukkan_kata_sandi"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
+    
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_gravity="right"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/btn_masuk"
+            android:layout_alignRight="@+id/btn_masuk"
+            android:layout_alignEnd="@+id/btn_masuk" />
 
-    <Button
-        android:id="@+id/btn_masuk"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_edit_text_green"
-        android:layout_marginBottom="16dp"
-        android:text="@string/masuk"
-        android:textColor="@color/green_400" />
+        <Button
+            android:id="@+id/btn_masuk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edit_text_green"
+            android:layout_marginBottom="16dp"
+            android:enabled="false"
+            android:text="@string/masuk"
+            android:textColor="@color/green_400" />
+
+    </RelativeLayout>
+
 
 </LinearLayout>

@@ -6,9 +6,10 @@ import com.example.bangkitandroid.data.remote.Repository
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(private val repository: Repository) : ViewModel() {
-    fun getUser() = repository.getUser()
-
+    fun getUser(token: String) = repository.getUser(token)
     fun editUser(name: String, phoneNumber: String) = repository.editProfile(name, phoneNumber)
+
+    fun getToken() = repository.getToken()
 
     fun logout(){
         viewModelScope.launch {

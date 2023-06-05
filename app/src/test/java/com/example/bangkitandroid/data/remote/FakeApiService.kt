@@ -1,10 +1,12 @@
 package com.example.bangkitandroid.data.remote
 
 import com.example.bangkitandroid.data.remote.model.HistoryModel
+import com.example.bangkitandroid.data.remote.request.LoginRequest
 import com.example.bangkitandroid.data.remote.response.*
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.service.DummyData
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class FakeApiService : ApiService {
 
@@ -38,21 +40,17 @@ class FakeApiService : ApiService {
             )
         )
     }
-
-    override fun login(phoneNumber: String, password: String): LoginResponse {
-        return LoginResponse(
-            success = true,
-            message = "Success",
-            data = DummyData().getUser(0)
-        )
+    override suspend fun login(request: LoginRequest): LoginResponse {
+        TODO("Not yet implemented")
     }
 
-    override fun register(name: String, phoneNumber: String, password: String): RegisterResponse {
-        return RegisterResponse(
-            success = true,
-            message = "Success",
-            data = DummyData().getUser(0)
-        )
+    override suspend fun register(
+        name: RequestBody,
+        phoneNumber: RequestBody,
+        password: RequestBody,
+        file: MultipartBody.Part
+    ): RegisterResponse {
+        TODO("Not yet implemented")
     }
     
     override fun getBlog(id: Int): BlogResponse {
@@ -92,6 +90,10 @@ class FakeApiService : ApiService {
             history = DummyData().getHistoryModels(),
             blogs = DummyData().getListBlogModels(),
         )
+    }
+
+    override suspend fun getUser(token: String): UserResponse {
+        TODO("Not yet implemented")
     }
 
     override fun editProfile(token: String, name: String, phoneNumber: String): EditProfileResponse {

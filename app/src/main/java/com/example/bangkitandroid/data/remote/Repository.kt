@@ -1,5 +1,6 @@
 package com.example.bangkitandroid.data.remote
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.asLiveData
@@ -9,11 +10,15 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.bangkitandroid.data.local.TokenPreferences
 import com.example.bangkitandroid.data.paging.DiseasePagingSource
+import com.example.bangkitandroid.data.remote.request.LoginRequest
+import com.example.bangkitandroid.data.remote.response.LoginResult
+import com.example.bangkitandroid.data.remote.response.RegisterResult
 import com.example.bangkitandroid.data.remote.response.HomeResponse
 import com.example.bangkitandroid.data.remote.response.UserResponse
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.domain.entities.History
+import com.example.bangkitandroid.domain.entities.Comment
 import com.example.bangkitandroid.domain.entities.User
 import com.example.bangkitandroid.domain.mapper.toDisease
 import com.example.bangkitandroid.service.DummyData
@@ -22,6 +27,7 @@ import kotlinx.coroutines.flow.Flow
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody
 import java.io.File
 import java.lang.Exception
 
@@ -31,34 +37,22 @@ class Repository (
 ){
 
     private val blogResult = MediatorLiveData<Result<Blog>>()
+    private val commentResult = MediatorLiveData<Result<Comment>>()
     private val editProfileResult = MediatorLiveData<Result<User>>()
-    private val loginResult = MediatorLiveData<Result<User>>()
-    private val registerResult = MediatorLiveData<Result<User>>()
 
-    fun login(phoneNumber: String, password: String): LiveData<Result<User>> {
-        loginResult.value = Result.Success(DummyData().getUserDummy(1))
-        return loginResult
-    }
-
-    fun register(name: String, phoneNumber: String, password: String): LiveData<Result<User>> {
-        registerResult.value = Result.Success(DummyData().getUserDummy(1))
-        return registerResult
-    }
-
-    fun getHome(): LiveData<Result<HomeResponse>> = liveData {
+    fun getHome(token: String): LiveData<Result<HomeResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.getHome(getToken().value)
+            val response = apiService.getHome("Bearer $token")
             emit(Result.Success(response))
         } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
         }
     }
 
-    fun getUser(): LiveData<Result<UserResponse>> = liveData {
+    fun getUser(token: String): LiveData<Result<UserResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val token = getToken().value ?: ""
             val response = apiService.getUser("Bearer $token")
             emit(Result.Success(response))
         } catch (e: Exception) {
@@ -81,8 +75,10 @@ class Repository (
                 requestImageFile
             )
 
-            val response = apiService.postDisease(token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1OTcwOTExLCJpYXQiOjE2ODU5Mjc3MTEsImp0aSI6ImM3ZThjMzVkMmE2ZDRjNmRhYTM2YTcwMDllYzJmNDE1IiwidXNlcl9pZCI6OH0.cyyybPRbLPIW83UMM_wt0BQWIuIh1AWgDHH1x4Fe2zY", file = imageMultipart)
-
+            val response = apiService.postDisease(
+                token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1OTcwOTExLCJpYXQiOjE2ODU5Mjc3MTEsImp0aSI6ImM3ZThjMzVkMmE2ZDRjNmRhYTM2YTcwMDllYzJmNDE1IiwidXNlcl9pZCI6OH0.cyyybPRbLPIW83UMM_wt0BQWIuIh1AWgDHH1x4Fe2zY",
+                file = imageMultipart
+            )
             emit(Result.Success(response.toDisease()))
         } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
@@ -111,11 +107,48 @@ class Repository (
         return pagingDataResult
     }
 
+//    fun getListComment() : LiveData<PagingData<Comment>> {
+//        val pagingDataResult = MediatorLiveData<PagingData<Comment>>()
+//        val listComment = DummyData().getDetailBlogDummy(0).comments
+//        pagingDataResult.value = PagingData.from(listComment)
+//        return pagingDataResult
+//    }
+//
+//    fun postComment(token: String, dateTime: String, description: String) : LiveData<Result<Comment>>{
+//        commentResult.value = Result.Success(DummyData().getDetailBlogDummy(0).comments[0])
+//        return commentResult
+//    }
+
+    fun login(phoneNumber: String, password: String) : LiveData<Result<LoginResult>> = liveData {
+        emit(Result.Loading)
+        try {
+            val loginRequest = LoginRequest(phoneNumber, password)
+            val response = apiService.login(loginRequest)
+            val login = response.data
+            emit(Result.Success(login))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun register(name: RequestBody, phoneNumber: RequestBody, password: RequestBody, image: MultipartBody.Part) : LiveData<Result<RegisterResult>> = liveData{
+        emit(Result.Loading)
+        try {
+//            val registerRequest = RegisterRequest(name, phoneNumber, password)
+            val response = apiService.register(name, phoneNumber, password, image)
+            Log.e("repo", "jalan")
+            val register = response.data
+            emit(Result.Success(register))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
     suspend fun logout(){
         tokenPreferences.deleteToken()
     }
 
-    private fun getToken(): LiveData<String> {
+    fun getToken(): LiveData<String> {
         return tokenPreferences.getToken().asLiveData()
     }
 
@@ -123,8 +156,11 @@ class Repository (
         return tokenPreferences.getSession().asLiveData()
     }
 
+    suspend fun setToken(token: String, sessionId: String){
+        tokenPreferences.saveToken(token, sessionId)
+    }
+
     companion object {
-        const val DiseaseTAG = "Disease"
         @Volatile
         private var instance: Repository? = null
         fun getInstance(
