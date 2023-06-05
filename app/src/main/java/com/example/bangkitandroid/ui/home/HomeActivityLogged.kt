@@ -21,6 +21,7 @@ import com.example.bangkitandroid.domain.entities.History
 import com.example.bangkitandroid.domain.mapper.toListBlog
 import com.example.bangkitandroid.domain.mapper.toListHistory
 import com.example.bangkitandroid.service.*
+import com.example.bangkitandroid.ui.disease.DiseaseHistoryActivity
 import com.example.bangkitandroid.ui.disease.DiseaseImagePreviewActivity
 import com.example.bangkitandroid.ui.profile.CameraActivity
 import com.example.bangkitandroid.ui.profile.EditProfileActivity
@@ -113,6 +114,7 @@ class HomeActivityLogged : AppCompatActivity() {
                                 seeAllTv.visibility = View.VISIBLE
                                 seeAllTv.setOnClickListener {
                                     // intent to disease history page
+                                    startActivity(Intent(this@HomeActivityLogged, DiseaseHistoryActivity::class.java))
                                 }
                             }
                             btnScanImage.setOnClickListener{

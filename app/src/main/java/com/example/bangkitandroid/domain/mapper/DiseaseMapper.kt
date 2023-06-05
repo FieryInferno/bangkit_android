@@ -8,7 +8,7 @@ import com.example.bangkitandroid.domain.entities.Disease
 import com.example.bangkitandroid.domain.entities.History
 import com.example.bangkitandroid.domain.entities.Product
 
-fun DiseaseHistoryResponse.toListDisease() : List<Disease> = result.toListDisease()
+fun DiseaseHistoryResponse.toListDisease() : List<History> = result.toListHistory()
 
 fun List<DiseaseResponse>.toListDisease() : List<Disease> = map {
     Disease(

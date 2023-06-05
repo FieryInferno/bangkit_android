@@ -33,7 +33,7 @@ interface ApiService {
     ): ListBlogResponse
 
     @GET("v1/history")
-    fun getDiseases(
+    suspend fun getDiseases(
         @Header("Authorization") token: String,
         @Query("page") page: Int,
         @Query("limit") size: Int,

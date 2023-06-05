@@ -3,14 +3,14 @@ package com.example.bangkitandroid.ui.disease
 import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.bangkitandroid.data.remote.Repository
 import com.example.bangkitandroid.domain.entities.Disease
+import com.example.bangkitandroid.domain.entities.History
 import com.example.bangkitandroid.service.Result
+import kotlinx.coroutines.flow.Flow
 import java.io.File
 
 class DiseaseViewModel(private val repository: Repository) : ViewModel() {
@@ -28,6 +28,6 @@ class DiseaseViewModel(private val repository: Repository) : ViewModel() {
         imgFile.value = null
     }
 
-    fun getHistoryDisease(token: String) : LiveData<PagingData<Disease>> = repository.getHistoryDisease(token)
+    fun getHistoryDisease(token: String) : Flow<PagingData<History>> = repository.getHistoryDisease(token).cachedIn(viewModelScope)
     fun postAnalyzeDisease() : LiveData<Result<Disease>> = repository.postAnalyzeDisease(imgFile.value)
 }

@@ -13,10 +13,12 @@ import com.example.bangkitandroid.data.remote.response.HomeResponse
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.domain.entities.Disease
+import com.example.bangkitandroid.domain.entities.History
 import com.example.bangkitandroid.domain.entities.User
 import com.example.bangkitandroid.domain.mapper.toDisease
 import com.example.bangkitandroid.service.DummyData
 import com.example.bangkitandroid.service.Result
+import kotlinx.coroutines.flow.Flow
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -84,15 +86,15 @@ class Repository (
         }
     }
 
-    fun getHistoryDisease(token: String): LiveData<PagingData<Disease>> {
+    fun getHistoryDisease(token: String): Flow<PagingData<History>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 5
+                pageSize = 10,
             ),
             pagingSourceFactory = {
                 DiseasePagingSource(apiService, getToken())
             }
-        ).liveData
+        ).flow
     }
 
 
