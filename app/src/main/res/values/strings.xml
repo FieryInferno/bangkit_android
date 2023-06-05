@@ -53,4 +53,6 @@
     <string name="flip_camera">Balik kamera</string>
     <string name="please_pick_image">Silakan ambil gambar tanaman Anda</string>
     <string name="disease_name_label">Nama Penyakit</string>
+    <string name="analysis_failed">Gagal Menganalisis</string>
+    <string name="connection_error">Jaringan Bermasalah</string>
 </resources>

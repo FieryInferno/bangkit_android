@@ -18,7 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.LoadState
@@ -83,6 +82,23 @@ class DiseaseHistoryActivity : AppCompatActivity() {
                         .padding(innerPadding)
                         .padding(horizontal = 16.dp),
                 ){
+                    when (diseases.loadState.refresh) { // Pagination
+                        is LoadState.Error -> {
+                            item {
+                                Placeholder{
+                                    Text(text = stringResource(R.string.connection_error))
+                                }
+                            }
+                        }
+                        is LoadState.Loading -> { // Pagination Loading UI
+                            item {
+                                Placeholder{
+                                    CircularProgressIndicator(color = Color(0xFF116531))
+                                }
+                            }
+                        }
+                        else -> {}
+                    }
                     items(diseases.itemCount, key = { diseases[it]?.id ?: 0 }){
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             CardHorizontalItem(
@@ -98,24 +114,12 @@ class DiseaseHistoryActivity : AppCompatActivity() {
                         }
                     }
 
-                    when (diseases.loadState.refresh) { // Pagination
-                        is LoadState.Error -> {
-
-                        }
-                        is LoadState.Loading -> { // Pagination Loading UI
-                            item {
-                                Loading()
-                            }
-                        }
-                        else -> {}
-                    }
                     when (diseases.loadState.append) { // Pagination
-                        is LoadState.Error -> {
-
-                        }
                         is LoadState.Loading -> { // Pagination Loading UI
                             item {
-                                Loading()
+                                Placeholder{
+                                    CircularProgressIndicator(color = Color(0xFF116531))
+                                }
                             }
                         }
                         else -> {}
@@ -127,14 +131,16 @@ class DiseaseHistoryActivity : AppCompatActivity() {
     }
 
     @Composable
-    fun Loading(){
+    fun Placeholder(
+        child: @Composable () -> Unit,
+    ){
         Column(
             modifier = Modifier
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
-            CircularProgressIndicator(color = Color.Green)
+            child()
         }
     }
 }
