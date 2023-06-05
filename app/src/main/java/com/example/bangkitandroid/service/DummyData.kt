@@ -108,7 +108,6 @@ class DummyData {
             name = "user $id",
             imgUrl = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
             phoneNumber = "123456789",
-            password = "password"
         )
     }
 
@@ -132,7 +131,12 @@ class DummyData {
             image = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
             description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             timestamp = "4 Mei 2023 9:00",
-            user = id,
+            user = User(
+                id = 0,
+                name = "Penulis",
+                phoneNumber = "081234567890",
+                imgUrl = ""
+            ),
         )
     }
 
@@ -184,7 +188,12 @@ class DummyData {
             image = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
             description = "Description $id",
             timestamp = "21 Mei 2023 22:00",
-            user = id,
+            user = User(
+                id = 0,
+                name = "Penulis",
+                phoneNumber = "081234567890",
+                imgUrl = ""
+            ),
         )
     }
 
@@ -233,7 +242,6 @@ class DummyData {
             name = "Name $id",
             imgUrl = "https://agrisustineri.org/wp-content/uploads/2022/08/The-Story-of-Todays-Successful-Young-Farmers-.jpg",
             phoneNumber = "0123456789",
-            password = "Password $id",
         )
     }
 }

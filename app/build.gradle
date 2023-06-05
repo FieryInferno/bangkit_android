@@ -32,8 +32,11 @@ android {
 
     buildFeatures {
         viewBinding true
+        compose true
     }
-
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.4.3'
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -44,6 +47,17 @@ android {
 }
 
 dependencies {
+    // compose
+    implementation 'androidx.activity:activity-compose:1.7.2'
+    implementation "androidx.compose.ui:ui:$compose_ui_version"
+    implementation "androidx.compose.material:material:$compose_ui_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_ui_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_ui_version" // observeAsState
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1" // ConstraintLayout
+    implementation "io.coil-kt:coil-compose:2.2.0" // AsyncImage
+
+    // kotlin
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'

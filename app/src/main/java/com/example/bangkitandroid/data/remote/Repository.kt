@@ -33,6 +33,8 @@ class Repository (
     private val loginResult = MediatorLiveData<Result<User>>()
     private val registerResult = MediatorLiveData<Result<User>>()
 
+    private fun getToken() = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1OTcwOTExLCJpYXQiOjE2ODU5Mjc3MTEsImp0aSI6ImM3ZThjMzVkMmE2ZDRjNmRhYTM2YTcwMDllYzJmNDE1IiwidXNlcl9pZCI6OH0.cyyybPRbLPIW83UMM_wt0BQWIuIh1AWgDHH1x4Fe2zY"
+
     fun login(phoneNumber: String, password: String): LiveData<Result<User>> {
         loginResult.value = Result.Success(DummyData().getUserDummy(1))
         return loginResult
@@ -46,7 +48,7 @@ class Repository (
     fun getHome(token: String?): LiveData<Result<HomeResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.getHome(token)
+            val response = apiService.getHome(getToken())
             emit(Result.Success(response))
         } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
@@ -72,8 +74,8 @@ class Repository (
                 photo.name,
                 requestImageFile
             )
-            val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1OTM1MTM2LCJpYXQiOjE2ODU4OTE5MzYsImp0aSI6IjNiMTJjZDA5Mzk5NDQ1MjJiMTliNDhlNThmZGIwZTY5IiwidXNlcl9pZCI6OH0.qUagcVoeIQYEVuZHtcqfwcxtVp90smT2NYRfY6jkikc"
-            val response = apiService.postDisease(token = "Bearer $token", file = imageMultipart)
+
+            val response = apiService.postDisease(token = "Bearer ${getToken()}", file = imageMultipart)
 
             emit(Result.Success(response.toDisease()))
         } catch (e: Exception) {
@@ -88,7 +90,7 @@ class Repository (
                 pageSize = 5
             ),
             pagingSourceFactory = {
-                DiseasePagingSource(apiService, token)
+                DiseasePagingSource(apiService, getToken())
             }
         ).liveData
     }

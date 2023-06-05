@@ -17,7 +17,7 @@ data class BlogModel(
     val title: String,
 
     @field:SerializedName("user")
-    val user: Int,
+    val user: UserModel,
 
     @field:SerializedName("timestamp")
     val timestamp: String

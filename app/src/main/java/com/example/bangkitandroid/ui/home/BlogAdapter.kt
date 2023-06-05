@@ -25,7 +25,7 @@ class BlogAdapter(private val blogs: List<Blog>) : RecyclerView.Adapter<BlogAdap
                 .load(blog.image)
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(binding.imgHorizontalItem)
-            binding.tvSecondSubtitleHorizontalItem.text = blog.user.toString()
+            binding.tvSecondSubtitleHorizontalItem.text = blog.user.name
             binding.tvSecondSubtitleHorizontalItem.visibility = View.VISIBLE
         }
     }

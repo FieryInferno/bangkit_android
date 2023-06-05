@@ -7,6 +7,6 @@ data class Blog (
     val description: String,
     val id: Int,
     val title: String,
-    val user: Int,
+    val user: User,
     val timestamp: String
 )
