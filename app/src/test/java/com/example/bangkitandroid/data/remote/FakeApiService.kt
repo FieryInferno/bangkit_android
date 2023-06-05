@@ -87,7 +87,11 @@ class FakeApiService : ApiService {
     }
 
     override suspend fun getHome(token: String?): HomeResponse {
-        TODO("Not yet implemented")
+        return HomeResponse(
+            isAuthenticated = true,
+            history = DummyData().getHistoryModels(),
+            blogs = DummyData().getListBlogModels(),
+        )
     }
 
     override fun editProfile(token: String, name: String, phoneNumber: String): EditProfileResponse {

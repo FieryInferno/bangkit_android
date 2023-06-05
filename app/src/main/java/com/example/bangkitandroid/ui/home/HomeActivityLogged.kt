@@ -21,10 +21,14 @@ import com.example.bangkitandroid.domain.entities.History
 import com.example.bangkitandroid.domain.mapper.toListBlog
 import com.example.bangkitandroid.domain.mapper.toListHistory
 import com.example.bangkitandroid.service.*
+import com.example.bangkitandroid.ui.blog.BlogDetailActivity
+import com.example.bangkitandroid.ui.blog.BlogListActivity
+import com.example.bangkitandroid.ui.disease.DiseaseDetailActivity
 import com.example.bangkitandroid.ui.disease.DiseaseHistoryActivity
 import com.example.bangkitandroid.ui.disease.DiseaseImagePreviewActivity
 import com.example.bangkitandroid.ui.profile.CameraActivity
 import com.example.bangkitandroid.ui.profile.EditProfileActivity
+import com.example.bangkitandroid.ui.profile.ProfileLoggedActivity
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 
@@ -35,7 +39,6 @@ class HomeActivityLogged : AppCompatActivity() {
     private lateinit var binding: ActivityHomeLoggedBinding
     private var histories: List<History> = emptyList()
     private var blogs: List<Blog> = emptyList()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,38 +75,51 @@ class HomeActivityLogged : AppCompatActivity() {
     private fun setupView() {
         // conditional view here, if not logged intent to home not logged
 
-        // change token with user token here
-        viewModel.getHome("Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1OTM1MTM2LCJpYXQiOjE2ODU4OTE5MzYsImp0aSI6IjNiMTJjZDA5Mzk5NDQ1MjJiMTliNDhlNThmZGIwZTY5IiwidXNlcl9pZCI6OH0.qUagcVoeIQYEVuZHtcqfwcxtVp90smT2NYRfY6jkikc").observe(this) {
+        viewModel.getHome().observe(this) {
             if (it != null) {
                 when (it) {
                     is Result.Loading -> {
-
+                        showLoading(true)
+                        binding.apply {
+                            relativeLayout.visibility = View.GONE
+                            blogTv.visibility = View.GONE
+                        }
                     }
                     is Result.Success -> {
+                        showLoading(false)
+
                         histories = it.data.history.toListHistory()
                         blogs = it.data.blogs.toListBlog()
 
                         val historyAdapter = HistoryAdapter(histories)
                         historyAdapter.setOnItemTapCallback(object : HistoryAdapter.OnItemTapCallback{
                             override fun onItemTap(data: History) {
-                                // intent to history detail
+                                val intent = Intent(this@HomeActivityLogged, DiseaseDetailActivity::class.java)
+                                intent.putExtra(DiseaseDetailActivity.EXTRA_DISEASE, data.disease)
+                                startActivity(intent)
                             }
                         })
 
                         val blogAdapter = BlogAdapter(blogs)
                         blogAdapter.setOnItemTapCallback(object : BlogAdapter.OnItemTapCallback{
                             override fun onItemTap(data: Blog) {
-                                // intent to blog detail
+                                val intent = Intent(this@HomeActivityLogged, BlogDetailActivity::class.java)
+                                intent.putExtra(BlogDetailActivity.EXTRA_BLOG, data)
+                                startActivity(intent)
                             }
                         })
 
                         binding.apply {
+                            relativeLayout.visibility = View.VISIBLE
+
                             historyRv.layoutManager = LinearLayoutManager(
                                 this@HomeActivityLogged,
                                 LinearLayoutManager.HORIZONTAL,
                                 false
                             )
                             historyRv.adapter = historyAdapter
+
+                            blogTv.visibility = View.VISIBLE
 
                             blogRv.layoutManager = LinearLayoutManager(this@HomeActivityLogged)
                             blogRv.adapter = blogAdapter
@@ -113,7 +129,6 @@ class HomeActivityLogged : AppCompatActivity() {
                             } else {
                                 seeAllTv.visibility = View.VISIBLE
                                 seeAllTv.setOnClickListener {
-                                    // intent to disease history page
                                     startActivity(Intent(this@HomeActivityLogged, DiseaseHistoryActivity::class.java))
                                 }
                             }
@@ -136,13 +151,14 @@ class HomeActivityLogged : AppCompatActivity() {
                         }
                     }
                     is Result.Error -> {
+                        showLoading(false)
+
                         Snackbar.make(
                             window.decorView.rootView,
                             it.error,
                             Snackbar.LENGTH_SHORT
                         ).show()
                     }
-                    else -> {}
                 }
             }
         }
@@ -156,12 +172,12 @@ class HomeActivityLogged : AppCompatActivity() {
                     false
                 }
                 R.id.blog -> {
-                    // Intent to blog page
+                    startActivity(Intent(this, BlogListActivity::class.java))
                     finish()
                     true
                 }
                 R.id.profile -> {
-                    // Intent to profile page
+                    startActivity(Intent(this, ProfileLoggedActivity::class.java))
                     finish()
                     true
                 }
@@ -186,6 +202,7 @@ class HomeActivityLogged : AppCompatActivity() {
         launcherIntentGallery.launch(chooser)
     }
 
+    @Suppress("DEPRECATION")
     private val launcherIntentCameraX = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
@@ -216,6 +233,10 @@ class HomeActivityLogged : AppCompatActivity() {
                 viewModel.setFile(myFile)
             }
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {

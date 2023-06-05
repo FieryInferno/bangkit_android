@@ -27,6 +27,10 @@ class BlogAdapter(private val blogs: List<Blog>) : RecyclerView.Adapter<BlogAdap
                 .into(binding.imgHorizontalItem)
             binding.tvSecondSubtitleHorizontalItem.text = blog.user.name
             binding.tvSecondSubtitleHorizontalItem.visibility = View.VISIBLE
+
+            binding.root.setOnClickListener {
+                onItemTapCallback.onItemTap(blog)
+            }
         }
     }
 

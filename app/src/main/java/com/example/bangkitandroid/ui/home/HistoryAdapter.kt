@@ -24,6 +24,10 @@ class HistoryAdapter(private val histories: List<History>) : RecyclerView.Adapte
                 .load(history.image)
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(binding.imgVerticalItem)
+
+            binding.root.setOnClickListener {
+                onItemTapCallback.onItemTap(history)
+            }
         }
     }
 

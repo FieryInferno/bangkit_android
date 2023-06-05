@@ -1,18 +1,15 @@
 package com.example.bangkitandroid.data.remote
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.liveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.liveData
 import com.example.bangkitandroid.data.paging.DiseasePagingSource
 import com.example.bangkitandroid.data.remote.response.HomeResponse
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.domain.entities.Blog
-import com.example.bangkitandroid.domain.entities.Disease
 import com.example.bangkitandroid.domain.entities.History
 import com.example.bangkitandroid.domain.entities.User
 import com.example.bangkitandroid.domain.mapper.toDisease
@@ -47,7 +44,7 @@ class Repository (
         return registerResult
     }
 
-    fun getHome(token: String?): LiveData<Result<HomeResponse>> = liveData {
+    fun getHome(): LiveData<Result<HomeResponse>> = liveData {
         emit(Result.Loading)
         try {
             val response = apiService.getHome(getToken())
@@ -95,8 +92,6 @@ class Repository (
             }
         ).flow
     }
-
-
     
     fun getBlogDetail(id: Int) : LiveData<Result<Blog>> {
         blogResult.value = Result.Success(DummyData().getDetailBlogDummy(id))
@@ -122,7 +117,6 @@ class Repository (
 //    }
 
     companion object {
-        const val HomeTAG = "Home"
         const val DiseaseTAG = "Disease"
         @Volatile
         private var instance: Repository? = null
