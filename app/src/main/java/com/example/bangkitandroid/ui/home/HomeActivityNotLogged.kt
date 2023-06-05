@@ -75,7 +75,7 @@ class HomeActivityNotLogged : AppCompatActivity() {
             finish()
         }
 
-        viewModel.getHome().observe(this) {
+        viewModel.getHome("").observe(this) {
             if (it != null) {
                 when (it) {
                     is Result.Loading -> {

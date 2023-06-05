@@ -15,5 +15,9 @@ class HomeViewModel(private val repository: Repository): ViewModel() {
     fun getFile() : LiveData<File?> {
         return imgFile
     }
-    fun getHome() = repository.getHome()
+    fun getHome(token: String) = repository.getHome(token)
+
+    fun getToken() = repository.getToken()
+
+    fun getSessionId() = repository.getSessionId()
 }
