@@ -74,7 +74,10 @@ class HomeActivityLogged : AppCompatActivity() {
 
     private fun setupView() {
         viewModel.getSessionId().observe(this) { session ->
-            if (session != null) {
+            if (session == null) {
+                startActivity(Intent(this, HomeActivityNotLogged::class.java))
+                finish()
+            } else {
                 viewModel.getToken().observe(this) { token ->
                     viewModel.getHome(token).observe(this) {
                         if (it != null) {
@@ -164,8 +167,6 @@ class HomeActivityLogged : AppCompatActivity() {
                         }
                     }
                 }
-            } else {
-                startActivity(Intent(this, HomeActivityNotLogged::class.java))
             }
         }
     }
