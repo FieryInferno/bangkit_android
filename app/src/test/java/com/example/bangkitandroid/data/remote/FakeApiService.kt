@@ -1,6 +1,6 @@
 package com.example.bangkitandroid.data.remote
 
-import com.example.bangkitandroid.data.remote.model.DiseaseModel
+import com.example.bangkitandroid.data.remote.model.HistoryModel
 import com.example.bangkitandroid.data.remote.response.*
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.service.DummyData
@@ -8,9 +8,9 @@ import okhttp3.MultipartBody
 
 class FakeApiService : ApiService {
 
-    override fun getDiseases(token: String, page: Int, size: Int): DiseaseHistoryResponse {
+    override suspend fun getDiseases(token: String, page: Int, size: Int): DiseaseHistoryResponse {
         return DiseaseHistoryResponse(
-            result = DummyData().getDiseaseResponses(),
+            result = DummyData().getHistoryModels(),
             meta = Meta(
                 totalItem = "",
                 hasPrevious = false,
@@ -22,14 +22,14 @@ class FakeApiService : ApiService {
         )
     }
 
-    override fun postDisease(token: String, file: MultipartBody.Part): DiseaseResponse {
+    override suspend fun postDisease(token: String, file: MultipartBody.Part): DiseaseResponse {
         if(token == "Bearer "){
             throw Exception("invalid token")
         }
         return DiseaseResponse(
             success = true,
             statusCode = 200,
-            data = Data(
+            data = HistoryModel(
                 image = "image.jpg",
                 disease = DummyData().getDetailDiseaseModel(0),
                 id = 0,

@@ -93,13 +93,23 @@ class DummyData {
     }
 
 
-    fun getHistoryDiseases(): List<Disease> {
-        val diseases = ArrayList<Disease>()
+    fun getHistoryModels(): List<HistoryModel> {
+        val diseases = ArrayList<HistoryModel>()
         for(i in 1..5){
-            val disease = getDetailDisease(i)
+            val disease = getHistoryModel(i)
             diseases.add(disease)
         }
         return diseases
+    }
+
+    fun getHistoryModel(id: Int): HistoryModel {
+        return HistoryModel(
+            image = "image.jpg",
+            disease = DummyData().getDetailDiseaseModel(0),
+            id = id,
+            user = 0,
+            timestamp = ""
+        )
     }
 
     fun getUser(id: Int): User {

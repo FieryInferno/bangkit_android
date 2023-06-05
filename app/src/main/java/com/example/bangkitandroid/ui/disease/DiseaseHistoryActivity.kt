@@ -42,7 +42,7 @@ class DiseaseHistoryActivity : AppCompatActivity() {
 
     private fun setView(){
         setContent {
-            val diseases = viewModel.getHistoryDisease("").collectAsLazyPagingItems()
+            val diseases = viewModel.getHistoryDisease().collectAsLazyPagingItems()
 
             DiseaseHistoryActivityApp(diseases)
         }
@@ -52,7 +52,7 @@ class DiseaseHistoryActivity : AppCompatActivity() {
     fun DiseaseHistoryActivityApp(
         diseases: LazyPagingItems<History>
     ){
-        MaterialTheme() {
+        MaterialTheme {
             Scaffold(
                 backgroundColor = Color(0xFFE7F0EB),
                 topBar = {

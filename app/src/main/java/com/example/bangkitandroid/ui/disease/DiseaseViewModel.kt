@@ -1,8 +1,5 @@
 package com.example.bangkitandroid.ui.disease
 
-import android.graphics.BitmapFactory
-import android.os.Build
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -28,6 +25,6 @@ class DiseaseViewModel(private val repository: Repository) : ViewModel() {
         imgFile.value = null
     }
 
-    fun getHistoryDisease(token: String) : Flow<PagingData<History>> = repository.getHistoryDisease(token).cachedIn(viewModelScope)
+    fun getHistoryDisease() : Flow<PagingData<History>> = repository.getHistoryDisease().cachedIn(viewModelScope)
     fun postAnalyzeDisease() : LiveData<Result<Disease>> = repository.postAnalyzeDisease(imgFile.value)
 }

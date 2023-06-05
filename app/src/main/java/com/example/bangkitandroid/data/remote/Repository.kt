@@ -35,7 +35,7 @@ class Repository (
     private val loginResult = MediatorLiveData<Result<User>>()
     private val registerResult = MediatorLiveData<Result<User>>()
 
-    private fun getToken() = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1OTcwOTExLCJpYXQiOjE2ODU5Mjc3MTEsImp0aSI6ImM3ZThjMzVkMmE2ZDRjNmRhYTM2YTcwMDllYzJmNDE1IiwidXNlcl9pZCI6OH0.cyyybPRbLPIW83UMM_wt0BQWIuIh1AWgDHH1x4Fe2zY"
+    fun getToken() = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1OTcwOTExLCJpYXQiOjE2ODU5Mjc3MTEsImp0aSI6ImM3ZThjMzVkMmE2ZDRjNmRhYTM2YTcwMDllYzJmNDE1IiwidXNlcl9pZCI6OH0.cyyybPRbLPIW83UMM_wt0BQWIuIh1AWgDHH1x4Fe2zY"
 
     fun login(phoneNumber: String, password: String): LiveData<Result<User>> {
         loginResult.value = Result.Success(DummyData().getUserDummy(1))
@@ -81,12 +81,11 @@ class Repository (
 
             emit(Result.Success(response.toDisease()))
         } catch (e: Exception) {
-            Log.e("Repository", e.message.toString())
             emit(Result.Error(e.message.toString()))
         }
     }
 
-    fun getHistoryDisease(token: String): Flow<PagingData<History>> {
+    fun getHistoryDisease(): Flow<PagingData<History>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 10,
