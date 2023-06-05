@@ -1,5 +1,6 @@
 package com.example.bangkitandroid.ui.authentication
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -70,10 +71,10 @@ class RegisterActivity : AppCompatActivity() {
                         is Result.Success -> {
                             binding.progressBar.visibility = View.GONE
                             val data = result.data
-                            //belum selesai tokennya belum di buat di API
-                            viewModel.setToken("token", data.name)
                             Log.e("data", data.toString())
-                            //set move intent
+                            val loginIntent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                            startActivity(loginIntent)
+                            finish()
                         }
                         is Result.Error -> {
                             binding.progressBar.visibility = View.GONE

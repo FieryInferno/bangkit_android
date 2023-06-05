@@ -61,9 +61,7 @@ class LoginActivity : AppCompatActivity() {
                         is Result.Success -> {
                             binding.progressBar.visibility = View.GONE
                             val data = result.data
-                            //belum selesai
-                            viewModel.setToken(data.token, "1")
-                            //liat token
+                            viewModel.setToken(data.token, data.user.name)
                             viewModel.getToken().observe(this) {token ->
                                 Log.e("data", token)
                             }

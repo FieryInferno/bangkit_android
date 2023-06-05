@@ -47,5 +47,8 @@ data class RegisterResult(
     val id: Int,
 
     @field:SerializedName("email")
-    val email: Any
+    val email: Any,
+
+    @field:SerializedName("image")
+    val image: Any
 )
