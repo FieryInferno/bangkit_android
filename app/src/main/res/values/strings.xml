@@ -30,7 +30,7 @@
     <string name="rekomendasi_produk">Rekomendasi Produk</string>
     <string name="back_button">Back Button</string>
     <string name="unggah_gambar">Unggah Gambar</string>
-    <string name="ambil_ulang">ambil ulang</string>
+    <string name="ambil_ulang">Ambil ulang</string>
     <string name="image_preview">Image Preview</string>
     <string name="sedang_diproses">Sedang Diproses</string>
     <string name="judul_blog">Judul Blog</string>
@@ -47,4 +47,9 @@
     <string name="nama">Nama</string>
     <string name="daftar">Daftar</string>
     <string name="something_wrong">Something Wrong</string>
+    <string name="take_photo">Ambil foto</string>
+    <string name="gallery">Galeri</string>
+    <string name="fill_new_name">Nama sama dengan nama lama</string>
+    <string name="fill_new_phone">Nomor telepon sama dengan nomor telepon lama</string>
+    <string name="flip_camera">Balik kamera</string>
 </resources>

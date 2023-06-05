@@ -19,7 +19,7 @@
         android:layout_marginBottom="16dp"
         android:textColor="@color/black"
         android:drawablePadding="4dp"
-        app:drawableStartCompat="@drawable/leaf" />
+        app:drawableStartCompat="@drawable/ic_leaf" />
 
     <LinearLayout
         android:layout_width="match_parent"

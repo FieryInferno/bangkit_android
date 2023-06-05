@@ -30,7 +30,7 @@ class BlogDetailActivity : AppCompatActivity() {
             tvBlogName.text = blog.title
             tvDiseaseDescription.text = blog.description
             tvBlogDateTime.text = blog.dateTime
-            tvBlogAuthor.text = blog.author
+            tvBlogAuthor.text = blog.user.toString()
             Glide.with(this@BlogDetailActivity)
                 .load(blog.imgUrl)
                 .placeholder(R.drawable.ic_launcher_background)

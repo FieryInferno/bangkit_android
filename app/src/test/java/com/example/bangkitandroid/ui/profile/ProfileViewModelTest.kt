@@ -6,7 +6,7 @@
 //import com.example.bangkitandroid.domain.entities.User
 //import com.example.bangkitandroid.service.DummyData
 //import com.example.bangkitandroid.service.Result
-//import com.example.bangkitandroid.utils.FakeApiService
+//import com.example.bangkitandroid.data.remote.FakeApiService
 //import com.example.bangkitandroid.utils.MainDispatcherRule
 //import com.example.bangkitandroid.utils.observeForTesting
 //import kotlinx.coroutines.ExperimentalCoroutinesApi

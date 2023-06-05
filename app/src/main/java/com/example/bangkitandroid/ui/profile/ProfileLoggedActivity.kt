@@ -19,16 +19,13 @@ class ProfileLoggedActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        getData()
         setupView()
         setupBottomNavigationView()
     }
 
-    private fun getData() {
-        user =  DummyData().getUser(1)
-    }
-
     private fun setupView() {
+        user =  DummyData().getUser(1)
+
         Glide.with(this).load(user.imgUrl).circleCrop().into(binding.personPhoto)
         binding.personName.text = user.name
         binding.personPhone.text = user.phoneNumber

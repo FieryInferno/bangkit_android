@@ -7,7 +7,6 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.ActivityDiseaseImagePreviewBinding
-import com.example.bangkitandroid.service.DummyData
 import kotlinx.coroutines.*
 
 class DiseaseImagePreviewActivity : AppCompatActivity() {
@@ -24,7 +23,7 @@ class DiseaseImagePreviewActivity : AppCompatActivity() {
     private fun setView(){
         binding?.apply {
             Glide.with(this@DiseaseImagePreviewActivity)
-                .load(DummyData().getDetailDisease(0).imgUrl)
+                .load("https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg")
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(imgUploadPreview)
 

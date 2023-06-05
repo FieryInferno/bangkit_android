@@ -100,4 +100,8 @@ class FakeApiService : ApiService {
             comments = DummyData().getDetailBlog(0).comments[0]
         )
     }
+
+    override fun editProfile(token: String, name: String, phoneNumber: String): EditProfileResponse {
+        return DummyData().generateEditProfileResponse()
+    }
 }

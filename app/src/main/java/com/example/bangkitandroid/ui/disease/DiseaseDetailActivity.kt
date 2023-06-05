@@ -30,10 +30,10 @@ class DiseaseDetailActivity : AppCompatActivity() {
         binding?.apply {
             tvDiseaseName.text = disease.title
             tvDiseaseDescription.text = disease.description
-            tvDiseaseDateTime.text = disease.dateTime
+            tvDiseaseDateTime.text = disease.createdAt
             tvDiseaseTreatment.text = disease.treatment
             Glide.with(this@DiseaseDetailActivity)
-                .load(disease.imgUrl)
+                .load("https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg")
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(imgDiseaseDetail)
             rvDiseaseProductRecommendation.layoutManager = LinearLayoutManager(this@DiseaseDetailActivity, LinearLayoutManager.HORIZONTAL, false)

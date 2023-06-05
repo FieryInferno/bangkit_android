@@ -2,22 +2,19 @@ package com.example.bangkitandroid.domain.entities
 
 import com.google.gson.annotations.SerializedName
 
-data class Blog (
+data class History(
 
     @field:SerializedName("id")
     val id: Int,
 
-    @field:SerializedName("title")
-    val title: String,
-
-    @field:SerializedName("description")
-    val description: String,
+    @field:SerializedName("disease")
+    val disease: Disease,
 
     @field:SerializedName("image")
-    val imgUrl: String,
+    val image: String,
 
     @field:SerializedName("timestamp")
-    val dateTime: String,
+    val timestamp: String,
 
     @field:SerializedName("user")
     val user: Int,

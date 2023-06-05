@@ -20,10 +20,10 @@ class DiseaseHistoryAdapter : PagingDataAdapter<Disease, DiseaseHistoryAdapter.V
         fun bind(disease: Disease){
             binding.apply {
                 tvTitleHorizontalItem.text = disease.title
-                tvSubtitleHorizontalItem.text = disease.dateTime
+                tvSubtitleHorizontalItem.text = disease.createdAt
                 tvSecondSubtitleHorizontalItem.visibility = View.GONE
                 Glide.with(imgHorizontalItem)
-                    .load(disease.imgUrl)
+                    .load("https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg")
                     .placeholder(R.drawable.ic_launcher_background)
                     .into(imgHorizontalItem)
             }

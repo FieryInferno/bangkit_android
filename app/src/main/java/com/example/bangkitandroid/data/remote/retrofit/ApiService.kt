@@ -7,15 +7,14 @@ import com.example.bangkitandroid.data.remote.response.DiseaseResponse
 import com.example.bangkitandroid.data.remote.response.EditProfileResponse
 import retrofit2.Call
 import retrofit2.http.*
-
 import com.example.bangkitandroid.data.remote.response.LoginResponse
 import com.example.bangkitandroid.data.remote.response.RegisterResponse
-
 import com.example.bangkitandroid.data.remote.response.BlogResponse
 import com.example.bangkitandroid.data.remote.response.CommentResponse
+import com.example.bangkitandroid.data.remote.response.HomeResponse
 import com.example.bangkitandroid.data.remote.response.ListBlogResponse
 import okhttp3.MultipartBody
-import okhttp3.Request
+import okhttp3.RequestBody
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -70,9 +69,13 @@ interface ApiService {
         @Body loginRequest: LoginRequest
     ): LoginResponse
 
+    @Multipart
     @POST("v1/auth/register/")
     suspend fun register(
-        @Body registerRequest: RegisterRequest
+        @Part ("name") name: RequestBody,
+        @Part ("phone_number") phoneNumber: RequestBody,
+        @Part ("password") password: RequestBody,
+        @Part file: MultipartBody.Part
     ): RegisterResponse
 
     @FormUrlEncoded
@@ -82,4 +85,9 @@ interface ApiService {
         @Field("dateTime") dateTime: String,
         @Field("description") description: String,
     ): CommentResponse
+
+    @GET("v1/home")
+    suspend fun getHome(
+        @Header("Authorization") token: String?,
+    ): HomeResponse
 }
