@@ -25,6 +25,7 @@ import com.example.bangkitandroid.ui.disease.DiseaseHistoryActivity
 import com.example.bangkitandroid.ui.disease.DiseaseImagePreviewActivity
 import com.example.bangkitandroid.ui.profile.CameraActivity
 import com.example.bangkitandroid.ui.profile.EditProfileActivity
+import com.example.bangkitandroid.ui.profile.ProfileLoggedActivity
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 
@@ -162,7 +163,8 @@ class HomeActivityLogged : AppCompatActivity() {
                 }
                 R.id.profile -> {
                     // Intent to profile page
-                    finish()
+                    val profileIntent = Intent(this@HomeActivityLogged, ProfileLoggedActivity::class.java)
+                    startActivity(profileIntent)
                     true
                 }
                 else -> false

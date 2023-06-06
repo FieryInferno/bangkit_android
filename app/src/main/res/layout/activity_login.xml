@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/green_100"
-    android:paddingHorizontal="16dp"
     android:orientation="vertical"
     tools:context=".ui.authentication.LoginActivity">
 
@@ -14,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp"
+        android:paddingHorizontal="16dp"
         tools:ignore="UseCompoundDrawables">
         <ImageView
             android:id="@+id/btn_login_back"
@@ -40,15 +40,19 @@
         android:textStyle="bold"
         android:textColor="@color/green_400"
         android:layout_marginTop="24dp"
+        android:layout_marginStart="40dp"
         android:drawablePadding="4dp"/>
 
-    <EditText
+    <com.example.bangkitandroid.component.PhoneNumberEditText
         android:id="@+id/et_nomor_telepon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_edit_text_white"
         android:layout_marginBottom="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:padding="10dp"
+        android:inputType="phone"
         android:textColorHint="@color/green_200"
         android:hint="@string/masukkan_nomor_telepon"/>
 
@@ -60,29 +64,52 @@
         android:textStyle="bold"
         android:textColor="@color/green_400"
         android:layout_marginTop="24dp"
+        android:layout_marginStart="40dp"
         android:drawablePadding="4dp"/>
 
-    <EditText
+    <com.example.bangkitandroid.component.PasswordEditText
         android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_edit_text_white"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:padding="10dp"
         android:inputType="textPassword"
         android:textColorHint="@color/green_200"
         android:hint="@string/masukkan_kata_sandi"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-
-    <Button
-        android:id="@+id/btn_masuk"
-        android:layout_width="match_parent"
+    
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_edit_text_green"
-        android:layout_marginBottom="16dp"
-        android:text="@string/masuk"
-        android:textColor="@color/green_400" />
+        android:paddingHorizontal="24dp">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_gravity="right"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/btn_masuk"
+            android:layout_alignRight="@+id/btn_masuk"
+            android:layout_alignEnd="@+id/btn_masuk" />
+
+        <Button
+            android:id="@+id/btn_masuk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edit_text_green"
+            android:layout_marginBottom="16dp"
+            android:textSize="16sp"
+            android:enabled="false"
+            android:text="@string/masuk"
+            android:textColor="@color/green_400" />
+
+    </RelativeLayout>
+
 
 </LinearLayout>

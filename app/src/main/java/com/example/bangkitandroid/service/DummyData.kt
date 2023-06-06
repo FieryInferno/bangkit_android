@@ -229,21 +229,21 @@ class DummyData {
         )
     }
 
-    fun generateLoginResponse(): LoginResponse {
-        return LoginResponse(
-            success = true,
-            message = "success",
-            data = getUser(1)
-        )
-    }
-
-    fun generateRegisterResponse(): RegisterResponse {
-        return RegisterResponse(
-            success = true,
-            message = "success",
-            data = getUser(1)
-        )
-    }
+//    fun generateLoginResponse(): LoginResponse {
+//        return LoginResponse(
+//            success = true,
+//            message = "success",
+//            data = getUser(1)
+//        )
+//    }
+//
+//    fun generateRegisterResponse(): RegisterResponse {
+//        return RegisterResponse(
+//            success = true,
+//            message = "success",
+//            data = getUser(1)
+//        )
+//    }
 
     // For supply placeholder purpose
     fun getUserDummy(id: Int): User {

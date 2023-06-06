@@ -22,6 +22,7 @@ import com.example.bangkitandroid.service.*
 import com.example.bangkitandroid.ui.disease.DiseaseImagePreviewActivity
 import com.example.bangkitandroid.ui.profile.CameraActivity
 import com.example.bangkitandroid.ui.profile.EditProfileActivity
+import com.example.bangkitandroid.ui.profile.ProfileNotLoggedActivity
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 
@@ -134,7 +135,8 @@ class HomeActivityNotLogged : AppCompatActivity() {
                 }
                 R.id.profile -> {
                     // Intent to profile page not logged
-                    finish()
+                    val profileIntent = Intent(this@HomeActivityNotLogged, ProfileNotLoggedActivity::class.java)
+                    startActivity(profileIntent)
                     true
                 }
                 else -> false

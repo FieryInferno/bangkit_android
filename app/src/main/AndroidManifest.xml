@@ -61,10 +61,10 @@
             android:name=".BlogActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.home.HomeActivityNotLogged"
+            android:name=".ui.home.HomeActivityLogged"
             android:exported="false" />
         <activity
-            android:name=".ui.home.HomeActivityLogged"
+            android:name=".ui.home.HomeActivityNotLogged"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
