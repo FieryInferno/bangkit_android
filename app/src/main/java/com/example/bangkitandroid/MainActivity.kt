@@ -3,7 +3,6 @@ package com.example.bangkitandroid
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
@@ -32,16 +31,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun setView(){
         viewModel.getSessionId().observe(this) { session ->
-            Log.e("SESSION", session)
             if (session.isEmpty()) {
                 startActivity(Intent(this, HomeActivityNotLogged::class.java))
                 finish()
             } else {
                 viewModel.getToken().observe(this) { token ->
-                    Log.e("TOKEN", token)
-                    viewModel.setToken(token, session)
-                    startActivity(Intent(this, HomeActivityLogged::class.java))
-                    finish()
+                    if (token.isNotEmpty()) {
+                        viewModel.setToken(token, session)
+                        startActivity(Intent(this, HomeActivityLogged::class.java))
+                        finish()
+                    }
                 }
             }
         }

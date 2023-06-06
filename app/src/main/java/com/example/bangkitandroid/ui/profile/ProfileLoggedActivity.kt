@@ -6,12 +6,12 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.example.bangkitandroid.R
-import com.example.bangkitandroid.databinding.ActivityHomeLoggedBinding
 import com.example.bangkitandroid.databinding.ActivityProfileLoggedBinding
 import com.example.bangkitandroid.domain.entities.User
 import com.example.bangkitandroid.service.Result
 import com.example.bangkitandroid.service.ViewModelFactory
 import com.example.bangkitandroid.ui.blog.BlogListActivity
+import com.example.bangkitandroid.ui.home.HomeActivityLogged
 import com.example.bangkitandroid.ui.home.HomeActivityNotLogged
 import com.google.android.material.snackbar.Snackbar
 
@@ -79,7 +79,7 @@ class ProfileLoggedActivity : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
-                    startActivity(Intent(this, ActivityHomeLoggedBinding::class.java))
+                    startActivity(Intent(this, HomeActivityLogged::class.java))
                     finish()
                     true
                 }
