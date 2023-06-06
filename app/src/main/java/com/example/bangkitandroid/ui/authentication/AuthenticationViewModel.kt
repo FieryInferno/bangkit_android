@@ -1,7 +1,7 @@
 package com.example.bangkitandroid.ui.authentication
 
 import androidx.lifecycle.ViewModel
-import com.example.bangkitandroid.data.Repository
+import com.example.bangkitandroid.data.remote.Repository
 
 class AuthenticationViewModel(private val repository: Repository) : ViewModel() {
     fun login(phoneNumber: String, password: String) = repository.login(phoneNumber, password)

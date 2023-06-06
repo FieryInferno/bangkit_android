@@ -29,10 +29,10 @@ class BlogDetailActivity : AppCompatActivity() {
         binding?.apply {
             tvBlogName.text = blog.title
             tvDiseaseDescription.text = blog.description
-            tvBlogDateTime.text = blog.dateTime
-            tvBlogAuthor.text = blog.author
+            tvBlogDateTime.text = blog.timestamp
+            tvBlogAuthor.text = blog.user.toString()
             Glide.with(this@BlogDetailActivity)
-                .load(blog.imgUrl)
+                .load(blog.image)
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(imgBlogDetail)
             rvComment.layoutManager = LinearLayoutManager(this@BlogDetailActivity, LinearLayoutManager.VERTICAL, false)

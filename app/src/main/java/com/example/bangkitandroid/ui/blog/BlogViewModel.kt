@@ -8,8 +8,8 @@ class BlogViewModel(private val repository: Repository) : ViewModel() {
 
     fun getBlog(id: Int) = repository.getBlogDetail(id)
 
-    fun getListComment() = repository.getListComment()
-
-    fun postComment(token: String, dateTime: String, description: String) =
-        repository.postComment(token, dateTime, description)
+//    fun getListComment() = repository.getListComment()
+//
+//    fun postComment(token: String, dateTime: String, description: String) =
+//        repository.postComment(token, dateTime, description)
 }

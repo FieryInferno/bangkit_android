@@ -1,11 +1,30 @@
 package com.example.bangkitandroid.ui.disease
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.bangkitandroid.data.remote.Repository
+import com.example.bangkitandroid.domain.entities.Disease
+import com.example.bangkitandroid.domain.entities.History
+import com.example.bangkitandroid.service.Result
+import kotlinx.coroutines.flow.Flow
 import java.io.File
 
 class DiseaseViewModel(private val repository: Repository) : ViewModel() {
-    fun getHistoryDisease(token: String) = repository.getHistoryDisease(token)
-    fun getDiseaseDetail(token: String, id: Int) = repository.getDiseaseDetail(token, id)
-    fun postAnalyzeDisease(token: String, photo: File) = repository.postAnalyzeDisease(token, photo)
+
+    private val imgFile = MediatorLiveData<File?>(null)
+
+    fun setFile(file: File){
+        imgFile.value = file
+    }
+    fun getFile() : LiveData<File?>{
+        return imgFile
+    }
+
+    fun deleteFile(){
+        imgFile.value = null
+    }
+
+    fun getHistoryDisease() : Flow<PagingData<History>> = repository.getHistoryDisease().cachedIn(viewModelScope)
+    fun postAnalyzeDisease() : LiveData<Result<Disease>> = repository.postAnalyzeDisease(imgFile.value)
 }

@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide
 import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.HorizontalCardItemBinding
 import com.example.bangkitandroid.domain.entities.Blog
-import com.example.bangkitandroid.domain.entities.Disease
 
 class BlogAdapter : PagingDataAdapter<Blog, BlogAdapter.ViewHolder>(
     DIFF_CALLBACK) {
@@ -19,12 +18,12 @@ class BlogAdapter : PagingDataAdapter<Blog, BlogAdapter.ViewHolder>(
     inner class ViewHolder(private val binding: HorizontalCardItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(blog: Blog){
             binding.tvTitleHorizontalItem.text = blog.title
-            binding.tvSubtitleHorizontalItem.text = blog.dateTime
+            binding.tvSubtitleHorizontalItem.text = blog.timestamp
             Glide.with(binding.imgHorizontalItem.context)
-                .load(blog.imgUrl)
+                .load(blog.image)
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(binding.imgHorizontalItem)
-            binding.tvSecondSubtitleHorizontalItem.text = blog.author
+            binding.tvSecondSubtitleHorizontalItem.text = blog.user.toString()
             binding.tvSecondSubtitleHorizontalItem.visibility = View.VISIBLE
         }
     }
