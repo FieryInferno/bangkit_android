@@ -70,6 +70,7 @@ class ProfileLoggedActivity : AppCompatActivity() {
 
         binding.logoutButton.setOnClickListener {
             viewModel.logout()
+            finish()
             startActivity(Intent(this, HomeActivityNotLogged::class.java))
         }
     }
