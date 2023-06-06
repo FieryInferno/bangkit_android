@@ -81,3 +81,11 @@ fun uriToFile(selectedImg: Uri, context: Context): File {
 
     return myFile
 }
+
+fun saveRotatedImage(bitmap: Bitmap, file: File): File {
+    val outputStream = FileOutputStream(file)
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+    outputStream.flush()
+    outputStream.close()
+    return file
+}

@@ -1,5 +1,6 @@
 package com.example.bangkitandroid.ui.authentication
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -15,6 +16,7 @@ import com.example.bangkitandroid.component.PhoneNumberEditText
 import com.example.bangkitandroid.databinding.ActivityLoginBinding
 import com.example.bangkitandroid.service.Result
 import com.example.bangkitandroid.service.ViewModelFactory
+import com.example.bangkitandroid.ui.home.HomeActivityLogged
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -66,12 +68,13 @@ class LoginActivity : AppCompatActivity() {
                                 Log.e("data", token)
                             }
                             //set move intent
+                            startActivity(Intent(this@LoginActivity, HomeActivityLogged::class.java))
                         }
                         is Result.Error -> {
                             binding.progressBar.visibility = View.GONE
                             val errorMessage = result.error
                             Log.e("eror", result.error)
-                            Toast.makeText(this@LoginActivity, "$errorMessage", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@LoginActivity, errorMessage, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

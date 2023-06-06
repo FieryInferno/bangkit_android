@@ -7,8 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -18,17 +16,14 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.bangkitandroid.R
 import com.example.bangkitandroid.component.NameEditText
 import com.example.bangkitandroid.component.PasswordEditText
 import com.example.bangkitandroid.component.PhoneNumberEditText
-import com.example.bangkitandroid.data.remote.request.RegisterRequest
-import com.example.bangkitandroid.databinding.ActivityDiseaseHistoryBinding
-import com.example.bangkitandroid.databinding.ActivityLoginBinding
 import com.example.bangkitandroid.databinding.ActivityRegisterBinding
-import com.example.bangkitandroid.domain.entities.User
 import com.example.bangkitandroid.service.Result
 import com.example.bangkitandroid.service.ViewModelFactory
 import com.example.bangkitandroid.service.rotateBitmap

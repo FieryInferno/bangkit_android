@@ -1,8 +1,9 @@
 package com.example.bangkitandroid.service
 
-import com.example.bangkitandroid.data.remote.response.LoginResponse
-import com.example.bangkitandroid.data.remote.response.RegisterResponse
-import com.example.bangkitandroid.data.remote.response.EditProfileResponse
+import com.example.bangkitandroid.data.remote.model.DiseaseModel
+import com.example.bangkitandroid.data.remote.model.HistoryModel
+import com.example.bangkitandroid.data.remote.model.ProductModel
+import com.example.bangkitandroid.data.remote.response.*
 import com.example.bangkitandroid.domain.entities.*
 
 class DummyData {
@@ -26,6 +27,24 @@ class DummyData {
         return products
     }
 
+    private fun getProductsModelRecommendation(): List<ProductModel> {
+        val products = ArrayList<ProductModel>()
+        for(i in 1..5){
+            val product = ProductModel(
+                id = i,
+                title = "Obat Tanaman $i",
+                image = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
+                price = 10000,
+                createdAt = "",
+                updatedAt = "",
+                description = "",
+                url = ""
+            )
+            products.add(product)
+        }
+        return products
+    }
+
     fun getDetailDisease(id: Int): Disease {
         return Disease(
             id = id,
@@ -35,16 +54,62 @@ class DummyData {
             createdAt = "4 Mei 2023 9:00",
             updatedAt = "4 Mei 2023 9:00",
             products = getProductsRecommendation(),
+            image = "image.jpg"
         )
     }
 
-    fun getHistoryDiseases(): List<Disease> {
-        val diseases = ArrayList<Disease>()
+    fun getDetailDiseaseModel(id: Int): DiseaseModel {
+        return DiseaseModel(
+            id = id,
+            name = "Nama Penyakit",
+            description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            solution = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, .",
+            createdAt = "4 Mei 2023 9:00",
+            updatedAt = "4 Mei 2023 9:00",
+            products = getProductsModelRecommendation(),
+        )
+    }
+
+    fun getDiseaseResponse(id: Int): DiseaseResponse {
+        return DiseaseResponse(
+            success = true,
+            statusCode = 200,
+            data = HistoryModel(
+                image = "image.jpg",
+                disease = DummyData().getDetailDiseaseModel(0),
+                id = 0,
+                user = 0,
+                timestamp = ""
+            )
+        )
+    }
+    fun getDiseaseResponses(): List<DiseaseResponse> {
+        val diseases = ArrayList<DiseaseResponse>()
         for(i in 1..5){
-            val disease = getDetailDisease(i)
+            val disease = getDiseaseResponse(i)
             diseases.add(disease)
         }
         return diseases
+    }
+
+
+    fun getHistoryModels(): List<HistoryModel> {
+        val diseases = ArrayList<HistoryModel>()
+        for(i in 1..5){
+            val disease = getHistoryModel(i)
+            diseases.add(disease)
+        }
+        return diseases
+    }
+
+    fun getHistoryModel(id: Int): HistoryModel {
+        return HistoryModel(
+            image = "image.jpg",
+            disease = DummyData().getDetailDiseaseModel(0),
+            id = id,
+            user = 0,
+            timestamp = ""
+        )
     }
 
     fun getUser(id: Int): User {
@@ -53,7 +118,6 @@ class DummyData {
             name = "user $id",
             imgUrl = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
             phoneNumber = "123456789",
-            password = "password"
         )
     }
 
@@ -74,10 +138,15 @@ class DummyData {
         return Blog(
             id = id,
             title = "Judul Blog $id",
-            imgUrl = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
+            image = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
             description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            dateTime = "4 Mei 2023 9:00",
-            user = id,
+            timestamp = "4 Mei 2023 9:00",
+            user = User(
+                id = 0,
+                name = "Penulis",
+                phoneNumber = "081234567890",
+                imgUrl = ""
+            ),
         )
     }
 
@@ -109,6 +178,7 @@ class DummyData {
             createdAt = "21 Mei 2023 22:00",
             updatedAt = "21 Mei 2023 22:00",
             products = getProductsRecommendation(),
+            image = "image.jpg"
         )
     }
 
@@ -125,10 +195,15 @@ class DummyData {
         return Blog(
             id = id,
             title = "Judul Blog $id",
-            imgUrl = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
+            image = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg",
             description = "Description $id",
-            dateTime = "21 Mei 2023 22:00",
-            user = id,
+            timestamp = "21 Mei 2023 22:00",
+            user = User(
+                id = 0,
+                name = "Penulis",
+                phoneNumber = "081234567890",
+                imgUrl = ""
+            ),
         )
     }
 
@@ -177,7 +252,6 @@ class DummyData {
             name = "Name $id",
             imgUrl = "https://agrisustineri.org/wp-content/uploads/2022/08/The-Story-of-Todays-Successful-Young-Farmers-.jpg",
             phoneNumber = "0123456789",
-            password = "Password $id",
         )
     }
 }
