@@ -70,7 +70,8 @@ class LoginActivity : AppCompatActivity() {
                         is Result.Error -> {
                             binding.progressBar.visibility = View.GONE
                             val errorMessage = result.error
-                            Toast.makeText(this, "Error: $errorMessage", Toast.LENGTH_SHORT).show()
+                            Log.e("eror", result.error)
+                            Toast.makeText(this@LoginActivity, "$errorMessage", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

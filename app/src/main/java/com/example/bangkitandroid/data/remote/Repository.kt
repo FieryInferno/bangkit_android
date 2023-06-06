@@ -109,7 +109,7 @@ class Repository (
             val login = response.data
             emit(Result.Success(login))
         } catch (e: Exception) {
-            emit(Result.Error(e.message.toString()))
+            emit(Result.Error("Nomor Telepon dan kata sandi salah."))
         }
     }
 
@@ -122,7 +122,7 @@ class Repository (
             val register = response.data
             emit(Result.Success(register))
         } catch (e: Exception) {
-            emit(Result.Error(e.message.toString()))
+            emit(Result.Error("Gagal Daftar"))
         }
     }
 
