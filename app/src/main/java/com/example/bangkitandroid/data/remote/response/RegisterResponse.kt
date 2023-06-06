@@ -1,6 +1,5 @@
 package com.example.bangkitandroid.data.remote.response
 
-import com.example.bangkitandroid.domain.entities.User
 import com.google.gson.annotations.SerializedName
 
 data class RegisterResponse (

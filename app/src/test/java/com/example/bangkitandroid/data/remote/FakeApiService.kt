@@ -1,9 +1,9 @@
 package com.example.bangkitandroid.data.remote
 
 import com.example.bangkitandroid.data.remote.model.HistoryModel
+import com.example.bangkitandroid.data.remote.model.UserModel
 import com.example.bangkitandroid.data.remote.response.*
 import com.example.bangkitandroid.data.remote.request.LoginRequest
-import com.example.bangkitandroid.data.remote.request.RegisterRequest
 import com.example.bangkitandroid.data.remote.response.DiseaseHistoryResponse
 import com.example.bangkitandroid.data.remote.response.DiseaseResponse
 import com.example.bangkitandroid.data.remote.response.LoginResponse
@@ -16,6 +16,8 @@ import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.service.DummyData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.http.Header
+import retrofit2.http.Part
 
 class FakeApiService : ApiService {
 
@@ -50,14 +52,6 @@ class FakeApiService : ApiService {
         )
     }
 
-    override fun editProfile(
-        token: String,
-        name: String,
-        phoneNumber: String
-    ): EditProfileResponse {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun login(request: LoginRequest): LoginResponse {
         TODO("Not yet implemented")
     }
@@ -70,7 +64,6 @@ class FakeApiService : ApiService {
     ): RegisterResponse {
         TODO("Not yet implemented")
     }
-
 
     override fun getBlog(id: Int): BlogResponse {
         return BlogResponse(
@@ -104,6 +97,41 @@ class FakeApiService : ApiService {
     }
 
     override suspend fun getHome(token: String?): HomeResponse {
-        TODO("Not yet implemented")
+        return HomeResponse(
+            isAuthenticated = true,
+            history = DummyData().getHistoryModels(),
+            blogs = DummyData().getListBlogModels(),
+        )
+    }
+
+    override suspend fun getUser(token: String): UserResponse {
+        return UserResponse(
+            success = true,
+            message = "Successfully return",
+            user = UserModel(
+                name = "user 0",
+                phoneNumber = "123456789",
+                email = null,
+                image = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg"
+            )
+        )
+    }
+
+    override suspend fun editProfile(
+        @Header(value = "Authorization") token: String,
+        @Part(value = "name") name: RequestBody,
+        @Part(value = "phone_number") phoneNumber: RequestBody,
+        @Part file: MultipartBody.Part?
+    ): EditProfileResponse {
+        return EditProfileResponse(
+            success = true,
+            message = "Successfully return",
+            user = UserModel(
+                name = "user 0",
+                phoneNumber = "123456789",
+                email = null,
+                image = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg"
+            )
+        )
     }
 }

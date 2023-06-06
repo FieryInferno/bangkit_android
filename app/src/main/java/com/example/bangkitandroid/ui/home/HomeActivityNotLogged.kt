@@ -19,6 +19,8 @@ import com.example.bangkitandroid.databinding.ActivityHomeNotLoggedBinding
 import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.domain.mapper.toListBlog
 import com.example.bangkitandroid.service.*
+import com.example.bangkitandroid.ui.blog.BlogDetailActivity
+import com.example.bangkitandroid.ui.blog.BlogListActivity
 import com.example.bangkitandroid.ui.disease.DiseaseImagePreviewActivity
 import com.example.bangkitandroid.ui.profile.CameraActivity
 import com.example.bangkitandroid.ui.profile.EditProfileActivity
@@ -69,26 +71,36 @@ class HomeActivityNotLogged : AppCompatActivity() {
 
     private fun setupView() {
         binding.emptyHistory.setOnClickListener {
-            // intent to login
+            startActivity(Intent(this, ProfileNotLoggedActivity::class.java))
+            finish()
         }
 
-        viewModel.getHome("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1OTM1MTM2LCJpYXQiOjE2ODU4OTE5MzYsImp0aSI6IjNiMTJjZDA5Mzk5NDQ1MjJiMTliNDhlNThmZGIwZTY5IiwidXNlcl9pZCI6OH0.qUagcVoeIQYEVuZHtcqfwcxtVp90smT2NYRfY6jkikc").observe(this) {
+        viewModel.getHome().observe(this) {
             if (it != null) {
                 when (it) {
                     is Result.Loading -> {
-
+                        showLoading(true)
+                        binding.apply {
+                            blogTv.visibility = View.GONE
+                        }
                     }
                     is Result.Success -> {
+                        showLoading(false)
+
                         blogs = it.data.blogs.toListBlog()
 
                         val blogAdapter = BlogAdapter(blogs)
                         blogAdapter.setOnItemTapCallback(object : BlogAdapter.OnItemTapCallback{
                             override fun onItemTap(data: Blog) {
-                                // intent to blog detail
+                                val intent = Intent(this@HomeActivityNotLogged, BlogDetailActivity::class.java)
+                                intent.putExtra(BlogDetailActivity.EXTRA_BLOG, data)
+                                startActivity(intent)
                             }
                         })
 
                         binding.apply {
+                            blogTv.visibility = View.VISIBLE
+
                             blogRv.layoutManager = LinearLayoutManager(this@HomeActivityNotLogged)
                             blogRv.adapter = blogAdapter
                             btnScanImage.setOnClickListener{
@@ -110,6 +122,8 @@ class HomeActivityNotLogged : AppCompatActivity() {
                         }
                     }
                     is Result.Error -> {
+                        showLoading(false)
+
                         Snackbar.make(
                             window.decorView.rootView,
                             it.error,
@@ -129,14 +143,13 @@ class HomeActivityNotLogged : AppCompatActivity() {
                     false
                 }
                 R.id.blog -> {
-                    // Intent to blog page
+                    startActivity(Intent(this, BlogListActivity::class.java))
                     finish()
                     true
                 }
                 R.id.profile -> {
-                    // Intent to profile page not logged
-                    val profileIntent = Intent(this@HomeActivityNotLogged, ProfileNotLoggedActivity::class.java)
-                    startActivity(profileIntent)
+                    startActivity(Intent(this, ProfileNotLoggedActivity::class.java))
+                    finish()
                     true
                 }
                 else -> false
@@ -161,6 +174,7 @@ class HomeActivityNotLogged : AppCompatActivity() {
         launcherIntentGallery.launch(chooser)
     }
 
+    @Suppress("DEPRECATION")
     private val launcherIntentCameraX = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
@@ -191,6 +205,10 @@ class HomeActivityNotLogged : AppCompatActivity() {
                 viewModel.setFile(myFile)
             }
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {

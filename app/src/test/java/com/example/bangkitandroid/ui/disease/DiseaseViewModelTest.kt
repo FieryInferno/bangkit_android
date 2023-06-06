@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.paging.*
-import com.example.bangkitandroid.data.local.TokenPreferences
 import com.example.bangkitandroid.data.remote.FakeApiService
 import com.example.bangkitandroid.data.remote.Repository
 import com.example.bangkitandroid.domain.entities.History
@@ -23,7 +22,6 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 import java.io.File
-import java.util.prefs.Preferences
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)

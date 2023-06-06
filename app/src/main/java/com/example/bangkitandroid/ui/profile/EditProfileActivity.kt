@@ -3,13 +3,13 @@ package com.example.bangkitandroid.ui.profile
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -21,10 +21,17 @@ import com.example.bangkitandroid.databinding.ActivityEditProfileBinding
 import com.example.bangkitandroid.domain.entities.User
 import com.example.bangkitandroid.service.ViewModelFactory
 import com.example.bangkitandroid.service.rotateBitmap
+import com.example.bangkitandroid.service.saveRotatedImage
 import com.example.bangkitandroid.service.uriToFile
-import java.io.ByteArrayOutputStream
+import com.example.bangkitandroid.service.Result
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
-import java.io.FileOutputStream
 
 class EditProfileActivity : AppCompatActivity() {
     private val viewModel: ProfileViewModel by viewModels {
@@ -73,10 +80,14 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         binding.apply {
-            Glide.with(this@EditProfileActivity).load(user?.imgUrl).circleCrop().into(editPhoto)
+            if (user?.imgUrl != "") {
+                Glide.with(this@EditProfileActivity).load(user?.imgUrl).into(editPhoto)
+            } else {
+                editPhoto.setImageResource(R.drawable.image_profile_default)
+            }
+
             editPhoto.setOnClickListener {
-                root.isClickable = false
-                saveButton.visibility = View.GONE
+                showPopup()
 
                 if (!allPermissionsGranted()) {
                     ActivityCompat.requestPermissions(
@@ -85,39 +96,93 @@ class EditProfileActivity : AppCompatActivity() {
                         REQUEST_CODE_PERMISSIONS
                     )
                 }
-
-                photoPicker.root.visibility = View.VISIBLE
-                photoPicker.photoButton.setOnClickListener { startTakePhoto() }
-                photoPicker.galleryButton.setOnClickListener { startGallery() }
             }
 
             editName.hint = user?.name
             editPhone.hint = user?.phoneNumber
 
             saveButton.setOnClickListener {
-                val name = editName.text.toString()
-                val phone = editPhone.text.toString()
+                val newName = editName.text.toString()
+                val newPhone = editPhone.text.toString()
 
-                when {
-                    name.isEmpty() -> {
-                        editName.error = resources.getString(R.string.fill_name)
-                    }
-                    phone.isEmpty() -> {
-                        editPhone.error = resources.getString(R.string.fill_phone)
-                    }
-                    else -> {
-                        if (name == user?.name) {
-                            editName.error = resources.getString(R.string.fill_new_name)
-                        } else if (phone == user?.phoneNumber) {
-                            editPhone.error = resources.getString(R.string.fill_new_phone)
+                val updatedName = newName.ifEmpty { user?.name }
+                val updatedPhone = newPhone.ifEmpty { user?.phoneNumber }
+
+                if (getFile != null) {
+                    val nameBody = updatedName?.toRequestBody("text/plain".toMediaType())
+                    val phoneBody = updatedPhone?.toRequestBody("text/plain".toMediaType())
+                    val requestImageFile = getFile!!.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                    val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                        "image",
+                        getFile!!.name,
+                        requestImageFile
+                    )
+
+                    viewModel.editProfile(nameBody!!, phoneBody!!, imageMultipart).observe(this@EditProfileActivity) {
+                        if (it != null) {
+                            when (it) {
+                                is Result.Loading -> {
+                                    showLoading(true)
+                                }
+                                is Result.Success -> {
+                                    showLoading(false)
+                                    finish()
+                                    startActivity(Intent(this@EditProfileActivity, ProfileLoggedActivity::class.java))
+                                }
+                                is Result.Error -> {
+                                    showLoading(false)
+                                    Snackbar.make(
+                                        window.decorView.rootView,
+                                        it.error,
+                                        Snackbar.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
                         }
-                        else {
-                            viewModel.editUser(name, phone)
+                    }
+                } else {
+                    val nameBody = updatedName?.toRequestBody("text/plain".toMediaType())
+                    val phoneBody = updatedPhone?.toRequestBody("text/plain".toMediaType())
+
+                    viewModel.editProfile(nameBody!!, phoneBody!!, null).observe(this@EditProfileActivity) {
+                        if (it != null) {
+                            when (it) {
+                                is Result.Loading -> {
+                                    showLoading(true)
+                                }
+                                is Result.Success -> {
+                                    showLoading(false)
+                                    finish()
+                                    startActivity(Intent(this@EditProfileActivity, ProfileLoggedActivity::class.java))
+                                }
+                                is Result.Error -> {
+                                    showLoading(false)
+                                    Snackbar.make(
+                                        window.decorView.rootView,
+                                        it.error,
+                                        Snackbar.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
                         }
                     }
                 }
+
             }
         }
+    }
+
+    private fun showPopup() {
+        val dialog = BottomSheetDialog(this)
+        dialog.setContentView(R.layout.popup_photo_picker)
+
+        val photoButton = dialog.findViewById<TextView>(R.id.photo_button)
+        val galleryButton = dialog.findViewById<TextView>(R.id.gallery_button)
+
+        photoButton?.setOnClickListener { startTakePhoto() }
+        galleryButton?.setOnClickListener { startGallery() }
+
+        dialog.show()
     }
 
     private var getFile: File? = null
@@ -164,27 +229,8 @@ class EditProfileActivity : AppCompatActivity() {
         launcherIntentGallery.launch(chooser)
     }
 
-    private fun saveRotatedImage(bitmap: Bitmap, file: File): File {
-        val outputStream = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-        outputStream.flush()
-        outputStream.close()
-        return file
-    }
-
-    private fun reduceFileImage(file: File): File {
-        val bitmap = BitmapFactory.decodeFile(file.path)
-        var compressQuality = 100
-        var streamLength: Int
-        do {
-            val bmpStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
-            val bmpPicByteArray = bmpStream.toByteArray()
-            streamLength = bmpPicByteArray.size
-            compressQuality -= 5
-        } while (streamLength > 1000000)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
-        return file
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {

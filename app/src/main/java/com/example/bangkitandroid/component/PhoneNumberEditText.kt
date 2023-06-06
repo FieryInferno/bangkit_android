@@ -5,7 +5,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
-import com.bumptech.glide.Glide.init
 
 class PhoneNumberEditText: AppCompatEditText {
     constructor(context: Context) : super(context) {

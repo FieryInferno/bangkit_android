@@ -33,7 +33,7 @@
         android:drawablePadding="4dp"
         app:drawableStartCompat="@drawable/icon_edit"/>
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/person_photo"
         android:layout_width="150dp"
         android:layout_height="150dp"

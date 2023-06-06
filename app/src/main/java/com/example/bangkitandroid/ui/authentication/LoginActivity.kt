@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.viewModels
-import com.example.bangkitandroid.R
 import com.example.bangkitandroid.component.PasswordEditText
 import com.example.bangkitandroid.component.PhoneNumberEditText
 import com.example.bangkitandroid.databinding.ActivityLoginBinding

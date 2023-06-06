@@ -22,8 +22,6 @@
     <string name="logout">Keluar</string>
     <string name="save">Simpan</string>
     <string name="profile_not_logged_in">Masuk untuk mengakses profil</string>
-    <string name="fill_name">Isi nama baru</string>
-    <string name="fill_phone">Isi nomor telepon baru</string>
     <string name="disease_detail_image">Disease Detail Image</string>
     <string name="time_icon">Time Icon</string>
     <string name="cara_mengobati">Cara Mengobati</string>

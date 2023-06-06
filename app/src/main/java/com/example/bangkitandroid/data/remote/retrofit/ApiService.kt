@@ -1,11 +1,9 @@
 package com.example.bangkitandroid.data.remote.retrofit
 
 import com.example.bangkitandroid.data.remote.request.LoginRequest
-import com.example.bangkitandroid.data.remote.request.RegisterRequest
 import com.example.bangkitandroid.data.remote.response.DiseaseHistoryResponse
 import com.example.bangkitandroid.data.remote.response.DiseaseResponse
 import com.example.bangkitandroid.data.remote.response.EditProfileResponse
-import retrofit2.Call
 import retrofit2.http.*
 import com.example.bangkitandroid.data.remote.response.LoginResponse
 import com.example.bangkitandroid.data.remote.response.RegisterResponse
@@ -23,6 +21,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Query
+import com.example.bangkitandroid.data.remote.response.UserResponse
 
 interface ApiService {
     @GET("blog")
@@ -50,12 +49,13 @@ interface ApiService {
         @Part file: MultipartBody.Part,
     ): DiseaseResponse
  
-    @FormUrlEncoded
-    @POST("auth/edit-profile")
-    fun editProfile(
+    @Multipart
+    @PUT("v1/auth/edit-profile/")
+    suspend fun editProfile(
         @Header("Authorization") token: String,
-        @Field("name") name: String,
-        @Field("phone_number") phoneNumber: String,
+        @Part("name") name: RequestBody,
+        @Part("phone_number") phoneNumber: RequestBody,
+        @Part file: MultipartBody.Part?,
     ): EditProfileResponse
 
     @POST("v1/auth/login/")
@@ -84,4 +84,9 @@ interface ApiService {
     suspend fun getHome(
         @Header("Authorization") token: String?,
     ): HomeResponse
+
+    @GET("v1/auth/user/")
+    suspend fun getUser(
+        @Header("Authorization") token: String,
+    ): UserResponse
 }
