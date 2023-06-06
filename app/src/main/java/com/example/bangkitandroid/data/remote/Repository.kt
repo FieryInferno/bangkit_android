@@ -31,7 +31,7 @@ import java.io.File
 
 class Repository (
     private val apiService: ApiService,
-    private val tokenPreferences: TokenPreferences
+    private val tokenPreferences: TokenPreferences?
 ){
 
     private val blogResult = MediatorLiveData<Result<Blog>>()
@@ -141,20 +141,20 @@ class Repository (
     }
 
     suspend fun logout(){
-        tokenPreferences.deleteToken()
+        tokenPreferences!!.deleteToken()
     }
 
     fun getToken(): LiveData<String> {
-        return tokenPreferences.getToken().asLiveData()
+        return tokenPreferences!!.getToken().asLiveData()
     }
 
     fun getSessionId(): LiveData<String> {
-        return tokenPreferences.getSession().asLiveData()
+        return tokenPreferences!!.getSession().asLiveData()
     }
 
     suspend fun setToken(token: String, sessionId: String){
         _token = "Bearer $token"
-        tokenPreferences.saveToken(token, sessionId)
+        tokenPreferences!!.saveToken(token, sessionId)
     }
 
     companion object {
