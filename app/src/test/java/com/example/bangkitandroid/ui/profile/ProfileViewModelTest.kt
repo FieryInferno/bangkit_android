@@ -81,21 +81,4 @@ class ProfileViewModelTest {
             assertEquals(expectedResponse, (actualResponse.value as Result.Success).data)
         }
     }
-
-//    @Test
-//    fun `when editProfile Should Return Error When Token Invalid`() = runTest {
-//        val expectedError = "invalid token"
-//
-//        Mockito.`when`(mockRepository.editProfile("user 0".toRequestBody(), "123456789".toRequestBody(), null))
-//            .thenReturn(MutableLiveData(Result.Error(error = "invalid token")))
-//        val profileViewModel = ProfileViewModel(mockRepository)
-//        val actualResponse = profileViewModel.editProfile("user 0".toRequestBody(), "123456789".toRequestBody(), null)
-//
-//        print(actualResponse)
-//
-//        actualResponse.observeForTesting {
-//            assertNotNull(actualResponse)
-//            assertEquals(expectedError, (actualResponse.value as Result.Error).error)
-//        }
-//    }
 }
