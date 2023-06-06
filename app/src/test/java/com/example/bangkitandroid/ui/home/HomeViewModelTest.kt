@@ -25,7 +25,7 @@ import java.io.File
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class DiseaseViewModelTest {
+class HomeViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
@@ -41,7 +41,7 @@ class DiseaseViewModelTest {
     @Before
     fun setUp() {
         apiService = FakeApiService()
-        repository = Repository(apiService)
+        repository = Repository(apiService, null)
     }
 
     @Test

@@ -79,7 +79,8 @@ class HomeActivityLogged : AppCompatActivity() {
                 finish()
             } else {
                 viewModel.getToken().observe(this) { token ->
-                    viewModel.getHome(token).observe(this) {
+                    viewModel.setToken(token, session)
+                    viewModel.getHome().observe(this) {
                         if (it != null) {
                             when (it) {
                                 is Result.Loading -> {
