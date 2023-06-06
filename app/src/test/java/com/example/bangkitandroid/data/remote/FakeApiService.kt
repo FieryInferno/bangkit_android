@@ -2,8 +2,16 @@ package com.example.bangkitandroid.data.remote
 
 import com.example.bangkitandroid.data.remote.model.HistoryModel
 import com.example.bangkitandroid.data.remote.model.UserModel
-import com.example.bangkitandroid.data.remote.request.LoginRequest
 import com.example.bangkitandroid.data.remote.response.*
+import com.example.bangkitandroid.data.remote.request.LoginRequest
+import com.example.bangkitandroid.data.remote.response.DiseaseHistoryResponse
+import com.example.bangkitandroid.data.remote.response.DiseaseResponse
+import com.example.bangkitandroid.data.remote.response.LoginResponse
+import com.example.bangkitandroid.data.remote.response.RegisterResponse
+import com.example.bangkitandroid.data.remote.response.BlogResponse
+import com.example.bangkitandroid.data.remote.response.CommentResponse
+import com.example.bangkitandroid.data.remote.response.EditProfileResponse
+import com.example.bangkitandroid.data.remote.response.ListBlogResponse
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.service.DummyData
 import okhttp3.MultipartBody
@@ -56,7 +64,7 @@ class FakeApiService : ApiService {
     ): RegisterResponse {
         TODO("Not yet implemented")
     }
-    
+
     override fun getBlog(id: Int): BlogResponse {
         return BlogResponse(
             success = true,
