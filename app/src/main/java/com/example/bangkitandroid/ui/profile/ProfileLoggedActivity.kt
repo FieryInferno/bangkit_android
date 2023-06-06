@@ -9,7 +9,6 @@ import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.ActivityHomeLoggedBinding
 import com.example.bangkitandroid.databinding.ActivityProfileLoggedBinding
 import com.example.bangkitandroid.domain.entities.User
-import com.example.bangkitandroid.domain.mapper.toUser
 import com.example.bangkitandroid.service.Result
 import com.example.bangkitandroid.service.ViewModelFactory
 import com.example.bangkitandroid.ui.blog.BlogListActivity
@@ -34,37 +33,40 @@ class ProfileLoggedActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
-        viewModel.getToken().observe(this) { token ->
-            viewModel.getUser(token).observe(this) {
-                if (it != null) {
-                    when (it) {
-                        is Result.Loading -> {
+        viewModel.getUser().observe(this) {
+            if (it != null) {
+                when (it) {
+                    is Result.Loading -> {
 
-                        }
-                        is Result.Success -> {
-                            user = it.data.user.toUser()
+                    }
+                    is Result.Success -> {
+                        user = it.data
 
-                            Glide.with(this).load(user.imgUrl).circleCrop().into(binding.personPhoto)
-                            binding.personName.text = user.name
-                            binding.personPhone.text = user.phoneNumber
+                        if (user.imgUrl != "") {
+                            Glide.with(this).load(user.imgUrl).into(binding.personPhoto)
+                        } else {
+                            binding.personPhoto.setImageResource(R.drawable.image_profile_default)
+                        }
+                        binding.personName.text = user.name
+                        binding.personPhone.text = user.phoneNumber
 
-                            binding.editTv.setOnClickListener {
-                                val intent = Intent(this, EditProfileActivity::class.java)
-                                intent.putExtra(EditProfileActivity.EXTRA_USER, user)
-                                startActivity(intent)
-                            }
+                        binding.editTv.setOnClickListener {
+                            val intent = Intent(this, EditProfileActivity::class.java)
+                            intent.putExtra(EditProfileActivity.EXTRA_USER, user)
+                            startActivity(intent)
                         }
-                        is Result.Error -> {
-                            Snackbar.make(
-                                window.decorView.rootView,
-                                it.error,
-                                Snackbar.LENGTH_SHORT
-                            ).show()
-                        }
+                    }
+                    is Result.Error -> {
+                        Snackbar.make(
+                            window.decorView.rootView,
+                            it.error,
+                            Snackbar.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
         }
+
 
         binding.logoutButton.setOnClickListener {
             viewModel.logout()

@@ -1,6 +1,5 @@
 package com.example.bangkitandroid.data.remote
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.asLiveData
@@ -14,13 +13,12 @@ import com.example.bangkitandroid.data.remote.request.LoginRequest
 import com.example.bangkitandroid.data.remote.response.LoginResult
 import com.example.bangkitandroid.data.remote.response.RegisterResult
 import com.example.bangkitandroid.data.remote.response.HomeResponse
-import com.example.bangkitandroid.data.remote.response.UserResponse
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.domain.entities.History
-import com.example.bangkitandroid.domain.entities.Comment
 import com.example.bangkitandroid.domain.entities.User
 import com.example.bangkitandroid.domain.mapper.toDisease
+import com.example.bangkitandroid.domain.mapper.toUser
 import com.example.bangkitandroid.service.DummyData
 import com.example.bangkitandroid.service.Result
 import kotlinx.coroutines.flow.Flow
@@ -31,38 +29,44 @@ import okhttp3.RequestBody
 import java.io.File
 import java.lang.Exception
 
-class Repository (
+class Repository(
     private val apiService: ApiService,
-    private val tokenPreferences: TokenPreferences
+    private val tokenPreferences: TokenPreferences?
 ){
 
     private val blogResult = MediatorLiveData<Result<Blog>>()
-    private val commentResult = MediatorLiveData<Result<Comment>>()
-    private val editProfileResult = MediatorLiveData<Result<User>>()
+    private var _token = ""
 
-    fun getHome(token: String): LiveData<Result<HomeResponse>> = liveData {
+    fun getHome(): LiveData<Result<HomeResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.getHome("Bearer $token")
+            val response = apiService.getHome(_token)
             emit(Result.Success(response))
         } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
         }
     }
 
-    fun getUser(token: String): LiveData<Result<UserResponse>> = liveData {
+    fun getUser(): LiveData<Result<User>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.getUser("Bearer $token")
-            emit(Result.Success(response))
+            val response = apiService.getUser(_token)
+            val user = response.user.toUser()
+            emit(Result.Success(user))
         } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
         }
     }
 
-    fun editProfile(name: String, phoneNumber: String): LiveData<Result<User>> {
-        editProfileResult.value = Result.Success(DummyData().getUserDummy(1))
-        return editProfileResult
+    fun editProfile(name: RequestBody, phoneNumber: RequestBody, image: MultipartBody.Part?): LiveData<Result<User>> = liveData {
+        emit(Result.Loading)
+        try{
+            val response = apiService.editProfile(_token, name, phoneNumber, image)
+            val user = response.user.toUser()
+            emit(Result.Success(user))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
     }
 
     fun postAnalyzeDisease(photo: File?) = liveData {
@@ -134,9 +138,7 @@ class Repository (
     fun register(name: RequestBody, phoneNumber: RequestBody, password: RequestBody, image: MultipartBody.Part) : LiveData<Result<RegisterResult>> = liveData{
         emit(Result.Loading)
         try {
-//            val registerRequest = RegisterRequest(name, phoneNumber, password)
             val response = apiService.register(name, phoneNumber, password, image)
-            Log.e("repo", "jalan")
             val register = response.data
             emit(Result.Success(register))
         } catch (e: Exception) {
@@ -145,19 +147,20 @@ class Repository (
     }
 
     suspend fun logout(){
-        tokenPreferences.deleteToken()
+        tokenPreferences!!.deleteToken()
     }
 
     fun getToken(): LiveData<String> {
-        return tokenPreferences.getToken().asLiveData()
+        return tokenPreferences!!.getToken().asLiveData()
     }
 
     fun getSessionId(): LiveData<String> {
-        return tokenPreferences.getSession().asLiveData()
+        return tokenPreferences!!.getSession().asLiveData()
     }
 
     suspend fun setToken(token: String, sessionId: String){
-        tokenPreferences.saveToken(token, sessionId)
+        _token = "Bearer $token"
+        tokenPreferences!!.saveToken(token, sessionId)
     }
 
     companion object {

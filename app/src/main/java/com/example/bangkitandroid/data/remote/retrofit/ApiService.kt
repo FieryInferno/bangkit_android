@@ -49,12 +49,13 @@ interface ApiService {
         @Part file: MultipartBody.Part,
     ): DiseaseResponse
  
-    @FormUrlEncoded
-    @POST("auth/edit-profile")
-    fun editProfile(
+    @Multipart
+    @PUT("v1/auth/edit-profile/")
+    suspend fun editProfile(
         @Header("Authorization") token: String,
-        @Field("name") name: String,
-        @Field("phone_number") phoneNumber: String,
+        @Part("name") name: RequestBody,
+        @Part("phone_number") phoneNumber: RequestBody,
+        @Part file: MultipartBody.Part?,
     ): EditProfileResponse
 
     @POST("v1/auth/login/")

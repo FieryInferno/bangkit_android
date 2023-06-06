@@ -11,5 +11,8 @@ data class UserModel(
 	val phoneNumber: String,
 
 	@field:SerializedName("email")
-	val email: Any
+	val email: String?,
+
+	@field:SerializedName("image")
+	val image: String?
 )

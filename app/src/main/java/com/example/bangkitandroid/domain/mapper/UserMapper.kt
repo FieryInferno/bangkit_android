@@ -7,7 +7,7 @@ fun UserModel.toUser(): User = let {
     User(
         id = 0,
         name = it.name,
-        imgUrl = "",
+        imgUrl = it.image ?: "",
         phoneNumber = it.phoneNumber
     )
 }

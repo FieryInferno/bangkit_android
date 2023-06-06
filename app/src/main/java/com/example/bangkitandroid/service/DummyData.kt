@@ -170,7 +170,8 @@ class DummyData {
             user = UserModel(
                 name = "Penulis",
                 phoneNumber = "081234567890",
-                email = ""
+                email = null,
+                image = null
             ),
             timestamp = "4 Mei 2023 9:00"
         )
@@ -247,15 +248,7 @@ class DummyData {
         return comments
     }
 
-    fun generateEditProfileResponse(): EditProfileResponse {
-        return EditProfileResponse(
-            success = true,
-            message = "success",
-            data = getUser(1)
-        )
-    }
-
-//    fun generateLoginResponse(): LoginResponse {
+    //    fun generateLoginResponse(): LoginResponse {
 //        return LoginResponse(
 //            success = true,
 //            message = "success",

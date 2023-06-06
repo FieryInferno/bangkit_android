@@ -1,12 +1,15 @@
 package com.example.bangkitandroid.data.remote
 
 import com.example.bangkitandroid.data.remote.model.HistoryModel
+import com.example.bangkitandroid.data.remote.model.UserModel
 import com.example.bangkitandroid.data.remote.request.LoginRequest
 import com.example.bangkitandroid.data.remote.response.*
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.service.DummyData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.http.Header
+import retrofit2.http.Part
 
 class FakeApiService : ApiService {
 
@@ -40,6 +43,7 @@ class FakeApiService : ApiService {
             )
         )
     }
+
     override suspend fun login(request: LoginRequest): LoginResponse {
         TODO("Not yet implemented")
     }
@@ -93,10 +97,33 @@ class FakeApiService : ApiService {
     }
 
     override suspend fun getUser(token: String): UserResponse {
-        TODO("Not yet implemented")
+        return UserResponse(
+            success = true,
+            message = "Successfully return",
+            user = UserModel(
+                name = "user 0",
+                phoneNumber = "123456789",
+                email = null,
+                image = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg"
+            )
+        )
     }
 
-    override fun editProfile(token: String, name: String, phoneNumber: String): EditProfileResponse {
-        return DummyData().generateEditProfileResponse()
+    override suspend fun editProfile(
+        @Header(value = "Authorization") token: String,
+        @Part(value = "name") name: RequestBody,
+        @Part(value = "phone_number") phoneNumber: RequestBody,
+        @Part file: MultipartBody.Part?
+    ): EditProfileResponse {
+        return EditProfileResponse(
+            success = true,
+            message = "Successfully return",
+            user = UserModel(
+                name = "user 0",
+                phoneNumber = "123456789",
+                email = null,
+                image = "https://cdn.britannica.com/89/126689-004-D622CD2F/Potato-leaf-blight.jpg"
+            )
+        )
     }
 }

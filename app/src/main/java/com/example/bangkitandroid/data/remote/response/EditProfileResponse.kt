@@ -1,6 +1,6 @@
 package com.example.bangkitandroid.data.remote.response
 
-import com.example.bangkitandroid.domain.entities.User
+import com.example.bangkitandroid.data.remote.model.UserModel
 import com.google.gson.annotations.SerializedName
 
 data class EditProfileResponse(
@@ -12,5 +12,5 @@ data class EditProfileResponse(
 	val message: String,
 
 	@field:SerializedName("data")
-	val data: User,
+	val user: UserModel,
 )
