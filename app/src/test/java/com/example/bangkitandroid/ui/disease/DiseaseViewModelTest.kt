@@ -35,6 +35,7 @@ class DiseaseViewModelTest {
     private lateinit var apiService: FakeApiService
     private lateinit var repository: Repository
 
+
     @Mock
     private lateinit var mockRepository: Repository
 

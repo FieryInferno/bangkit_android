@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,6 +16,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.bangkitandroid.R
@@ -165,7 +165,7 @@ class RegisterActivity : AppCompatActivity() {
                             is Result.Error -> {
                                 binding.progressBar.visibility = View.GONE
                                 val errorMessage = result.error
-                                Toast.makeText(this, "Error: $errorMessage", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "$errorMessage", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -277,6 +277,8 @@ class RegisterActivity : AppCompatActivity() {
         return file
     }
     companion object {
+        const val EXTRA_USER = "USER"
+        const val CAMERA_X_RESULT = 200
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
     }

@@ -22,8 +22,6 @@
     <string name="logout">Keluar</string>
     <string name="save">Simpan</string>
     <string name="profile_not_logged_in">Masuk untuk mengakses profil</string>
-    <string name="fill_name">Isi nama baru</string>
-    <string name="fill_phone">Isi nomor telepon baru</string>
     <string name="disease_detail_image">Disease Detail Image</string>
     <string name="time_icon">Time Icon</string>
     <string name="cara_mengobati">Cara Mengobati</string>
@@ -54,4 +52,6 @@
     <string name="flip_camera">Balik kamera</string>
     <string name="please_pick_image">Silakan ambil gambar tanaman Anda</string>
     <string name="disease_name_label">Nama Penyakit</string>
+    <string name="analysis_failed">Gagal Menganalisis</string>
+    <string name="connection_error">Jaringan Bermasalah</string>
 </resources>

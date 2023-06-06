@@ -66,13 +66,14 @@ class LoginActivity : AppCompatActivity() {
                             viewModel.getToken().observe(this) {token ->
                                 Log.e("data", token)
                             }
-                            startActivity(Intent(this, HomeActivityLogged::class.java))
-                            finish()
+                            //set move intent
+                            startActivity(Intent(this@LoginActivity, HomeActivityLogged::class.java))
                         }
                         is Result.Error -> {
                             binding.progressBar.visibility = View.GONE
                             val errorMessage = result.error
-                            Toast.makeText(this, "Error: $errorMessage", Toast.LENGTH_SHORT).show()
+                            Log.e("eror", result.error)
+                            Toast.makeText(this@LoginActivity, errorMessage, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

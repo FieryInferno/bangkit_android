@@ -73,99 +73,89 @@ class HomeActivityLogged : AppCompatActivity() {
     }
 
     private fun setupView() {
-        viewModel.getSessionId().observe(this) { session ->
-            if (session == null) {
-                startActivity(Intent(this, HomeActivityNotLogged::class.java))
-                finish()
-            } else {
-                viewModel.getToken().observe(this) { token ->
-                    viewModel.setToken(token, session)
-                    viewModel.getHome().observe(this) {
-                        if (it != null) {
-                            when (it) {
-                                is Result.Loading -> {
-                                    showLoading(true)
-                                    binding.apply {
-                                        relativeLayout.visibility = View.GONE
-                                        blogTv.visibility = View.GONE
-                                    }
-                                }
-                                is Result.Success -> {
-                                    showLoading(false)
+        viewModel.getHome().observe(this) {
+            if (it != null) {
+                when (it) {
+                    is Result.Loading -> {
+                        showLoading(true)
+                        binding.apply {
+                            relativeLayout.visibility = View.GONE
+                            blogTv.visibility = View.GONE
+                        }
+                    }
+                    is Result.Success -> {
+                        showLoading(false)
 
-                                    histories = it.data.history.toListHistory()
-                                    blogs = it.data.blogs.toListBlog()
+                        histories = it.data.history.toListHistory()
+                        blogs = it.data.blogs.toListBlog()
 
-                                    val historyAdapter = HistoryAdapter(histories)
-                                    historyAdapter.setOnItemTapCallback(object : HistoryAdapter.OnItemTapCallback{
-                                        override fun onItemTap(data: History) {
-                                            val intent = Intent(this@HomeActivityLogged, DiseaseDetailActivity::class.java)
-                                            intent.putExtra(DiseaseDetailActivity.EXTRA_DISEASE, data.disease)
-                                            startActivity(intent)
-                                        }
-                                    })
+                        val historyAdapter = HistoryAdapter(histories)
+                        historyAdapter.setOnItemTapCallback(object : HistoryAdapter.OnItemTapCallback{
+                            override fun onItemTap(data: History) {
+                                val intent = Intent(this@HomeActivityLogged, DiseaseDetailActivity::class.java)
+                                intent.putExtra(DiseaseDetailActivity.EXTRA_DISEASE, data.disease)
+                                startActivity(intent)
+                            }
+                        })
 
-                                    val blogAdapter = BlogAdapter(blogs)
-                                    blogAdapter.setOnItemTapCallback(object : BlogAdapter.OnItemTapCallback{
-                                        override fun onItemTap(data: Blog) {
-                                            val intent = Intent(this@HomeActivityLogged, BlogDetailActivity::class.java)
-                                            intent.putExtra(BlogDetailActivity.EXTRA_BLOG, data.id)
-                                            startActivity(intent)
-                                        }
-                                    })
+                        val blogAdapter = BlogAdapter(blogs)
+                        blogAdapter.setOnItemTapCallback(object : BlogAdapter.OnItemTapCallback{
+                            override fun onItemTap(data: Blog) {
+                                val intent = Intent(this@HomeActivityLogged, BlogDetailActivity::class.java)
+                                intent.putExtra(BlogDetailActivity.EXTRA_BLOG, data.id)
+                                startActivity(intent)
+                            }
+                        })
 
-                                    binding.apply {
-                                        relativeLayout.visibility = View.VISIBLE
+                        binding.apply {
+                            relativeLayout.visibility = View.VISIBLE
 
-                                        historyRv.layoutManager = LinearLayoutManager(
-                                            this@HomeActivityLogged,
-                                            LinearLayoutManager.HORIZONTAL,
-                                            false
-                                        )
-                                        historyRv.adapter = historyAdapter
+                            historyRv.layoutManager = LinearLayoutManager(
+                                this@HomeActivityLogged,
+                                LinearLayoutManager.HORIZONTAL,
+                                false
+                            )
+                            historyRv.adapter = historyAdapter
 
-                                        blogTv.visibility = View.VISIBLE
+                            blogTv.visibility = View.VISIBLE
 
-                                        blogRv.layoutManager = LinearLayoutManager(this@HomeActivityLogged)
-                                        blogRv.adapter = blogAdapter
+                            blogRv.layoutManager = LinearLayoutManager(this@HomeActivityLogged)
+                            blogRv.adapter = blogAdapter
 
-                                        if (histories.isEmpty()) {
-                                            seeAllTv.visibility = View.GONE
-                                        } else {
-                                            seeAllTv.visibility = View.VISIBLE
-                                            seeAllTv.setOnClickListener {
-                                                startActivity(Intent(this@HomeActivityLogged, DiseaseHistoryActivity::class.java))
-                                            }
-                                        }
-                                        btnScanImage.setOnClickListener{
-                                            homePopupPhotoPicker.root.visibility = View.VISIBLE
-                                            homePopupPhotoPickerModal.visibility = View.VISIBLE
-                                            bottomNavigation.visibility = View.GONE
-                                        }
-                                        popupClose.root.setOnClickListener {
-                                            homePopupPhotoPicker.root.visibility = View.GONE
-                                            homePopupPhotoPickerModal.visibility = View.GONE
-                                            bottomNavigation.visibility = View.VISIBLE
-                                        }
-                                        homePopupPhotoPicker.photoButton.setOnClickListener {
-                                            startCameraX()
-                                        }
-                                        homePopupPhotoPicker.galleryButton.setOnClickListener {
-                                            startGallery()
-                                        }
-                                    }
-                                }
-                                is Result.Error -> {
-                                    showLoading(false)
-
-                                    Snackbar.make(
-                                        window.decorView.rootView,
-                                        it.error,
-                                        Snackbar.LENGTH_SHORT
-                                    ).show()
+                            if (histories.isEmpty()) {
+                                seeAllTv.visibility = View.GONE
+                            } else {
+                                seeAllTv.visibility = View.VISIBLE
+                                seeAllTv.setOnClickListener {
+                                    startActivity(Intent(this@HomeActivityLogged, DiseaseHistoryActivity::class.java))
                                 }
                             }
+                            btnScanImage.setOnClickListener{
+                                homePopupPhotoPicker.root.visibility = View.VISIBLE
+                                homePopupPhotoPickerModal.visibility = View.VISIBLE
+                                bottomNavigation.visibility = View.GONE
+                            }
+                            popupClose.root.setOnClickListener {
+                                homePopupPhotoPicker.root.visibility = View.GONE
+                                homePopupPhotoPickerModal.visibility = View.GONE
+                                bottomNavigation.visibility = View.VISIBLE
+                            }
+                            homePopupPhotoPicker.photoButton.setOnClickListener {
+                                startCameraX()
+                            }
+                            homePopupPhotoPicker.galleryButton.setOnClickListener {
+                                startGallery()
+                            }
                         }
+                    }
+                    is Result.Error -> {
+                        showLoading(false)
+
+                        Snackbar.make(
+                            window.decorView.rootView,
+                            it.error,
+                            Snackbar.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }

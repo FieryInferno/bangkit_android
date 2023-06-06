@@ -10,9 +10,9 @@ import androidx.paging.PagingData
 import com.example.bangkitandroid.data.local.TokenPreferences
 import com.example.bangkitandroid.data.paging.DiseasePagingSource
 import com.example.bangkitandroid.data.remote.request.LoginRequest
+import com.example.bangkitandroid.data.remote.response.HomeResponse
 import com.example.bangkitandroid.data.remote.response.LoginResult
 import com.example.bangkitandroid.data.remote.response.RegisterResult
-import com.example.bangkitandroid.data.remote.response.HomeResponse
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.domain.entities.History
@@ -24,12 +24,11 @@ import com.example.bangkitandroid.service.Result
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-import java.lang.Exception
 
-class Repository(
+class Repository (
     private val apiService: ApiService,
     private val tokenPreferences: TokenPreferences?
 ){
@@ -79,10 +78,8 @@ class Repository(
                 requestImageFile
             )
 
-            val response = apiService.postDisease(
-                token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1OTcwOTExLCJpYXQiOjE2ODU5Mjc3MTEsImp0aSI6ImM3ZThjMzVkMmE2ZDRjNmRhYTM2YTcwMDllYzJmNDE1IiwidXNlcl9pZCI6OH0.cyyybPRbLPIW83UMM_wt0BQWIuIh1AWgDHH1x4Fe2zY",
-                file = imageMultipart
-            )
+            val response = apiService.postDisease(token = _token, file = imageMultipart)
+
             emit(Result.Success(response.toDisease()))
         } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
@@ -95,11 +92,11 @@ class Repository(
                 pageSize = 10,
             ),
             pagingSourceFactory = {
-                DiseasePagingSource(apiService, "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1OTcwOTExLCJpYXQiOjE2ODU5Mjc3MTEsImp0aSI6ImM3ZThjMzVkMmE2ZDRjNmRhYTM2YTcwMDllYzJmNDE1IiwidXNlcl9pZCI6OH0.cyyybPRbLPIW83UMM_wt0BQWIuIh1AWgDHH1x4Fe2zY")
+                DiseasePagingSource(apiService, _token)
             }
         ).flow
     }
-    
+
     fun getBlogDetail(id: Int) : LiveData<Result<Blog>> {
         blogResult.value = Result.Success(DummyData().getDetailBlogDummy(id))
         return blogResult
@@ -131,7 +128,7 @@ class Repository(
             val login = response.data
             emit(Result.Success(login))
         } catch (e: Exception) {
-            emit(Result.Error(e.message.toString()))
+            emit(Result.Error("Nomor Telepon dan kata sandi salah."))
         }
     }
 
@@ -142,7 +139,7 @@ class Repository(
             val register = response.data
             emit(Result.Success(register))
         } catch (e: Exception) {
-            emit(Result.Error(e.message.toString()))
+            emit(Result.Error("Gagal Daftar"))
         }
     }
 

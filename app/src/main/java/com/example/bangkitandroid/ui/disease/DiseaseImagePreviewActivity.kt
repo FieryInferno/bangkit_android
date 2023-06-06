@@ -1,13 +1,16 @@
 package com.example.bangkitandroid.ui.disease
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.ActivityDiseaseImagePreviewBinding
 import com.example.bangkitandroid.service.ViewModelFactory
 import com.example.bangkitandroid.service.rotateBitmap
@@ -28,9 +31,9 @@ class DiseaseImagePreviewActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         val myFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getSerializableExtra("picture", File::class.java)
+            intent.getSerializableExtra(EXTRA_PICTURE, File::class.java)
         } else {
-            intent.getSerializableExtra("picture")
+            intent.getSerializableExtra(EXTRA_PICTURE)
         } as File
         viewModel.setFile(myFile)
 
@@ -60,6 +63,7 @@ class DiseaseImagePreviewActivity : AppCompatActivity() {
                         }
                         is Result.Error -> {
                             layoutPreviewLoading.layoutLoadingFullScreen.visibility = View.GONE
+                            showToast(this@DiseaseImagePreviewActivity, getString(R.string.analysis_failed))
                         }
                     }
                 }
@@ -72,6 +76,10 @@ class DiseaseImagePreviewActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+
+    private fun showToast(context: Context, message: String){
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     private fun startCameraX() {

@@ -3,70 +3,60 @@ package com.example.bangkitandroid
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import com.example.bangkitandroid.ui.authentication.LoginActivity
-import com.example.bangkitandroid.ui.authentication.RegisterActivity
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import com.example.bangkitandroid.service.ViewModelFactory
+import com.example.bangkitandroid.ui.home.HomeActivityLogged
+import com.example.bangkitandroid.ui.home.HomeActivityNotLogged
+import com.example.bangkitandroid.ui.home.HomeViewModel
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var edtWidth: EditText
-    private lateinit var edtHeight: EditText
-    private lateinit var edtLength: EditText
-    private lateinit var btnCalculate: Button
-    private lateinit var btnLogin: Button
-    private lateinit var btnRegister: Button
-    private lateinit var tvResult: TextView
+class MainActivity : AppCompatActivity() {
+
+    private val viewModel : HomeViewModel by viewModels {
+        ViewModelFactory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        supportActionBar?.hide()
+        setView()
+    }
 
-        edtWidth = findViewById(R.id.edt_width)
-        edtHeight = findViewById(R.id.edt_height)
-        edtLength = findViewById(R.id.edt_length)
-        btnCalculate = findViewById(R.id.btn_calculate)
-        tvResult = findViewById(R.id.tv_result)
-        btnLogin = findViewById(R.id.btn_login)
-        btnRegister = findViewById(R.id.btn_register)
-
-        btnCalculate.setOnClickListener(this)
-        btnLogin.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+    private fun setView(){
+        viewModel.getSessionId().observe(this) { session ->
+            if (session.isEmpty()) {
+                startActivity(Intent(this, HomeActivityNotLogged::class.java))
+                finish()
+            } else {
+                viewModel.getToken().observe(this) { token ->
+                    if (token.isNotEmpty()) {
+                        viewModel.setToken(token, session)
+                        startActivity(Intent(this, HomeActivityLogged::class.java))
+                        finish()
+                    }
+                }
+            }
         }
-        btnRegister.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
+
+        setContent {
+            Loading()
         }
     }
 
-    override fun onClick(v: View?) {
-        if (v?.id == R.id.btn_calculate) {
-            val inputLength = edtLength.text.toString().trim()
-            val inputWidth = edtWidth.text.toString().trim()
-            val inputHeight = edtHeight.text.toString().trim()
-
-            var isEmptyFields = false
-
-            if (inputLength.isEmpty()) {
-                isEmptyFields = true
-                edtLength.error = "Field ini tidak boleh kosong"
-            }
-            if (inputWidth.isEmpty()) {
-                isEmptyFields = true
-                edtWidth.error = "Field ini tidak boleh kosong"
-            }
-            if (inputHeight.isEmpty()) {
-                isEmptyFields = true
-                edtHeight.error = "Field ini tidak boleh kosong"
-            }
-
-            if (!isEmptyFields) {
-                val rectangular = RectangularBox(inputLength.toDouble(), inputWidth.toDouble(), inputHeight.toDouble())
-                tvResult.text = rectangular.getVolume().toString()
-            }
+    @Composable
+    fun Loading() {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator(color = Color.Green)
         }
     }
 }
