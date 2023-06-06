@@ -76,30 +76,29 @@ class DiseaseHistoryActivity : AppCompatActivity() {
                     }
                 }
             ) { innerPadding ->
-
+                when (diseases.loadState.refresh) { // Pagination
+                    is LoadState.Error -> {
+                        Placeholder(
+                            modifier = Modifier.fillMaxHeight()
+                        ){
+                            Text(text = stringResource(R.string.connection_error))
+                        }
+                    }
+                    is LoadState.Loading -> { // Pagination Loading UI
+                        Placeholder(
+                            modifier = Modifier.fillMaxHeight()
+                        ){
+                            CircularProgressIndicator(color = Color(0xFF116531))
+                        }
+                    }
+                    else -> {}
+                }
                 LazyColumn(
                     modifier = Modifier
                         .padding(innerPadding)
                         .padding(horizontal = 16.dp),
                 ){
-                    when (diseases.loadState.refresh) { // Pagination
-                        is LoadState.Error -> {
-                            item {
-                                Placeholder{
-                                    Text(text = stringResource(R.string.connection_error))
-                                }
-                            }
-                        }
-                        is LoadState.Loading -> { // Pagination Loading UI
-                            item {
-                                Placeholder{
-                                    CircularProgressIndicator(color = Color(0xFF116531))
-                                }
-                            }
-                        }
-                        else -> {}
-                    }
-                    items(diseases.itemCount, key = { diseases[it]?.id ?: 0 }){
+                    items(diseases.itemCount){
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             CardHorizontalItem(
                                 onTap = {
@@ -132,10 +131,11 @@ class DiseaseHistoryActivity : AppCompatActivity() {
 
     @Composable
     fun Placeholder(
+        modifier: Modifier = Modifier,
         child: @Composable () -> Unit,
     ){
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,

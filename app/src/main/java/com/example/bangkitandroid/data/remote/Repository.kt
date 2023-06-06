@@ -35,7 +35,7 @@ class Repository (
     private val loginResult = MediatorLiveData<Result<User>>()
     private val registerResult = MediatorLiveData<Result<User>>()
 
-    fun getToken() = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1OTcwOTExLCJpYXQiOjE2ODU5Mjc3MTEsImp0aSI6ImM3ZThjMzVkMmE2ZDRjNmRhYTM2YTcwMDllYzJmNDE1IiwidXNlcl9pZCI6OH0.cyyybPRbLPIW83UMM_wt0BQWIuIh1AWgDHH1x4Fe2zY"
+    fun getToken() = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2MDY4ODQyLCJpYXQiOjE2ODYwMjU2NDIsImp0aSI6IjRhZTkwZWVmMzQxNzRmYmQ5ZjQ4OWQ0ODUxZjFkMTU3IiwidXNlcl9pZCI6OH0.JjEgmAGwlNjorQhfYGPnOv0uy2DDxWac8RTZrODE_B4"
 
     fun login(phoneNumber: String, password: String): LiveData<Result<User>> {
         loginResult.value = Result.Success(DummyData().getUserDummy(1))

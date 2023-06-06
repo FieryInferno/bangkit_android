@@ -27,7 +27,7 @@ fun CardHorizontalItem(
     onTap: () -> Unit
     ){
         Box(
-            modifier = modifier.padding(bottom = 16.dp)
+            modifier = modifier.padding(bottom = 8.dp)
         ) {
             Card(
                 modifier = Modifier.height(80.dp).clickable { onTap() },
