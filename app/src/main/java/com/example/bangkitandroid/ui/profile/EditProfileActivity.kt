@@ -8,7 +8,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -122,13 +122,15 @@ class EditProfileActivity : AppCompatActivity() {
                         if (it != null) {
                             when (it) {
                                 is Result.Loading -> {
-
+                                    showLoading(true)
                                 }
                                 is Result.Success -> {
+                                    showLoading(false)
                                     finish()
                                     startActivity(Intent(this@EditProfileActivity, ProfileLoggedActivity::class.java))
                                 }
                                 is Result.Error -> {
+                                    showLoading(false)
                                     Snackbar.make(
                                         window.decorView.rootView,
                                         it.error,
@@ -143,17 +145,18 @@ class EditProfileActivity : AppCompatActivity() {
                     val phoneBody = updatedPhone?.toRequestBody("text/plain".toMediaType())
 
                     viewModel.editProfile(nameBody!!, phoneBody!!, null).observe(this@EditProfileActivity) {
-                        Log.e("CALLED VIEW MODEL", "OK")
                         if (it != null) {
                             when (it) {
                                 is Result.Loading -> {
-                                    Log.e("LOADING", "LOAD")
+                                    showLoading(true)
                                 }
                                 is Result.Success -> {
+                                    showLoading(false)
                                     finish()
                                     startActivity(Intent(this@EditProfileActivity, ProfileLoggedActivity::class.java))
                                 }
                                 is Result.Error -> {
+                                    showLoading(false)
                                     Snackbar.make(
                                         window.decorView.rootView,
                                         it.error,
@@ -224,6 +227,10 @@ class EditProfileActivity : AppCompatActivity() {
         intent.type = "image/*"
         val chooser = Intent.createChooser(intent, "Choose a Picture")
         launcherIntentGallery.launch(chooser)
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {
