@@ -151,11 +151,23 @@ class HomeActivityLogged : AppCompatActivity() {
                     is Result.Error -> {
                         showLoading(false)
 
-                        Snackbar.make(
-                            window.decorView.rootView,
-                            it.error,
-                            Snackbar.LENGTH_SHORT
-                        ).show()
+                        if(it.error.contains("401")){
+                            viewModel.setToken("", "")
+                            startActivity(Intent(this@HomeActivityLogged, HomeActivityNotLogged::class.java))
+                            finish()
+                            Snackbar.make(
+                                window.decorView.rootView,
+                                "Silakan login kembali",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Snackbar.make(
+                                window.decorView.rootView,
+                                it.error,
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
+
                     }
                 }
             }

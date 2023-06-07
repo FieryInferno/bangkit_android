@@ -58,6 +58,7 @@ class DiseaseImagePreviewActivity : AppCompatActivity() {
                             layoutPreviewLoading.layoutLoadingFullScreen.visibility = View.GONE
                             val intent = Intent(this@DiseaseImagePreviewActivity, DiseaseDetailActivity::class.java)
                             intent.putExtra(DiseaseDetailActivity.EXTRA_DISEASE, it.data)
+                            intent.putExtra(DiseaseDetailActivity.EXTRA_PICTURE, viewModel.getFile().value)
                             startActivity(intent)
                             finish()
                         }

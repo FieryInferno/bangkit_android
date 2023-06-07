@@ -156,7 +156,11 @@ class Repository (
     }
 
     suspend fun setToken(token: String, sessionId: String){
-        _token = "Bearer $token"
+        _token = if(token.isNotEmpty()){
+            "Bearer $token"
+        } else {
+            ""
+        }
         tokenPreferences!!.saveToken(token, sessionId)
     }
 

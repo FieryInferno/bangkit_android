@@ -108,6 +108,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:paddingBottom="72dp"
                 android:orientation="vertical"
+                android:nestedScrollingEnabled="false"
                 tools:listitem="@layout/horizontal_card_item" />
 
         </LinearLayout>

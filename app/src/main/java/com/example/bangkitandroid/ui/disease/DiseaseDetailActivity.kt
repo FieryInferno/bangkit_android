@@ -1,17 +1,26 @@
 package com.example.bangkitandroid.ui.disease
 
+import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.window.OnBackInvokedDispatcher
+import androidx.annotation.RequiresApi
+import androidx.core.os.BuildCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.ActivityDiseaseDetailBinding
 import com.example.bangkitandroid.domain.entities.Disease
 import com.example.bangkitandroid.service.DateFormatter
+import com.example.bangkitandroid.ui.home.HomeActivityLogged
+import com.example.bangkitandroid.ui.home.HomeActivityNotLogged
+import java.io.File
 
 class DiseaseDetailActivity : AppCompatActivity() {
     private lateinit var disease: Disease
+    private var image: File? = null
     private var binding: ActivityDiseaseDetailBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +38,12 @@ class DiseaseDetailActivity : AppCompatActivity() {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra(EXTRA_DISEASE)
         } as Disease
+        val myFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra(EXTRA_PICTURE, File::class.java)
+        } else {
+            intent.getSerializableExtra(EXTRA_PICTURE)
+        } as File
+        image = myFile
         disease = data
     }
 
@@ -42,14 +57,23 @@ class DiseaseDetailActivity : AppCompatActivity() {
             }
 
             tvDiseaseTreatment.text = disease.treatment
-            Glide.with(this@DiseaseDetailActivity)
-                .load(disease.image)
-                .placeholder(R.drawable.ic_launcher_background)
-                .into(imgDiseaseDetail)
+            if(disease.image != null){
+                Glide.with(this@DiseaseDetailActivity)
+                    .load(disease.image)
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .into(imgDiseaseDetail)
+            } else {
+                imgDiseaseDetail.setImageBitmap(BitmapFactory.decodeFile(image?.path))
+            }
+
             rvDiseaseProductRecommendation.layoutManager = LinearLayoutManager(this@DiseaseDetailActivity, LinearLayoutManager.HORIZONTAL, false)
             rvDiseaseProductRecommendation.adapter = adapter
             btnDiseaseBack.setOnClickListener {
-                finish()
+                if(disease.image == null){
+                   startActivity(Intent(this@DiseaseDetailActivity, HomeActivityNotLogged::class.java))
+                } else {
+                    startActivity(Intent(this@DiseaseDetailActivity, HomeActivityLogged::class.java))
+                }
             }
         }
     }
@@ -60,6 +84,7 @@ class DiseaseDetailActivity : AppCompatActivity() {
     }
 
     companion object {
+        const val EXTRA_PICTURE = "extra_picture"
         const val EXTRA_DISEASE = "extra_disease"
     }
 }
