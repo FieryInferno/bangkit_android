@@ -11,7 +11,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import com.example.bangkitandroid.service.ViewModelFactory
 import com.example.bangkitandroid.ui.home.HomeActivityLogged
 import com.example.bangkitandroid.ui.home.HomeActivityNotLogged
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            CircularProgressIndicator(color = Color.Green)
+            CircularProgressIndicator(color = colorResource(id = R.color.green_400))
         }
     }
 }
