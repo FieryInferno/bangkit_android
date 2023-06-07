@@ -1,5 +1,6 @@
 package com.example.bangkitandroid.data.remote.response
 
+import com.example.bangkitandroid.data.remote.model.UserModel
 import com.example.bangkitandroid.domain.entities.Blog
 import com.google.gson.annotations.SerializedName
 
@@ -18,7 +19,7 @@ data class BlogResponse (
     val title: String,
 
     @field:SerializedName("user")
-    val user: Int,
+    val user: UserModel,
 
     @field:SerializedName("timestamp")
     val timestamp: String

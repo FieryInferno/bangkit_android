@@ -12,7 +12,7 @@ class ProductRecommendationAdapter(private val products: List<Product>) : Recycl
     inner class ViewHolder(private val binding: VerticalCardItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(product: Product){
             binding.tvTitleVerticalItem.text = product.title
-            binding.tvSubtitleVerticalItem.text = product.price
+            binding.tvSubtitleVerticalItem.text = product.price.toString()
             Glide.with(binding.imgVerticalItem.context)
                 .load(product.imgUrl)
                 .placeholder(R.drawable.ic_launcher_background)

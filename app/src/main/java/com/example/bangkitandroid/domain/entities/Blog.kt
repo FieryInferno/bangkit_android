@@ -1,11 +1,14 @@
 package com.example.bangkitandroid.domain.entities
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Blog (
+    val image: String,
+    val description: String,
     val id: Int,
     val title: String,
-    val dateTime: String,
-    val author: String,
-    val imgUrl: String,
-    val description: String,
-    val comments: List<Comment>
-)
+    val user: User,
+    val timestamp: String
+): Parcelable

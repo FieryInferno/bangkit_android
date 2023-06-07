@@ -1,15 +1,15 @@
 package com.example.bangkitandroid.data.remote.response
 
-import com.example.bangkitandroid.domain.entities.Disease
+import com.example.bangkitandroid.data.remote.model.DiseaseModel
+import com.example.bangkitandroid.data.remote.model.HistoryModel
+import com.example.bangkitandroid.data.remote.model.MetaModel
 import com.google.gson.annotations.SerializedName
 
-data class DiseaseHistoryResponse (
-    @field:SerializedName("success")
-    val success: Boolean,
+data class DiseaseHistoryResponse(
 
-    @field:SerializedName("message")
-    val message: String,
+	@field:SerializedName("result")
+	val result: List<HistoryModel>,
 
-    @field:SerializedName("data")
-    val disease: List<Disease>?,
+	@field:SerializedName("meta")
+	val meta: MetaModel
 )

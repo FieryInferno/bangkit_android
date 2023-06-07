@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bangkitandroid.R
+import com.example.bangkitandroid.data.remote.model.BlogModel
 import com.example.bangkitandroid.data.remote.response.BlogResponse
 import com.example.bangkitandroid.databinding.ActivityBlogListBinding
 import com.example.bangkitandroid.domain.entities.Blog
@@ -45,9 +46,9 @@ class BlogListActivity : AppCompatActivity() {
 
         val adapter = BlogAdapter()
         adapter.setOnItemTapCallback(object : BlogAdapter.OnItemTapCallback{
-            override fun onItemTap(data: BlogResponse) {
+            override fun onItemTap(data: BlogModel) {
                 val detailBlogIntent = Intent(this@BlogListActivity, BlogDetailActivity::class.java)
-                detailBlogIntent.putExtra(BlogDetailActivity.EXTRA_ID, data.id.toString())
+                detailBlogIntent.putExtra(BlogDetailActivity.EXTRA_BLOG, data.id.toString())
                 startActivity(detailBlogIntent)
             }
         })

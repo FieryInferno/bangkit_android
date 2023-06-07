@@ -46,6 +46,16 @@
     <string name="masukkan_nama">Masukkan Nama</string>
     <string name="nama">Nama</string>
     <string name="daftar">Daftar</string>
+    <string name="something_wrong">Something Wrong</string>
+    <string name="take_photo">Ambil foto</string>
+    <string name="gallery">Galeri</string>
+    <string name="fill_new_name">Nama sama dengan nama lama</string>
+    <string name="fill_new_phone">Nomor telepon sama dengan nomor telepon lama</string>
+    <string name="flip_camera">Balik kamera</string>
+    <string name="please_pick_image">Silakan ambil gambar tanaman Anda</string>
+    <string name="disease_name_label">Nama Penyakit</string>
+    <string name="analysis_failed">Gagal Menganalisis</string>
+    <string name="connection_error">Jaringan Bermasalah</string>
     <string name="timeout">Time Out</string>
     <string name="retry">Retry</string>
 </resources>

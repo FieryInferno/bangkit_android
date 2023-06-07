@@ -33,13 +33,13 @@ class BlogDetailActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        val idUser = intent.getStringExtra(EXTRA_ID)?.toInt()
+        val idUser = intent.getStringExtra(EXTRA_BLOG)?.toInt()
         if (idUser != null){
             viewModel.getBlog(idUser)
         }
     }
     private fun setView() {
-        val idUser = intent.getStringExtra(EXTRA_ID)?.toInt()
+        val idUser = intent.getStringExtra(EXTRA_BLOG)?.toInt()
         if (idUser != null) {
             viewModel.getBlog(idUser).observe(this) { result ->
                 if (result != null) {
@@ -80,20 +80,22 @@ class BlogDetailActivity : AppCompatActivity() {
                     adapter.retry()
                 }
             )
-            viewModel.listComment.observe(this@BlogDetailActivity) {
-                adapter.submitData(lifecycle, it)
-            }
+//            viewModel.listComment.observe(this@BlogDetailActivity) {
+//                adapter.submitData(lifecycle, it)
+//            }
             btnBlogBack.setOnClickListener {
                 finish()
             }
         }
+
     }
+
     override fun onDestroy() {
         super.onDestroy()
         binding = null
     }
 
     companion object{
-        const val EXTRA_ID = "extra_id"
+        const val EXTRA_BLOG = "extra_blog"
     }
 }

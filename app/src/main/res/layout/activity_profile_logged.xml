@@ -19,7 +19,7 @@
         android:layout_marginBottom="16dp"
         android:textColor="@color/black"
         android:drawablePadding="4dp"
-        app:drawableStartCompat="@drawable/leaf" />
+        app:drawableStartCompat="@drawable/ic_leaf" />
 
     <TextView
         android:id="@+id/edit_tv"
@@ -33,7 +33,7 @@
         android:drawablePadding="4dp"
         app:drawableStartCompat="@drawable/icon_edit"/>
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/person_photo"
         android:layout_width="150dp"
         android:layout_height="150dp"

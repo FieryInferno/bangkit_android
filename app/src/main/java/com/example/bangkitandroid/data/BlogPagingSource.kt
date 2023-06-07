@@ -4,20 +4,21 @@ import android.util.Log
 import androidx.datastore.preferences.protobuf.Api
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.example.bangkitandroid.data.remote.model.BlogModel
 import com.example.bangkitandroid.data.remote.response.BlogResponse
 import com.example.bangkitandroid.data.remote.retrofit.ApiService
 
 class BlogPagingSource(
     private val apiService: ApiService,
-): PagingSource<Int, BlogResponse>() {
-    override fun getRefreshKey(state: PagingState<Int, BlogResponse>): Int? {
+): PagingSource<Int, BlogModel>() {
+    override fun getRefreshKey(state: PagingState<Int, BlogModel>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, BlogResponse> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, BlogModel> {
         return try {
             val page = params.key ?: INITIAL_PAGE_INDEX
             val response = apiService.getListBlogs(page, params.loadSize)

@@ -1,11 +1,11 @@
 //package com.example.bangkitandroid.ui.authentication
 //
 //import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+//import com.example.bangkitandroid.data.remote.Repository
 //import com.example.bangkitandroid.data.remote.retrofit.ApiService
 //import com.example.bangkitandroid.service.DummyData
 //import com.example.bangkitandroid.service.Result
 //import com.example.bangkitandroid.data.remote.FakeApiService
-//import com.example.bangkitandroid.data.remote.Repository
 //import com.example.bangkitandroid.utils.MainDispatcherRule
 //import com.example.bangkitandroid.utils.observeForTesting
 //import kotlinx.coroutines.ExperimentalCoroutinesApi
