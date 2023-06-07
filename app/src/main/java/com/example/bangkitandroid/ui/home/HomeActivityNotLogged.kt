@@ -79,14 +79,13 @@ class HomeActivityNotLogged : AppCompatActivity() {
             if (it != null) {
                 when (it) {
                     is Result.Loading -> {
-                        showLoading(true)
                         binding.apply {
-                            blogTv.visibility = View.GONE
+                            val blogPlaceholderAdapter = BlogPlaceholderAdapter()
+                            blogRv.layoutManager = LinearLayoutManager(this@HomeActivityNotLogged)
+                            blogRv.adapter = blogPlaceholderAdapter
                         }
                     }
                     is Result.Success -> {
-                        showLoading(false)
-
                         blogs = it.data.blogs.toListBlog()
 
                         val blogAdapter = BlogAdapter(blogs)
@@ -99,8 +98,6 @@ class HomeActivityNotLogged : AppCompatActivity() {
                         })
 
                         binding.apply {
-                            blogTv.visibility = View.VISIBLE
-
                             blogRv.layoutManager = LinearLayoutManager(this@HomeActivityNotLogged)
                             blogRv.adapter = blogAdapter
                             btnScanImage.setOnClickListener{
@@ -122,8 +119,6 @@ class HomeActivityNotLogged : AppCompatActivity() {
                         }
                     }
                     is Result.Error -> {
-                        showLoading(false)
-
                         Snackbar.make(
                             window.decorView.rootView,
                             it.error,
@@ -205,10 +200,6 @@ class HomeActivityNotLogged : AppCompatActivity() {
                 viewModel.setFile(myFile)
             }
         }
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {

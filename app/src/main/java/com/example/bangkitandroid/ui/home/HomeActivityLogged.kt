@@ -77,15 +77,23 @@ class HomeActivityLogged : AppCompatActivity() {
             if (it != null) {
                 when (it) {
                     is Result.Loading -> {
-                        showLoading(true)
                         binding.apply {
-                            relativeLayout.visibility = View.GONE
-                            blogTv.visibility = View.GONE
+                            seeAllTv.visibility = View.GONE
+
+                            val historyPlaceholderAdapter = HistoryPlaceholderAdapter()
+                            historyRv.layoutManager = LinearLayoutManager(
+                                this@HomeActivityLogged,
+                                LinearLayoutManager.HORIZONTAL,
+                                false
+                            )
+                            historyRv.adapter = historyPlaceholderAdapter
+
+                            val blogPlaceholderAdapter = BlogPlaceholderAdapter()
+                            blogRv.layoutManager = LinearLayoutManager(this@HomeActivityLogged)
+                            blogRv.adapter = blogPlaceholderAdapter
                         }
                     }
                     is Result.Success -> {
-                        showLoading(false)
-
                         histories = it.data.history.toListHistory()
                         blogs = it.data.blogs.toListBlog()
 
@@ -108,16 +116,12 @@ class HomeActivityLogged : AppCompatActivity() {
                         })
 
                         binding.apply {
-                            relativeLayout.visibility = View.VISIBLE
-
                             historyRv.layoutManager = LinearLayoutManager(
                                 this@HomeActivityLogged,
                                 LinearLayoutManager.HORIZONTAL,
                                 false
                             )
                             historyRv.adapter = historyAdapter
-
-                            blogTv.visibility = View.VISIBLE
 
                             blogRv.layoutManager = LinearLayoutManager(this@HomeActivityLogged)
                             blogRv.adapter = blogAdapter
@@ -149,13 +153,23 @@ class HomeActivityLogged : AppCompatActivity() {
                         }
                     }
                     is Result.Error -> {
-                        showLoading(false)
+                        if(it.error.contains("401")){
+                            viewModel.setToken("", "")
+                            startActivity(Intent(this@HomeActivityLogged, HomeActivityNotLogged::class.java))
+                            finish()
+                            Snackbar.make(
+                                window.decorView.rootView,
+                                "Silakan login kembali",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Snackbar.make(
+                                window.decorView.rootView,
+                                it.error,
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
 
-                        Snackbar.make(
-                            window.decorView.rootView,
-                            it.error,
-                            Snackbar.LENGTH_SHORT
-                        ).show()
                     }
                 }
             }
@@ -231,10 +245,6 @@ class HomeActivityLogged : AppCompatActivity() {
                 viewModel.setFile(myFile)
             }
         }
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {
