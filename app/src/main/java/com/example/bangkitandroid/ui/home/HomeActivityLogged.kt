@@ -153,7 +153,9 @@ class HomeActivityLogged : AppCompatActivity() {
                         }
                     }
                     is Result.Error -> {
-                        if(it.error.contains("401")){
+                        if(it.error.contains("timeout")){
+                            viewModel.getHome()
+                        } else if(it.error.contains("401")){
                             viewModel.setToken("", "")
                             startActivity(Intent(this@HomeActivityLogged, HomeActivityNotLogged::class.java))
                             finish()

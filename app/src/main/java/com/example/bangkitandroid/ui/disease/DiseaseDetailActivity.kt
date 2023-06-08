@@ -65,13 +65,6 @@ class DiseaseDetailActivity : AppCompatActivity() {
 
             rvDiseaseProductRecommendation.layoutManager = LinearLayoutManager(this@DiseaseDetailActivity, LinearLayoutManager.HORIZONTAL, false)
             rvDiseaseProductRecommendation.adapter = adapter
-            btnDiseaseBack.setOnClickListener {
-                if(disease.image == null){
-                   startActivity(Intent(this@DiseaseDetailActivity, HomeActivityNotLogged::class.java))
-                } else {
-                    startActivity(Intent(this@DiseaseDetailActivity, HomeActivityLogged::class.java))
-                }
-            }
         }
     }
 

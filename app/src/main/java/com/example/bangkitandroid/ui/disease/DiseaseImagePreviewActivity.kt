@@ -73,9 +73,6 @@ class DiseaseImagePreviewActivity : AppCompatActivity() {
             btnRetakeImage.setOnClickListener {
                 startCameraX()
             }
-            btnDiseasePreviewBack.btnImageBack.setOnClickListener {
-                finish()
-            }
         }
     }
 

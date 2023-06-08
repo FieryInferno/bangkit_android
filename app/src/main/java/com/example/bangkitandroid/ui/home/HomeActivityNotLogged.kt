@@ -119,11 +119,16 @@ class HomeActivityNotLogged : AppCompatActivity() {
                         }
                     }
                     is Result.Error -> {
-                        Snackbar.make(
-                            window.decorView.rootView,
-                            it.error,
-                            Snackbar.LENGTH_SHORT
-                        ).show()
+                        if(it.error.contains("timeout")){
+                            viewModel.getHome()
+                        } else {
+                            Snackbar.make(
+                                window.decorView.rootView,
+                                it.error,
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
+
                     }
                 }
             }
