@@ -40,7 +40,7 @@ fun CardHorizontalItemPlaceholder(
                                 .background(color = AppColors.green200)
                                 .height(14.dp)
                                 .fillMaxWidth())
-                            Spacer(modifier = Modifier.width(4.dp))
+                            Spacer(modifier = Modifier.height(4.dp))
                             Box(modifier = Modifier
                                 .background(color = AppColors.green200)
                                 .height(14.dp)
