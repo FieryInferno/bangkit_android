@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class HistoryModel(
 
     @field:SerializedName("image")
-    val image: String,
+    val image: String?,
 
     @field:SerializedName("disease")
     val disease: DiseaseModel,

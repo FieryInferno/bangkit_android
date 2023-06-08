@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
@@ -25,6 +26,7 @@ import com.example.bangkitandroid.ui.disease.DiseaseImagePreviewActivity
 import com.example.bangkitandroid.ui.profile.CameraActivity
 import com.example.bangkitandroid.ui.profile.EditProfileActivity
 import com.example.bangkitandroid.ui.profile.ProfileNotLoggedActivity
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 
@@ -58,8 +60,6 @@ class HomeActivityNotLogged : AppCompatActivity() {
         viewModel.getFile().observe(this@HomeActivityNotLogged){
             if(it != null){
                 binding.apply {
-                    homePopupPhotoPicker.root.visibility = View.GONE
-                    homePopupPhotoPickerModal.visibility = View.GONE
                     bottomNavigation.visibility = View.VISIBLE
                 }
                 val intent = Intent(this, DiseaseImagePreviewActivity::class.java)
@@ -79,14 +79,13 @@ class HomeActivityNotLogged : AppCompatActivity() {
             if (it != null) {
                 when (it) {
                     is Result.Loading -> {
-                        showLoading(true)
                         binding.apply {
-                            blogTv.visibility = View.GONE
+                            val blogPlaceholderAdapter = BlogPlaceholderAdapter()
+                            blogRv.layoutManager = LinearLayoutManager(this@HomeActivityNotLogged)
+                            blogRv.adapter = blogPlaceholderAdapter
                         }
                     }
                     is Result.Success -> {
-                        showLoading(false)
-
                         blogs = it.data.blogs.toListBlog()
 
                         val blogAdapter = BlogAdapter(blogs)
@@ -99,40 +98,42 @@ class HomeActivityNotLogged : AppCompatActivity() {
                         })
 
                         binding.apply {
-                            blogTv.visibility = View.VISIBLE
-
                             blogRv.layoutManager = LinearLayoutManager(this@HomeActivityNotLogged)
                             blogRv.adapter = blogAdapter
                             btnScanImage.setOnClickListener{
-                                homePopupPhotoPicker.root.visibility = View.VISIBLE
-                                homePopupPhotoPickerModal.visibility = View.VISIBLE
-                                bottomNavigation.visibility = View.GONE
+                               showPopup()
                             }
-                            popupClose.root.setOnClickListener {
-                                homePopupPhotoPicker.root.visibility = View.GONE
-                                homePopupPhotoPickerModal.visibility = View.GONE
-                                bottomNavigation.visibility = View.VISIBLE
-                            }
-                            homePopupPhotoPicker.photoButton.setOnClickListener {
-                                startCameraX()
-                            }
-                            homePopupPhotoPicker.galleryButton.setOnClickListener {
-                                startGallery()
-                            }
+
                         }
                     }
                     is Result.Error -> {
-                        showLoading(false)
+                        if(it.error.contains("timeout")){
+                            viewModel.getHome()
+                        } else {
+                            Snackbar.make(
+                                window.decorView.rootView,
+                                it.error,
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
 
-                        Snackbar.make(
-                            window.decorView.rootView,
-                            it.error,
-                            Snackbar.LENGTH_SHORT
-                        ).show()
                     }
                 }
             }
         }
+    }
+
+    private fun showPopup() {
+        val dialog = BottomSheetDialog(this)
+        dialog.setContentView(R.layout.popup_photo_picker)
+
+        val photoButton = dialog.findViewById<TextView>(R.id.photo_button)
+        val galleryButton = dialog.findViewById<TextView>(R.id.gallery_button)
+
+        photoButton?.setOnClickListener { startCameraX() }
+        galleryButton?.setOnClickListener { startGallery() }
+
+        dialog.show()
     }
 
     private fun setupBottomNavigationView() {
@@ -205,10 +206,6 @@ class HomeActivityNotLogged : AppCompatActivity() {
                 viewModel.setFile(myFile)
             }
         }
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {

@@ -25,6 +25,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.bangkitandroid.R
 import com.example.bangkitandroid.component.CardHorizontalItem
+import com.example.bangkitandroid.component.CardHorizontalItemPlaceholder
 import com.example.bangkitandroid.domain.entities.History
 import com.example.bangkitandroid.service.DateFormatter
 import com.example.bangkitandroid.service.ViewModelFactory
@@ -85,10 +86,14 @@ class DiseaseHistoryActivity : AppCompatActivity() {
                         }
                     }
                     is LoadState.Loading -> { // Pagination Loading UI
-                        Placeholder(
-                            modifier = Modifier.fillMaxHeight()
+                        LazyColumn(
+                            modifier = Modifier
+                                .padding(innerPadding)
+                                .padding(horizontal = 16.dp),
                         ){
-                            CircularProgressIndicator(color = Color(0xFF116531))
+                            items(5){
+                                CardHorizontalItemPlaceholder()
+                            }
                         }
                     }
                     else -> {}

@@ -3,6 +3,7 @@ package com.example.bangkitandroid.ui.profile
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.example.bangkitandroid.R
@@ -37,23 +38,32 @@ class ProfileLoggedActivity : AppCompatActivity() {
             if (it != null) {
                 when (it) {
                     is Result.Loading -> {
-
+                        binding.apply {
+                            personName.visibility = View.GONE
+                            personPhone.visibility = View.GONE
+                        }
                     }
                     is Result.Success -> {
                         user = it.data
 
-                        if (user.imgUrl != "") {
-                            Glide.with(this).load(user.imgUrl).into(binding.personPhoto)
-                        } else {
-                            binding.personPhoto.setImageResource(R.drawable.image_profile_default)
-                        }
-                        binding.personName.text = user.name
-                        binding.personPhone.text = user.phoneNumber
+                        binding.apply {
+                            if (user.imgUrl != "") {
+                                Glide.with(this@ProfileLoggedActivity).load(user.imgUrl).into(personPhoto)
+                            } else {
+                                personPhoto.setImageResource(R.drawable.image_profile_default)
+                            }
 
-                        binding.editTv.setOnClickListener {
-                            val intent = Intent(this, EditProfileActivity::class.java)
-                            intent.putExtra(EditProfileActivity.EXTRA_USER, user)
-                            startActivity(intent)
+                            personName.visibility = View.VISIBLE
+                            personPhone.visibility = View.VISIBLE
+
+                            personName.text = user.name
+                            personPhone.text = user.phoneNumber
+
+                            editTv.setOnClickListener {
+                                val intent = Intent(this@ProfileLoggedActivity, EditProfileActivity::class.java)
+                                intent.putExtra(EditProfileActivity.EXTRA_USER, user)
+                                startActivity(intent)
+                            }
                         }
                     }
                     is Result.Error -> {
