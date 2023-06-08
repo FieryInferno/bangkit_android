@@ -24,6 +24,8 @@ class BlogViewModel(private val repository: Repository) : ViewModel() {
         return repository.getBlogDetail(id)
     }
 
+    fun getSessionId() = repository.getSessionId()
+
 //    val listComment: LiveData<PagingData<Comment>> =
 //        repository.getListComment().cachedIn(viewModelScope)
 

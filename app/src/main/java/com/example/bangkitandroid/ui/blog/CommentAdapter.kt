@@ -10,8 +10,8 @@ import com.example.bangkitandroid.R
 import com.example.bangkitandroid.databinding.CommentCardItemBinding
 import com.example.bangkitandroid.domain.entities.Comment
 
-class CommentAdapter : PagingDataAdapter<Comment, CommentAdapter.ViewHolder>(
-    DIFF_CALLBACK) {
+class CommentAdapter(private val comment: List<Comment>) :
+    RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: CommentCardItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(comment: Comment){
@@ -29,22 +29,10 @@ class CommentAdapter : PagingDataAdapter<Comment, CommentAdapter.ViewHolder>(
         return ViewHolder(binding)
     }
 
+    override fun getItemCount(): Int = comment.size
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val comment = getItem(position)
-        if (comment != null){
-            holder.bind(comment)
-        }
-    }
-
-    companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Comment>() {
-            override fun areItemsTheSame(oldItem: Comment, newItem: Comment): Boolean {
-                return oldItem == newItem
-            }
-
-            override fun areContentsTheSame(oldItem: Comment, newItem: Comment): Boolean {
-                return oldItem.id == newItem.id
-            }
-        }
+        val comment = comment[position]
+        holder.bind(comment)
     }
 }

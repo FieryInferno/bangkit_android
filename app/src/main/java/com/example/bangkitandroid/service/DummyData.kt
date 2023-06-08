@@ -234,7 +234,7 @@ class DummyData {
         )
     }
 
-    private fun getCommentDummy(): List<Comment> {
+    fun getCommentDummy(): List<Comment> {
         val comments = ArrayList<Comment>()
         for(i in 1..5){
             val comment = Comment(

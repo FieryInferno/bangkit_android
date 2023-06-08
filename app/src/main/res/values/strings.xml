@@ -58,4 +58,5 @@
     <string name="connection_error">Jaringan Bermasalah</string>
     <string name="timeout">Time Out</string>
     <string name="retry">Retry</string>
+    <string name="belum_ada_komentar">Belum ada komentar.</string>
 </resources>

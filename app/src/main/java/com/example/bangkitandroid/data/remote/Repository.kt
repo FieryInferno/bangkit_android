@@ -115,7 +115,7 @@ class Repository (
     fun getListBlogs(): LiveData<PagingData<BlogModel>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 5
+                pageSize = 10
             ),
             pagingSourceFactory = {
                 BlogPagingSource(apiService)

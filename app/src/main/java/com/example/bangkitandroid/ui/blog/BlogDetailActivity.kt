@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -60,10 +61,18 @@ class BlogDetailActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding?.commentTextInputLayout?.setEndIconOnClickListener {
+            val inputComment = binding?.commentEditText?.text.toString()
+
+            Log.e("input", inputComment)
+        }
+
     }
 
     private fun submitBlogData(data: BlogResponse) {
-        val adapter = CommentAdapter()
+        val comment = DummyData().getCommentDummy()
+        val commentAdapter = CommentAdapter(comment)
         binding?.apply {
             tvBlogName.text = data.title
             tvDiseaseDescription.text = data.description
@@ -75,14 +84,7 @@ class BlogDetailActivity : AppCompatActivity() {
                 .into(imgBlogDetail)
 
             rvComment.layoutManager = LinearLayoutManager(this@BlogDetailActivity, LinearLayoutManager.VERTICAL, false)
-            rvComment.adapter = adapter.withLoadStateFooter(
-                footer = LoadingStateAdapter{
-                    adapter.retry()
-                }
-            )
-//            viewModel.listComment.observe(this@BlogDetailActivity) {
-//                adapter.submitData(lifecycle, it)
-//            }
+            rvComment.adapter = commentAdapter
             btnBlogBack.setOnClickListener {
                 finish()
             }

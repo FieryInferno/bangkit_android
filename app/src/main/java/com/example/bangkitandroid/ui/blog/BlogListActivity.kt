@@ -15,6 +15,8 @@ import com.example.bangkitandroid.domain.entities.Blog
 import com.example.bangkitandroid.service.DummyData
 import com.example.bangkitandroid.service.ViewModelFactory
 import com.example.bangkitandroid.ui.home.HomeActivityNotLogged
+import com.example.bangkitandroid.ui.profile.ProfileLoggedActivity
+import com.example.bangkitandroid.ui.profile.ProfileNotLoggedActivity
 
 class BlogListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBlogListBinding
@@ -63,7 +65,7 @@ class BlogListActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavigationView() {
-        binding.bottomNavigation.selectedItemId = R.id.home
+        binding.bottomNavigation.selectedItemId = R.id.blog
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
@@ -73,11 +75,18 @@ class BlogListActivity : AppCompatActivity() {
                     true
                 }
                 R.id.blog -> {
-                    // Intent to blog page
                     false
                 }
                 R.id.profile -> {
-                    // Intent to profile page
+                    viewModel.getSessionId().observe(this){ session ->
+                        if (session.isEmpty()) {
+                            val profileIntent = Intent(this, ProfileNotLoggedActivity::class.java)
+                            startActivity(profileIntent)
+                        } else {
+                            val profileIntent = Intent(this, ProfileLoggedActivity::class.java)
+                            startActivity(profileIntent)
+                        }
+                    }
                     finish()
                     true
                 }
