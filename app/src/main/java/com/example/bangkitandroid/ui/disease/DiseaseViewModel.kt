@@ -15,18 +15,17 @@ class DiseaseViewModel(private val repository: Repository) : ViewModel() {
 
     private val imgFile = MediatorLiveData<File?>(null)
 
-    fun setFile(file: File){
+    fun setFile(file: File) {
         imgFile.value = file
     }
-    fun getFile() : LiveData<File?>{
+
+    fun getFile(): LiveData<File?> {
         return imgFile
     }
 
-    fun deleteFile(){
-        imgFile.value = null
-    }
+    fun getHistoryDisease(): Flow<PagingData<History>> =
+        repository.getHistoryDisease().cachedIn(viewModelScope)
 
-    fun getHistoryDisease() : Flow<PagingData<History>> = repository.getHistoryDisease().cachedIn(viewModelScope)
-    fun postAnalyzeDisease() : LiveData<Result<Disease>> = repository.postAnalyzeDisease(
-        reduceFileImage(imgFile.value as File))
+    fun postAnalyzeDisease(): LiveData<Result<Disease>> =
+        repository.postAnalyzeDisease(imgFile.value)
 }

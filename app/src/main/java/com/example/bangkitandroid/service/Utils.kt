@@ -86,7 +86,7 @@ fun saveRotatedImage(bitmap: Bitmap, file: File): File {
     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
     outputStream.flush()
     outputStream.close()
-    return file
+    return reduceFileImage(file)
 }
 
 fun reduceFileImage(file: File): File {
