@@ -39,7 +39,7 @@ class DiseaseDetailActivity : AppCompatActivity() {
             intent.getSerializableExtra(EXTRA_PICTURE, File::class.java)
         } else {
             intent.getSerializableExtra(EXTRA_PICTURE)
-        } as File
+        } as File?
         image = myFile
         disease = data
     }
