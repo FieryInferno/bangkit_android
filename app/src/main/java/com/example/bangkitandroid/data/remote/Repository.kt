@@ -159,7 +159,7 @@ class Repository (
         }
     }
 
-    fun register(name: RequestBody, phoneNumber: RequestBody, password: RequestBody, image: MultipartBody.Part) : LiveData<Result<RegisterResult>> = liveData {
+    fun register(name: RequestBody, phoneNumber: RequestBody, password: RequestBody, image: MultipartBody.Part?) : LiveData<Result<RegisterResult>> = liveData {
         emit(Result.Loading)
         try {
             val response = apiService.register(name, phoneNumber, password, image)

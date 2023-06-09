@@ -1,6 +1,7 @@
 package com.example.bangkitandroid.service
 
 import com.example.bangkitandroid.data.remote.model.BlogModel
+import com.example.bangkitandroid.data.remote.model.CommentModel
 import com.example.bangkitandroid.data.remote.model.DiseaseModel
 import com.example.bangkitandroid.data.remote.model.HistoryModel
 import com.example.bangkitandroid.data.remote.model.ProductModel
@@ -123,14 +124,20 @@ class DummyData {
         )
     }
 
-    private fun getComment(): List<Comment> {
-        val comments = ArrayList<Comment>()
+    fun getComment(): List<CommentModel> {
+        val comments = ArrayList<CommentModel>()
         for(i in 1..5){
-            val comment = Comment(
+            val comment = CommentModel(
+                blogId = 0,
                 id = i,
-                user = getUser(i),
-                description = "Comment $i",
-                dateTime = "4 Mei 2023 9:00"
+                user = UserModel(
+                    name = "Penulis",
+                    phoneNumber = "081234567890",
+                    email = null,
+                    image = ""
+                ),
+                message = "Comment $i",
+                timestamp = "4 Mei 2023 9:00"
             )
             comments.add(comment)
         }
@@ -272,5 +279,31 @@ class DummyData {
             imgUrl = "https://agrisustineri.org/wp-content/uploads/2022/08/The-Story-of-Todays-Successful-Young-Farmers-.jpg",
             phoneNumber = "0123456789",
         )
+    }
+
+    fun getLoginResult(): LoginResult {
+        return LoginResult(
+            token="token",
+            refreshToken="token",
+            user=DataUser(
+                name="",
+                phoneNumber="",
+                email=null)
+        )
+    }
+
+    fun getRegisterResult(): RegisterResult {
+        return RegisterResult(
+            password="",
+            isSuperuser=false,
+            isActive=true, userPermissions= emptyList(),
+            isStaff=false,
+            lastLogin="",
+            name="",
+            groups= emptyList(),
+            phoneNumber="",
+            id=0,
+            email="",
+            image="")
     }
 }

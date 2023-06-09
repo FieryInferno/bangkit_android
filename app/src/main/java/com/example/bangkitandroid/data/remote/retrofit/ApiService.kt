@@ -71,7 +71,7 @@ interface ApiService {
         @Part ("name") name: RequestBody,
         @Part ("phone_number") phoneNumber: RequestBody,
         @Part ("password") password: RequestBody,
-        @Part file: MultipartBody.Part
+        @Part file: MultipartBody.Part?
     ): RegisterResponse
 
     @Multipart

@@ -17,8 +17,9 @@ import kotlinx.coroutines.flow.Flow
 
 class BlogViewModel(private val repository: Repository) : ViewModel() {
 
-    val listBlog: LiveData<PagingData<Blog>> =
+    fun listBlog(): LiveData<PagingData<Blog>> =
         repository.getListBlogs().cachedIn(viewModelScope)
+
     fun getBlog(id: Int): LiveData<Result<Blog>> {
         return repository.getBlogDetail(id)
     }

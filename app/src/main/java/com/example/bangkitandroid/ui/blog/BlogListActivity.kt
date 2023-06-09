@@ -51,7 +51,7 @@ class BlogListActivity : AppCompatActivity() {
                 adapter.retry()
             }
         )
-        viewModel.listBlog.observe(this) {
+        viewModel.listBlog().observe(this) {
             adapter.submitData(lifecycle, it)
         }
     }
