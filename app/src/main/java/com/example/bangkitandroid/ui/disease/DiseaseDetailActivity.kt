@@ -5,9 +5,6 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.window.OnBackInvokedDispatcher
-import androidx.annotation.RequiresApi
-import androidx.core.os.BuildCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.bangkitandroid.R
@@ -42,7 +39,7 @@ class DiseaseDetailActivity : AppCompatActivity() {
             intent.getSerializableExtra(EXTRA_PICTURE, File::class.java)
         } else {
             intent.getSerializableExtra(EXTRA_PICTURE)
-        } as File
+        } as File?
         image = myFile
         disease = data
     }
@@ -68,13 +65,6 @@ class DiseaseDetailActivity : AppCompatActivity() {
 
             rvDiseaseProductRecommendation.layoutManager = LinearLayoutManager(this@DiseaseDetailActivity, LinearLayoutManager.HORIZONTAL, false)
             rvDiseaseProductRecommendation.adapter = adapter
-            btnDiseaseBack.setOnClickListener {
-                if(disease.image == null){
-                   startActivity(Intent(this@DiseaseDetailActivity, HomeActivityNotLogged::class.java))
-                } else {
-                    startActivity(Intent(this@DiseaseDetailActivity, HomeActivityLogged::class.java))
-                }
-            }
         }
     }
 

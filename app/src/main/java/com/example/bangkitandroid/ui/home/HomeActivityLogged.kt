@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
@@ -29,6 +30,7 @@ import com.example.bangkitandroid.ui.disease.DiseaseImagePreviewActivity
 import com.example.bangkitandroid.ui.profile.CameraActivity
 import com.example.bangkitandroid.ui.profile.EditProfileActivity
 import com.example.bangkitandroid.ui.profile.ProfileLoggedActivity
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 
@@ -61,8 +63,6 @@ class HomeActivityLogged : AppCompatActivity() {
         viewModel.getFile().observe(this@HomeActivityLogged){
             if(it != null){
                 binding.apply {
-                    homePopupPhotoPicker.root.visibility = View.GONE
-                    homePopupPhotoPickerModal.visibility = View.GONE
                     bottomNavigation.visibility = View.VISIBLE
                 }
                 val intent = Intent(this, DiseaseImagePreviewActivity::class.java)
@@ -135,25 +135,14 @@ class HomeActivityLogged : AppCompatActivity() {
                                 }
                             }
                             btnScanImage.setOnClickListener{
-                                homePopupPhotoPicker.root.visibility = View.VISIBLE
-                                homePopupPhotoPickerModal.visibility = View.VISIBLE
-                                bottomNavigation.visibility = View.GONE
-                            }
-                            popupClose.root.setOnClickListener {
-                                homePopupPhotoPicker.root.visibility = View.GONE
-                                homePopupPhotoPickerModal.visibility = View.GONE
-                                bottomNavigation.visibility = View.VISIBLE
-                            }
-                            homePopupPhotoPicker.photoButton.setOnClickListener {
-                                startCameraX()
-                            }
-                            homePopupPhotoPicker.galleryButton.setOnClickListener {
-                                startGallery()
+                                showPopup()
                             }
                         }
                     }
                     is Result.Error -> {
-                        if(it.error.contains("401")){
+                        if(it.error.contains("timeout")){
+                            viewModel.getHome()
+                        } else if(it.error.contains("401")){
                             viewModel.setToken("", "")
                             startActivity(Intent(this@HomeActivityLogged, HomeActivityNotLogged::class.java))
                             finish()
@@ -174,6 +163,19 @@ class HomeActivityLogged : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun showPopup() {
+        val dialog = BottomSheetDialog(this)
+        dialog.setContentView(R.layout.popup_photo_picker)
+
+        val photoButton = dialog.findViewById<TextView>(R.id.photo_button)
+        val galleryButton = dialog.findViewById<TextView>(R.id.gallery_button)
+
+        photoButton?.setOnClickListener { startCameraX() }
+        galleryButton?.setOnClickListener { startGallery() }
+
+        dialog.show()
     }
 
     private fun setupBottomNavigationView() {

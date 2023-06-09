@@ -20,10 +20,6 @@
         android:contentDescription="@string/image_preview"
         />
 
-    <include
-        android:id="@+id/btn_disease_preview_back"
-        layout="@layout/image_back_button"/>
-
     <LinearLayout
         android:id="@+id/bottom_sheet_disease_preview"
         android:layout_width="match_parent"

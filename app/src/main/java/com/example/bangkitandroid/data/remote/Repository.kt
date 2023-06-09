@@ -144,6 +144,7 @@ class Repository (
     }
 
     suspend fun logout(){
+        _token = ""
         tokenPreferences!!.deleteToken()
     }
 
