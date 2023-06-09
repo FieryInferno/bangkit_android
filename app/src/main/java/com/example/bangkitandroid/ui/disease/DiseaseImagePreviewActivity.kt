@@ -92,15 +92,16 @@ class DiseaseImagePreviewActivity : AppCompatActivity() {
                 it.data?.getSerializableExtra(EXTRA_PICTURE, File::class.java)
             } else {
                 it.data?.getSerializableExtra(EXTRA_PICTURE)
-            } as File
+            } as File?
             val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
 
-            val result = rotateBitmap(
-                BitmapFactory.decodeFile(myFile.path),
-                isBackCamera
-            )
-
-            viewModel.setFile(saveRotatedImage(result, myFile))
+            if(myFile != null){
+                val result = rotateBitmap(
+                    BitmapFactory.decodeFile(myFile.path),
+                    isBackCamera
+                )
+                viewModel.setFile(saveRotatedImage(result, myFile))
+            }
         }
     }
 
