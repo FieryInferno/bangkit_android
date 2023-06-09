@@ -68,11 +68,11 @@ class LoginActivity : AppCompatActivity() {
                             }
                             //set move intent
                             startActivity(Intent(this@LoginActivity, HomeActivityLogged::class.java))
+                            finish()
                         }
                         is Result.Error -> {
                             binding.progressBar.visibility = View.GONE
                             val errorMessage = result.error
-                            Log.e("eror", result.error)
                             Toast.makeText(this@LoginActivity, errorMessage, Toast.LENGTH_SHORT).show()
                         }
                     }

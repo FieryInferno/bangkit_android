@@ -92,7 +92,7 @@ class HomeActivityNotLogged : AppCompatActivity() {
                         blogAdapter.setOnItemTapCallback(object : BlogAdapter.OnItemTapCallback{
                             override fun onItemTap(data: Blog) {
                                 val intent = Intent(this@HomeActivityNotLogged, BlogDetailActivity::class.java)
-                                intent.putExtra(BlogDetailActivity.EXTRA_BLOG, data)
+                                intent.putExtra(BlogDetailActivity.EXTRA_BLOG, data.id.toString())
                                 startActivity(intent)
                             }
                         })

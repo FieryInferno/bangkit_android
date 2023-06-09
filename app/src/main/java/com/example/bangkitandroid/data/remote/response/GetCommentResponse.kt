@@ -1,14 +1,14 @@
 package com.example.bangkitandroid.data.remote.response
 
-import com.example.bangkitandroid.data.remote.model.DiseaseModel
-import com.example.bangkitandroid.data.remote.model.HistoryModel
+import com.example.bangkitandroid.data.remote.model.CommentModel
 import com.example.bangkitandroid.data.remote.model.MetaModel
+import com.example.bangkitandroid.data.remote.model.UserModel
 import com.google.gson.annotations.SerializedName
 
-data class DiseaseHistoryResponse(
+data class GetCommentResponse(
 
 	@field:SerializedName("result")
-	val result: List<HistoryModel>,
+	val result: List<CommentModel>,
 
 	@field:SerializedName("meta")
 	val meta: MetaModel

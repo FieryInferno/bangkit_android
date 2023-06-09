@@ -9,8 +9,10 @@ import com.example.bangkitandroid.data.remote.response.LoginResponse
 import com.example.bangkitandroid.data.remote.response.RegisterResponse
 import com.example.bangkitandroid.data.remote.response.BlogResponse
 import com.example.bangkitandroid.data.remote.response.CommentResponse
+import com.example.bangkitandroid.data.remote.response.GetCommentResponse
 import com.example.bangkitandroid.data.remote.response.HomeResponse
 import com.example.bangkitandroid.data.remote.response.ListBlogResponse
+import com.example.bangkitandroid.data.remote.response.PostCommentResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Field
@@ -24,22 +26,22 @@ import retrofit2.http.Query
 import com.example.bangkitandroid.data.remote.response.UserResponse
 
 interface ApiService {
-    @GET("blog")
-    fun getBlog(
-        @Query("id") id: Int,
+    @GET("v1/blog/{id}/")
+    suspend fun getBlog(
+        @Path("id") id: Int
     ): BlogResponse
 
-    @GET("blogs")
-    fun getBlogs(
-        @Query("Page") page: Int,
-        @Query("Size") size: Int,
+    @GET("v1/blog")
+    suspend fun getListBlogs(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
     ): ListBlogResponse
 
     @GET("v1/history")
     suspend fun getDiseases(
         @Header("Authorization") token: String,
         @Query("page") page: Int,
-        @Query("limit") size: Int,
+        @Query("size") size: Int,
     ): DiseaseHistoryResponse
 
     @Multipart
@@ -69,16 +71,23 @@ interface ApiService {
         @Part ("name") name: RequestBody,
         @Part ("phone_number") phoneNumber: RequestBody,
         @Part ("password") password: RequestBody,
-        @Part file: MultipartBody.Part
+        @Part file: MultipartBody.Part?
     ): RegisterResponse
 
-    @FormUrlEncoded
-    @POST("comment/submit/")
-    fun postComment(
+    @Multipart
+    @POST("v1/comment/submit/")
+    suspend fun postComment(
         @Header("Authorization") token: String,
-        @Field("dateTime") dateTime: String,
-        @Field("description") description: String,
-    ): CommentResponse
+        @Part("message") message: String,
+        @Part("id_blog") id_blog: Int,
+    ): PostCommentResponse
+
+    @GET("v1/comment/{id}")
+    suspend fun getComment(
+        @Path("id") id: Int,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetCommentResponse
 
     @GET("v1/home")
     suspend fun getHome(

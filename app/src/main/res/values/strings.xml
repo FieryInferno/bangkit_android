@@ -22,13 +22,15 @@
     <string name="logout">Keluar</string>
     <string name="save">Simpan</string>
     <string name="profile_not_logged_in">Masuk untuk mengakses profil</string>
+    <string name="fill_name">Isi nama baru</string>
+    <string name="fill_phone">Isi nomor telepon baru</string>
     <string name="disease_detail_image">Disease Detail Image</string>
     <string name="time_icon">Time Icon</string>
     <string name="cara_mengobati">Cara Mengobati</string>
     <string name="rekomendasi_produk">Rekomendasi Produk</string>
     <string name="back_button">Back Button</string>
     <string name="unggah_gambar">Unggah Gambar</string>
-    <string name="ambil_ulang">Ambil ulang</string>
+    <string name="ambil_ulang">ambil ulang</string>
     <string name="image_preview">Image Preview</string>
     <string name="sedang_diproses">Sedang Diproses</string>
     <string name="judul_blog">Judul Blog</string>
@@ -54,4 +56,8 @@
     <string name="disease_name_label">Nama Penyakit</string>
     <string name="analysis_failed">Gagal Menganalisis</string>
     <string name="connection_error">Jaringan Bermasalah</string>
+    <string name="timeout">Time Out</string>
+    <string name="retry">Retry</string>
+    <string name="belum_ada_komentar">Belum ada komentar.</string>
+    <string name="masuk_untuk_berkomentar">Masuk untuk berkomentar</string>
 </resources>

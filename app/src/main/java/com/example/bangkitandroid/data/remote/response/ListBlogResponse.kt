@@ -1,15 +1,14 @@
 package com.example.bangkitandroid.data.remote.response
 
+import com.example.bangkitandroid.data.remote.model.BlogModel
+import com.example.bangkitandroid.data.remote.model.MetaModel
 import com.example.bangkitandroid.domain.entities.Blog
 import com.google.gson.annotations.SerializedName
 
 data class ListBlogResponse (
-    @field:SerializedName("success")
-    val success: Boolean,
+    @field:SerializedName("result")
+    val result: List<BlogModel>,
 
-    @field:SerializedName("message")
-    val message: String,
-
-    @field:SerializedName("data")
-    val blogs: List<Blog>?,
+    @field:SerializedName("meta")
+    val meta: MetaModel
 )

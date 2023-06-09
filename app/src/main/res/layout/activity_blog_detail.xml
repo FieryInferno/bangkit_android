@@ -42,47 +42,52 @@
             android:contentDescription="@string/disease_detail_image"
             tools:src="@tools:sample/backgrounds/scenic"
             />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="24dp"
+            android:layout_marginTop="-24dp"
             android:background="@drawable/top_rounded_linear_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/img_blog_detail"
             android:orientation="vertical"
-            android:layout_marginTop="-24dp">
+            android:padding="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_blog_detail">
+
             <TextView
                 android:id="@+id/tv_blog_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                tools:text="@string/judul_blog"
+                android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="@color/black" />
+                tools:text="@string/judul_blog" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/tv_blog_date_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:paddingEnd="16dp"
-                    tools:text="4 Mei 2023 9:00"
                     android:drawablePadding="8dp"
-                    app:drawableStartCompat="@drawable/baseline_access_time_24" />
+                    android:paddingEnd="16dp"
+                    app:drawableStartCompat="@drawable/baseline_access_time_24"
+                    tools:text="4 Mei 2023 9:00" />
+
                 <TextView
                     android:id="@+id/tv_blog_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:drawablePadding="8dp"
-                    app:layout_constraintEnd_toEndOf="@id/tv_blog_date_time"
                     app:drawableStartCompat="@drawable/baseline_person_outline_24"
+                    app:layout_constraintEnd_toEndOf="@id/tv_blog_date_time"
                     tools:text="@string/author" />
             </LinearLayout>
 
@@ -93,54 +98,86 @@
                 android:layout_marginTop="8dp"
                 android:lineHeight="21sp"
                 android:textSize="14sp"
-                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                />
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/komentar"
+                android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/black" />
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_empty_comment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:text="@string/belum_ada_komentar"
+                android:paddingTop="16dp"
+                android:textSize="16sp"
+                android:visibility="gone"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_comment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/comment_card_item"
+                android:layout_height="400dp"
                 android:layout_marginTop="16dp"
+                tools:listitem="@layout/comment_card_item"
                 tools:orientation="horizontal" />
 
         </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/comment_text_input_layout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_a_comment"
-            android:textColorHint="@color/green_400"
+            android:paddingHorizontal="16dp"
+            tools:ignore="UseCompoundDrawables"
             android:background="@drawable/rounded_edit_text_green"
             android:padding="8dp"
             android:layout_margin="16dp"
-            app:boxBackgroundColor="@color/green_100"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:endIconMode="custom"
-            app:endIconDrawable="@drawable/baseline_send_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/comment_edit_text"
-                android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/et_comment"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:maxLines="4"
-                android:imeOptions="actionSend"
-                android:imeActionLabel="@string/kirim"/>
+                android:layout_weight="1"
+                android:hint="@string/add_a_comment"
+                android:textColorHint="@color/green_400"
+                app:boxBackgroundColor="@color/green_100"/>
+            <ImageView
+                android:id="@+id/img_send"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_send_24"/>
+        </LinearLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
-
+        <TextView
+            android:id="@+id/tv_login_for_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/masuk_untuk_berkomentar"
+            android:textColor="@color/green_400"
+            android:background="@drawable/rounded_edit_text_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="16dp"
+            android:layout_margin="16dp"
+            android:visibility="gone"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
