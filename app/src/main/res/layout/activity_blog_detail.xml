@@ -110,8 +110,9 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_empty_comment"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="200dp"
                 android:text="@string/belum_ada_komentar"
                 android:paddingTop="16dp"
                 android:textSize="16sp"
@@ -138,31 +139,45 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/comment_text_input_layout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_a_comment"
-            android:textColorHint="@color/green_400"
+            android:paddingHorizontal="16dp"
+            tools:ignore="UseCompoundDrawables"
             android:background="@drawable/rounded_edit_text_green"
             android:padding="8dp"
             android:layout_margin="16dp"
-            app:boxBackgroundColor="@color/green_100"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:endIconMode="custom"
-            app:endIconDrawable="@drawable/baseline_send_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/comment_edit_text"
-                android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/et_comment"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:maxLines="4"
-                android:imeOptions="actionSend"
-                android:imeActionLabel="@string/kirim"/>
+                android:layout_weight="1"
+                android:hint="@string/add_a_comment"
+                android:textColorHint="@color/green_400"
+                app:boxBackgroundColor="@color/green_100"/>
+            <ImageView
+                android:id="@+id/img_send"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_send_24"/>
+        </LinearLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/tv_login_for_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/masuk_untuk_berkomentar"
+            android:textColor="@color/green_400"
+            android:background="@drawable/rounded_edit_text_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="16dp"
+            android:layout_margin="16dp"
+            android:visibility="gone"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

@@ -9,8 +9,10 @@ import com.example.bangkitandroid.data.remote.response.LoginResponse
 import com.example.bangkitandroid.data.remote.response.RegisterResponse
 import com.example.bangkitandroid.data.remote.response.BlogResponse
 import com.example.bangkitandroid.data.remote.response.CommentResponse
+import com.example.bangkitandroid.data.remote.response.GetCommentResponse
 import com.example.bangkitandroid.data.remote.response.HomeResponse
 import com.example.bangkitandroid.data.remote.response.ListBlogResponse
+import com.example.bangkitandroid.data.remote.response.PostCommentResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Field
@@ -72,13 +74,20 @@ interface ApiService {
         @Part file: MultipartBody.Part
     ): RegisterResponse
 
-    @FormUrlEncoded
-    @POST("comment/submit/")
-    fun postComment(
+    @Multipart
+    @POST("v1/comment/submit/")
+    suspend fun postComment(
         @Header("Authorization") token: String,
-        @Field("dateTime") dateTime: String,
-        @Field("description") description: String,
-    ): CommentResponse
+        @Part("message") message: String,
+        @Part("id_blog") id_blog: Int,
+    ): PostCommentResponse
+
+    @GET("v1/comment/{id}")
+    suspend fun getComment(
+        @Path("id") id: Int,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): GetCommentResponse
 
     @GET("v1/home")
     suspend fun getHome(

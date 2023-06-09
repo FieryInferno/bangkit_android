@@ -27,12 +27,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"
+            android:layout_marginBottom="80dp"
             android:orientation="vertical">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_list_blog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/horizontal_card_item"/>
+
         </ScrollView>
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
@@ -47,6 +49,8 @@
             app:itemIconTint="@drawable/bottom_navigation_color_selector"
             app:labelVisibilityMode="unlabeled"
             app:menu="@menu/bottom_navigation_menu" />
+
+
 
 
         <ProgressBar

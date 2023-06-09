@@ -59,4 +59,5 @@
     <string name="timeout">Time Out</string>
     <string name="retry">Retry</string>
     <string name="belum_ada_komentar">Belum ada komentar.</string>
+    <string name="masuk_untuk_berkomentar">Masuk untuk berkomentar</string>
 </resources>

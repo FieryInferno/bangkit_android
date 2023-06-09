@@ -17,18 +17,17 @@ import kotlinx.coroutines.flow.Flow
 
 class BlogViewModel(private val repository: Repository) : ViewModel() {
 
-    val listBlog: LiveData<PagingData<BlogModel>> =
+    val listBlog: LiveData<PagingData<Blog>> =
         repository.getListBlogs().cachedIn(viewModelScope)
-    fun getBlog(id: Int): LiveData<Result<BlogResponse>> {
-        Log.e("ViewModel", "Masuk")
+    fun getBlog(id: Int): LiveData<Result<Blog>> {
         return repository.getBlogDetail(id)
     }
 
     fun getSessionId() = repository.getSessionId()
 
-//    val listComment: LiveData<PagingData<Comment>> =
-//        repository.getListComment().cachedIn(viewModelScope)
+    fun listComment(id_blog: Int): LiveData<PagingData<Comment>> =
+        repository.getListComment(id_blog).cachedIn(viewModelScope)
 
-//    fun postComment(token: String, dateTime: String, description: String) =
-//        repository.postComment(token, dateTime, description)
+    fun postComment(message: String, id_blog: Int) =
+        repository.postComment(message, id_blog)
 }

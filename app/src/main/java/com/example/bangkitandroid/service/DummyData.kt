@@ -171,7 +171,7 @@ class DummyData {
                 name = "Penulis",
                 phoneNumber = "081234567890",
                 email = null,
-                image = null
+                image = ""
             ),
             timestamp = "4 Mei 2023 9:00"
         )
